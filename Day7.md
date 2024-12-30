@@ -1,4 +1,3 @@
-<details>
 <summary><strong>src/components/MovieCard.js</strong></summary>
 
 ```javascript
@@ -39,9 +38,6 @@ function MovieCard({ movie }) {
 export default MovieCard;
 
 ```
-</details>
-
-<details>
 <summary><strong>src/pages/Home.js</strong></summary>
 
 ```javascript
@@ -94,7 +90,6 @@ function Home() {
 
 export default Home;
 ```
-</details>
 
 ---
 
