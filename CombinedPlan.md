@@ -15,9 +15,8 @@
 - Explore Axios for API requests.
 - Build a simple app that fetches data from an API and displays it.
 
-### **Day 3 (Friday): Material UI and Dispatch**
+### **Day 3 (Friday): Material UI**
 - Explore Material UI (MUI) for building reusable UI components.
-- Learn the concept of dispatch to manage actions in state management libraries.
 - Practice applying styles with Material UI in a sample component.
 
 ---
