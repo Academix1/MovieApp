@@ -1,4 +1,3 @@
-<details>
 <summary><strong>src/components/Loading.js</strong></summary>
 
 ```javascript
@@ -24,9 +23,7 @@ function Loading({ message = 'Loading...' }) {
 
 export default Loading;
 ```
-</details>
 
-<details>
 <summary><strong>src/pages/Home.js</strong></summary>
 
 ```javascript
@@ -113,4 +110,3 @@ function Home() {
 export default Home;
 
 ```
-</details>
