@@ -1,4 +1,3 @@
-<details>
 <summary><strong>src/utils/api.js</strong></summary>
 
 ```javascript
@@ -17,9 +16,7 @@ export const getTrendingMovies = () => api.get('/trending/movie/day');
 
 export default api;
 ```
-</details>
 
-<details>
 <summary><strong>src/redux/movieSlice.js</strong></summary>
 
 ```javascript
@@ -72,9 +69,7 @@ const movieSlice = createSlice({
 
 export default movieSlice.reducer;
 ```
-</details>
 
-<details>
 <summary><strong>src/pages/Home.js</strong></summary>
 
 ```javascript
@@ -116,6 +111,5 @@ function Home() {
 
 export default Home;
 ```
-</details>
 
 ---
