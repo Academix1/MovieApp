@@ -83,12 +83,18 @@ import {
 
 // Page components
 import Home from './pages/Home';
+import MovieDetails from './pages/MovieDetails';
+import Search from './pages/Search';
+import Watchlist from './pages/Watchlist';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/movie/:id" element={<MovieDetails />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/watchlist" element={<Watchlist />} />
       </Routes>
     </Router>
   );
@@ -188,7 +194,9 @@ import Navbar from './components/Navbar';
 
 // Pages
 import Home from './pages/Home';
-
+import MovieDetails from './pages/MovieDetails';
+import Search from './pages/Search';
+import Watchlist from './pages/Watchlist';
 
 function App() {
   return (
@@ -199,7 +207,9 @@ function App() {
         <Box sx={{ mt: 8 }}>
           <Routes>
             <Route path="/" element={<Home />} />
-           
+            <Route path="/movie/:id" element={<MovieDetails />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/watchlist" element={<Watchlist />} />
           </Routes>
         </Box>
       </Router>
@@ -208,6 +218,7 @@ function App() {
 }
 
 export default App;
+
 ```
 
 Run the app and notice the dark theme with the red `AppBar`.
