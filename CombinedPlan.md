@@ -5,15 +5,16 @@
 ## **Week 1: React Concepts**
 **Goal**: Learn React fundamentals and explore essential concepts for building the Movie App.
 
-### **Day 1 (Monday): Props and `useState`**
+### **Day 1 (Monday): Props and Components**
 - Understand Props and how to pass data between components.
-- Learn `useState` for managing component state.
+- Learn about Components in React
 - Practice with a simple counter app to demonstrate state changes.
 
-### **Day 2 (Wednesday): `useEffect` and Axios**
+### **Day 2 (Wednesday): `useEffect`, `useState`, and Axios**
+- Understand how to combine `useEffect` with `useState` for dynamic data updates.
 - Learn `useEffect` for handling side effects (e.g., fetching data, subscriptions).
 - Explore Axios for API requests.
-- Build a simple app that fetches data from an API and displays it.
+- Build a simple app that fetches data from an API, stores it in state using `useState`, and displays it.
 
 ### **Day 3 (Friday): Material UI**
 - Explore Material UI (MUI) for building reusable UI components.
@@ -28,17 +29,17 @@
 - Create a new React app using `create-react-app`.
 - Configure the project structure for scalability.
 
-### **Day 2 (Wednesday): NavBar and Theme**
+### **Day 2 (Tuesday): NavBar and Theme**
 - Build a responsive NavBar using Material UI.
 - Apply a theme using `theme.js` to provide consistent styling.
 
-### **Day 3 (Friday): MovieCard and Home**
+### **Day 3 (Wednesday): MovieCard and Home**
 - Construct `MovieCard.js` to display individual movie details.
 - Build `Home.js` to fetch and display popular movies using `useState` and `useEffect`.
 - Integrate `Home.js` into `App.js`.
 
-### **Day 4–6 (Saturday–Monday): Refine and Enhance**
-- Complete TO-DO-List
+### **Day 4–6 (Thursday-Saturday): Refine and Enhance**
+- Complete TODOs such as responsive design, error handling, and optimizing API calls.
 
 ---
 
@@ -68,23 +69,23 @@
 - Set up the Redux store and reducers for managing app state.
 - Use Redux Thunk to handle asynchronous data fetching.
 
-### **Day 2 (Wednesday): Genre Functionality**
+### **Day 2 (Tuesday): Genre Functionality**
 - Fetch genres from the API and prepare `GenreSidebar`.
 - Integrate `GenreSidebar` into `App.js`.
 
-### **Day 3 (Friday): Movie Details and Routing**
+### **Day 3 (Wednesday): Movie Details and Routing**
 - Create `MovieDetail.js` to display detailed information about a selected movie.
 - Add routing for movie details in `App.js`.
 
-### **Day 4 (Saturday): Search Functionality**
+### **Day 4 (Thursday): Search Functionality**
 - Add a search bar component to allow searching for movies.
 - Implement search functionality using Redux and the movie API.
 
-### **Day 5 (Sunday): WatchList Functionality**
+### **Day 5 (Friday): WatchList Functionality**
 - Create a WatchList feature to save favorite movies.
 - Add the functionality in `MovieCard.js` to toggle movies in the WatchList.
 
-### **Day 6 (Monday): Final Testing and Debugging**
+### **Day 6 (Saturday): Final Testing and Debugging**
 - Refine the app by testing all features.
 - Debug and optimize API calls and performance.
 
