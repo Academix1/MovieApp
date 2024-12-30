@@ -1,4 +1,3 @@
-<details>
 <summary><strong>src/components/Navbar.js</strong></summary>
 
 ```javascript
@@ -81,9 +80,7 @@ function Navbar() {
 
 export default Navbar;
 ```
-</details>
 
-<details>
 <summary><strong>src/redux/movieSlice.js</strong></summary>
 
 ```javascript
@@ -107,9 +104,7 @@ const movieSlice = createSlice({
 
 export default movieSlice.reducer;
 ```
-</details>
 
-<details>
 <summary><strong>src/pages/Search.js</strong></summary>
 
 ```javascript
@@ -159,4 +154,3 @@ function Search() {
 
 export default Search;
 ```
-</details>
