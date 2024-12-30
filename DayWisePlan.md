@@ -83,18 +83,12 @@ import {
 
 // Page components
 import Home from './pages/Home';
-import MovieDetails from './pages/MovieDetails';
-import Search from './pages/Search';
-import Watchlist from './pages/Watchlist';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/movie/:id" element={<MovieDetails />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/watchlist" element={<Watchlist />} />
       </Routes>
     </Router>
   );
@@ -114,9 +108,6 @@ function Home() {
 
 export default Home;
 ```
-
-Similarly, create `MovieDetails.js`, `Search.js`, and `Watchlist.js` with simple placeholders.
-
 ---
 
 ## **Day 3: Adding Material UI & Theming**
@@ -197,9 +188,7 @@ import Navbar from './components/Navbar';
 
 // Pages
 import Home from './pages/Home';
-import MovieDetails from './pages/MovieDetails';
-import Search from './pages/Search';
-import Watchlist from './pages/Watchlist';
+
 
 function App() {
   return (
@@ -210,9 +199,7 @@ function App() {
         <Box sx={{ mt: 8 }}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/movie/:id" element={<MovieDetails />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/watchlist" element={<Watchlist />} />
+           
           </Routes>
         </Box>
       </Router>
@@ -303,9 +290,6 @@ import { store } from './redux/store';
 
 // Pages
 import Home from './pages/Home';
-import MovieDetails from './pages/MovieDetails';
-import Search from './pages/Search';
-import Watchlist from './pages/Watchlist';
 
 function App() {
   return (
@@ -317,9 +301,7 @@ function App() {
           <Box sx={{ mt: 8 }}>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/movie/:id" element={<MovieDetails />} />
-              <Route path="/search" element={<Search />} />
-              <Route path="/watchlist" element={<Watchlist />} />
+              
             </Routes>
           </Box>
         </Router>
@@ -351,7 +333,6 @@ Now you have a working Redux store integrated into your React app, ready for fut
 
 ---
 
-```markdown
 # Day 5: Fetching Popular & Trending Movies (Redux Thunks)
 
 ### Goal
@@ -367,9 +348,17 @@ Now you have a working Redux store integrated into your React app, ready for fut
 ### Code After Day 5
 
 <details>
+  ### .env Configurations
+
+  ```.env
+  - REACT_APP_TMDB_API_KEY=API_KEY
+  - REACT_APP_TMDB_ACCESS_TOKEN=ACCESS_TOKEN
+  ```
+
 <summary><strong>src/utils/api.js</strong></summary>
 
 ```javascript
+
 import axios from 'axios';
 
 const api = axios.create({
@@ -818,7 +807,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Container, Typography, Grid } from '@mui/material';
-import { searchMoviesAsync } from '../redux/movieSlice';
+import { searchMoviesAsync } from '../redux/MovieSlice';
 import MovieCard from '../components/MovieCard';
 import Loading from '../components/Loading';
 
@@ -860,7 +849,7 @@ function Search() {
 
 export default Search;
 ```
-```markdown
+
 # Day 9: Watchlist Feature
 
 ### Goal
@@ -906,10 +895,22 @@ export default movieSlice.reducer;
 <summary><strong>src/components/MovieCard.js</strong></summary>
 
 ```javascript
-import { addToWatchlist, removeFromWatchlist } from '../redux/movieSlice';
+import React from 'react';
+import {
+  Card,
+  CardContent,
+  Typography,
+  CardMedia,
+  IconButton,
+} from '@mui/material';
+import { Bookmark, BookmarkBorder } from '@mui/icons-material';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { addToWatchlist, removeFromWatchlist } from '../redux/MovieSlice';
 
 function MovieCard({ movie }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize useNavigate
   const watchlist = useSelector((state) => state.movies.watchlist);
   const isInWatchlist = watchlist.some((m) => m.id === movie.id);
 
@@ -922,15 +923,54 @@ function MovieCard({ movie }) {
     }
   };
 
+  const handleCardClick = () => {
+    navigate(`/movie/${movie.id}`); // Navigate to the MovieDetails page with movie ID
+  };
+
   return (
-    <Card>
-      {/* Movie content */}
-      <IconButton onClick={handleWatchlistClick}>
+    <Card
+      onClick={handleCardClick}
+      sx={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        cursor: 'pointer',
+        borderRadius: 2,
+        boxShadow: 3,
+        position: 'relative', // Ensure the IconButton is positioned correctly
+      }}
+    >
+      <CardMedia
+        component="img"
+        height="250"
+        image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} // Use the movie poster URL
+        alt={movie.title}
+        sx={{ objectFit: 'cover', borderRadius: 2 }}
+      />
+      <CardContent sx={{ flexGrow: 1 }}>
+        <Typography gutterBottom variant="h6" component="div">
+          {movie.title}
+        </Typography>
+        <Typography variant="body2" color="textSecondary">
+          {movie.release_date ? movie.release_date.slice(0, 4) : 'N/A'} {/* Display release year */}
+        </Typography>
+      </CardContent>
+      <IconButton
+        onClick={handleWatchlistClick}
+        sx={{
+          position: 'absolute',
+          top: 8,
+          right: 8,
+          color: isInWatchlist ? 'primary.main' : 'text.secondary', // Change icon color based on watchlist status
+        }}
+      >
         {isInWatchlist ? <Bookmark /> : <BookmarkBorder />}
       </IconButton>
     </Card>
   );
 }
+
+export default MovieCard;
 ```
 </details>
 
@@ -938,12 +978,19 @@ function MovieCard({ movie }) {
 <summary><strong>src/pages/Watchlist.js</strong></summary>
 
 ```javascript
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Container, Typography, Grid } from '@mui/material';
+import MovieCard from './MovieCard'; // Ensure the path to MovieCard is correct
+
 function Watchlist() {
   const watchlist = useSelector((state) => state.movies.watchlist);
 
   return (
     <Container>
-      <Typography variant="h4">My Watchlist</Typography>
+      <Typography variant="h4" gutterBottom>
+        My Watchlist
+      </Typography>
       <Grid container spacing={3}>
         {watchlist.map((movie) => (
           <Grid item xs={12} sm={6} md={4} key={movie.id}>
@@ -954,6 +1001,8 @@ function Watchlist() {
     </Container>
   );
 }
+
+export default Watchlist;
 ```
 </details>
 
@@ -1016,8 +1065,28 @@ export const { setSelectedGenre, clearSelectedGenre } = movieSlice.actions;
 <summary><strong>src/components/GenreDrawer.js</strong></summary>
 
 ```javascript
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemButton,
+  Typography,
+  useTheme,
+  useMediaQuery,
+  Box,
+} from '@mui/material';
+import { fetchGenres, setSelectedGenre } from '../redux/MovieSlice';
+
+const DRAWER_WIDTH = 240;
+
 function GenreDrawer() {
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  
   const genres = useSelector((state) => state.movies.genres);
   const selectedGenre = useSelector((state) => state.movies.selectedGenre);
 
@@ -1026,23 +1095,72 @@ function GenreDrawer() {
   }, [dispatch]);
 
   const handleGenreClick = (genre) => {
-    dispatch(setSelectedGenre(genre));
+      dispatch(setSelectedGenre(genre));
   };
 
-  return (
-    <Drawer>
+  const drawer = (
+    <>
+      <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
+        <Typography variant="h6" component="div">
+          Genres
+        </Typography>
+      </Box>
       <List>
         {genres.map((genre) => (
-          <ListItem
-            key={genre.id}
-            selected={selectedGenre?.id === genre.id}
-            onClick={() => handleGenreClick(genre)}
-          >
-            <ListItemText primary={genre.name} />
+          <ListItem key={genre.id} disablePadding>
+            <ListItemButton
+              selected={selectedGenre?.id === genre.id}
+              onClick={() => handleGenreClick(genre)}
+            >
+              <ListItemText primary={genre.name} />
+            </ListItemButton>
           </ListItem>
         ))}
       </List>
-    </Drawer>
+    </>
+  );
+
+  return (
+    <Box
+      component="nav"
+      sx={{ width: { sm: DRAWER_WIDTH }, flexShrink: { sm: 0 } }}
+    >
+      {isMobile ? (
+        <Drawer
+          variant="temporary"
+          open={false} // This will be controlled by a state in the parent component
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile
+          }}
+          sx={{
+            display: { xs: 'block', sm: 'none' },
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: DRAWER_WIDTH,
+            },
+          }}
+        >
+          {drawer}
+        </Drawer>
+      ) : (
+        <Drawer
+          variant="permanent"
+          sx={{
+            display: { xs: 'none', sm: 'block' },
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: DRAWER_WIDTH,
+              borderRight: '1px solid rgba(0, 0, 0, 0.12)',
+              position: 'relative',
+              height: '100vh',
+            },
+          }}
+          open
+        >
+          {drawer}
+        </Drawer>
+      )}
+    </Box>
   );
 }
 
@@ -1069,6 +1187,13 @@ export default GenreDrawer;
 <summary><strong>src/pages/MovieDetails.js</strong></summary>
 
 ```javascript
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Container, Grid, Typography, Box, Chip, Rating } from '@mui/material';
+import api from '../utils/api'; // Ensure this points to your API utility
+import Loading from '../components/Loading'; // Ensure this component exists and is correctly implemented
+
 function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
@@ -1077,12 +1202,16 @@ function MovieDetails() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const [movieRes, creditsRes] = await Promise.all([
-        api.get(`/movie/${id}`),
-        api.get(`/movie/${id}/credits`),
-      ]);
-      setMovie(movieRes.data);
-      setCast(creditsRes.data.cast.slice(0, 10));
+      try {
+        const [movieRes, creditsRes] = await Promise.all([
+          api.get(`/movie/${id}`),
+          api.get(`/movie/${id}/credits`),
+        ]);
+        setMovie(movieRes.data);
+        setCast(creditsRes.data.cast.slice(0, 10));
+      } catch (error) {
+        console.error('Failed to fetch movie details:', error);
+      }
     };
     fetchData();
   }, [id]);
@@ -1095,16 +1224,26 @@ function MovieDetails() {
     <Container>
       <Grid container spacing={4}>
         <Grid item xs={12} md={4}>
-          <img src={movie.poster_path} alt={movie.title} />
+          <img
+            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            alt={movie.title}
+            style={{ width: '100%', borderRadius: '8px' }}
+          />
         </Grid>
         <Grid item xs={12} md={8}>
-          <Typography variant="h3">{movie.title}</Typography>
+          <Typography variant="h3" gutterBottom>
+            {movie.title}
+          </Typography>
           <Rating value={movie.vote_average / 2} readOnly />
-          <Typography>{movie.overview}</Typography>
+          <Typography paragraph>{movie.overview}</Typography>
           <Typography>Release Date: {movie.release_date}</Typography>
-          <Box>
+          <Box mt={2}>
             {cast.map((actor) => (
-              <Chip key={actor.id} label={actor.name} />
+              <Chip
+                key={actor.id}
+                label={actor.name}
+                sx={{ margin: '4px' }}
+              />
             ))}
           </Box>
         </Grid>
@@ -1112,6 +1251,8 @@ function MovieDetails() {
     </Container>
   );
 }
+
+export default MovieDetails;
 ```
 </details>
 
