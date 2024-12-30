@@ -1,10 +1,3 @@
-### **5-Week Plan to Learn React and Redux, Ending with a Movies App Using TMDB API**
-Week#0
-Javascript
-object, array, function,
-map, push, filter,
-
----
 
 ### **Week 1: React Basics**
 **Goal**: Understand core concepts of React and build simple components.
