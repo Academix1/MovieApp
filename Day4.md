@@ -1,6 +1,5 @@
 <summary><strong>src/redux/movieSlice.js</strong></summary>
 
-<details>
 
 ```js
 import { createSlice } from '@reduxjs/toolkit';
@@ -19,10 +18,7 @@ const movieSlice = createSlice({
 
 export default movieSlice.reducer;
 ```
-</details>
 
-
-<details>
 <summary><strong>src/redux/store.js</strong></summary>
 
 ```js
@@ -38,9 +34,6 @@ export const store = configureStore({
 export default store;
 ```
 
-</details>
-
-<details>
 <summary><strong>src/App.js (Updated)</strong></summary>
 
 ```js
@@ -82,7 +75,6 @@ function App() {
 export default App;
 ```
 
-</details>
 
 ---
 
