@@ -39,8 +39,7 @@
 - Integrate `Home.js` into `App.js`.
 
 ### **Day 4–6 (Saturday–Monday): Refine and Enhance**
-- Test and debug the features implemented.
-- Add basic error handling for API requests.
+- Complete TO-DO-List
 
 ---
 
