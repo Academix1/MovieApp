@@ -45,7 +45,7 @@ console.log(a);
 
 ```javascript
 console.log(5 == "5");  
-console.log(5 === "5");\
+console.log(5 === "5");
 
 a=34
 b=45
