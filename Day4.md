@@ -101,7 +101,7 @@ for (let index in colors) {
   }
 ```
 
-for-each
+#### Arrays
 
 ```javascript// 1. Initial Array
 let colors = ["red", "green", "blue"];
