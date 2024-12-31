@@ -352,6 +352,7 @@ Now you have a working Redux store integrated into your React app, ready for fut
 ---
 
 ```markdown
+
 # Day 5: Fetching Popular & Trending Movies (Redux Thunks)
 
 ### Goal
