@@ -48,9 +48,6 @@ console.log(a);
 console.log(5 == "5");  
 console.log(5 === "5");
 
-a=34
-b=45
-# Write a Condition to Check Weather a is Greater than b
  ```
 #### Logical Operators
 
