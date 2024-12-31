@@ -884,7 +884,6 @@ export default Search;
 </details>
 
 
-```markdown
 # Day 9: Watchlist Feature
 
 ### Goal
@@ -899,15 +898,17 @@ export default Search;
 
 ### Code After Day 9
 
+
 <details>
 <summary><strong>src/redux/movieSlice.js</strong></summary>
 
 ```javascript
+import { createSlice } from '@reduxjs/toolkit';
+
 const movieSlice = createSlice({
   name: 'movies',
   initialState: {
     watchlist: [],
-    // other states
   },
   reducers: {
     addToWatchlist: (state, action) => {
@@ -921,8 +922,13 @@ const movieSlice = createSlice({
   },
 });
 
-export const { addToWatchlist, removeFromWatchlist } = movieSlice.actions;
+export const {
+  addToWatchlist,
+  removeFromWatchlist,
+} = movieSlice.actions;
+
 export default movieSlice.reducer;
+
 ```
 </details>
 
@@ -990,81 +996,7 @@ export default Watchlist;
 ```
 </details>
 
-<details>
-<summary><strong>src/redux/movieSlice.js</strong></summary>
 
-```javascriptimport { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
-import api from '../util/api'; // Assuming 'api' is correctly set up
-
-// Thunk to search for movies based on a query
-export const searchMoviesAsync = createAsyncThunk(
-  'movies/search',
-  async (query) => {
-    const response = await api.get(`/search/movie?query=${query}`);
-    return response.data.results;
-  }
-);
-
-// Thunk to fetch genres
-export const fetchGenres = createAsyncThunk(
-  'movies/fetchGenres',
-  async () => {
-    const response = await api.get('/genre/movie/list');
-    return response.data.genres;
-  }
-);
-
-// Reducers to handle Watchlist actions
-const movieSlice = createSlice({
-  name: 'movies',
-  initialState: {
-    searchResults: [],
-    watchlist: [],
-    genres: [],
-    loading: false,
-    error: null,
-  },
-  reducers: {
-    addToWatchlist: (state, action) => {
-      state.watchlist.push(action.payload);
-    },
-    removeFromWatchlist: (state, action) => {
-      state.watchlist = state.watchlist.filter(
-        (movie) => movie.id !== action.payload.id
-      );
-    },
-  },
-  extraReducers: (builder) => {
-    // Search Movies
-    builder
-      .addCase(searchMoviesAsync.fulfilled, (state, action) => {
-        state.searchResults = action.payload;
-      })
-      .addCase(searchMoviesAsync.rejected, (state, action) => {
-        state.error = action.error.message;
-      });
-
-    // Fetch Genres
-    builder
-      .addCase(fetchGenres.fulfilled, (state, action) => {
-        state.genres = action.payload;
-      })
-      .addCase(fetchGenres.rejected, (state, action) => {
-        state.error = action.error.message;
-      });
-  },
-});
-
-export const {
-  addToWatchlist,
-  removeFromWatchlist,
-} = movieSlice.actions;
-
-export default movieSlice.reducer;
-
-```
-</details>
 
 ---
 
@@ -1260,6 +1192,42 @@ export default GenreDrawer;
 ```
 <summary><strong>src/App.js</strong></summary>
 
+```javascript
+  <Box sx={{ display: 'flex', mt: 8 }}>
+            {/* Sidebar */}
+            <Box
+              component="aside"
+              sx={{
+                width: { xs: '100%', sm: '240px' }, // Full width on small screens, fixed on larger
+                flexShrink: 0,
+                position: 'fixed',
+                height: 'calc(100vh - 64px)', // Subtract Navbar height
+                overflowY: 'auto',
+                borderRight: '1px solid #e0e0e0',
+                bgcolor: 'background.paper',
+              }}
+            >
+              <GenreDrawer />
+            </Box>
+
+            {/* Main Content */}
+            <Box
+              component="main"
+              sx={{
+                flexGrow: 1,
+                ml: { sm: '240px' }, // Leave space for the sidebar on larger screens
+                p: 3,
+              }}
+            >
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/movie/:id" element={<MovieDetails />} />
+                <Route path="/search" element={<Search />} />
+                <Route path="/watchlist" element={<Watchlist />} />
+              </Routes>
+            </Box>
+          </Box>
+```
 </details>
 
 ---
