@@ -38,8 +38,9 @@ console.log(a);
 
 
 let b = 15;
-a /= 5;  
+b /= 5;  
 console.log(a);
+
 ```
 #### Comparision Operators
 
@@ -49,7 +50,7 @@ console.log(5 === "5");
 
 a=34
 b=45
-# Assign the added value of a and b to c
+# Write a Condition to Check Weather a is Greater than b
  ```
 #### Logical Operators
 
