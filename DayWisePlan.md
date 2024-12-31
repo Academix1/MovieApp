@@ -1033,34 +1033,7 @@ export default Watchlist;
 
 ```javascript
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getPopularMovies, getTrendingMovies } from '../util/api';
-import api from '../util/api'; // Assuming 'api' is correctly set up
-
-// Thunks to fetch popular and trending movies
-export const fetchPopularMovies = createAsyncThunk(
-  'movies/fetchPopular',
-  async () => {
-    const response = await getPopularMovies();
-    return response.data.results;
-  }
-);
-
-export const fetchTrendingMovies = createAsyncThunk(
-  'movies/fetchTrending',
-  async () => {
-    const response = await getTrendingMovies();
-    return response.data.results;
-  }
-);
-
-// Thunk to search for movies based on a query
-export const searchMoviesAsync = createAsyncThunk(
-  'movies/search',
-  async (query) => {
-    const response = await api.get(`/search/movie?query=${query}`);
-    return response.data.results;
-  }
-);
+import api from '../util/api'; // Ensure 'api' is correctly set up
 
 // Thunk to fetch genres
 export const fetchGenres = createAsyncThunk(
@@ -1083,25 +1056,12 @@ export const fetchMoviesByGenre = createAsyncThunk(
 const movieSlice = createSlice({
   name: 'movies',
   initialState: {
-    popular: [],
-    trending: [],
-    searchResults: [],
     genres: [],
     selectedGenre: null,
     genreMovies: [],
-    watchlist: [],
-    loading: false,
     error: null,
   },
   reducers: {
-    addToWatchlist: (state, action) => {
-      state.watchlist.push(action.payload);
-    },
-    removeFromWatchlist: (state, action) => {
-      state.watchlist = state.watchlist.filter(
-        (movie) => movie.id !== action.payload.id
-      );
-    },
     setSelectedGenre: (state, action) => {
       state.selectedGenre = action.payload;
     },
@@ -1112,32 +1072,6 @@ const movieSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Popular Movies
-      .addCase(fetchPopularMovies.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchPopularMovies.fulfilled, (state, action) => {
-        state.loading = false;
-        state.popular = action.payload;
-      })
-      .addCase(fetchPopularMovies.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      })
-
-      // Trending Movies
-      .addCase(fetchTrendingMovies.fulfilled, (state, action) => {
-        state.trending = action.payload;
-      })
-
-      // Search Movies
-      .addCase(searchMoviesAsync.fulfilled, (state, action) => {
-        state.searchResults = action.payload;
-      })
-      .addCase(searchMoviesAsync.rejected, (state, action) => {
-        state.error = action.error.message;
-      })
-
       // Fetch Genres
       .addCase(fetchGenres.fulfilled, (state, action) => {
         state.genres = action.payload;
@@ -1156,12 +1090,7 @@ const movieSlice = createSlice({
   },
 });
 
-export const {
-  addToWatchlist,
-  removeFromWatchlist,
-  setSelectedGenre,
-  clearSelectedGenre,
-} = movieSlice.actions;
+export const { setSelectedGenre, clearSelectedGenre } = movieSlice.actions;
 
 export default movieSlice.reducer;
 
@@ -1297,12 +1226,11 @@ export default GenreDrawer;
 <details>
 <summary><strong>src/pages/MovieDetails.js</strong></summary>
 
-```javascript
-import React, { useState, useEffect } from 'react';
+```javascriptimport React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Container, Grid, Typography, Box, Chip, Rating } from '@mui/material';
-import api from '../utils/api'; // Ensure this points to your API utility
+import api from '../util/api'; // Ensure this points to your API utility
 import Loading from '../components/Loading'; // Ensure this component exists and is correctly implemented
 
 function MovieDetails() {
@@ -1367,6 +1295,16 @@ export default MovieDetails;
 
 ```
 </details>
+
+- MovieCard.js(Update)
+  
+```javascript
+
+const handleCardClick = () => {
+    navigate(`/movie/${movie.id}`); // Navigate to the MovieDetails page with movie ID
+  };
+
+```
 
 ---
 
