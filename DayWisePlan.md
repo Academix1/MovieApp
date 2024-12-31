@@ -1085,6 +1085,7 @@ export default movieSlice.reducer;
 </details>
 
 <details>
+  
 <summary><strong>src/components/GenreDrawer.js</strong></summary>
 
 ```javascript
@@ -1190,6 +1191,11 @@ function GenreDrawer() {
 export default GenreDrawer;
 
 ```
+</details>
+
+--- 
+
+<details>
 <summary><strong>src/App.js</strong></summary>
 
 ```javascript
