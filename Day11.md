@@ -1,6 +1,6 @@
 ### MovieDetails.js
 
-```
+```javascript
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Container, Grid, Typography, Box, Chip, Rating } from '@mui/material';
