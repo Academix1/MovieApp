@@ -1,45 +1,75 @@
-#### `src/App.js`
 
-```js
-import React from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from 'react-router-dom';
+### DataTypes
 
-// Page components
-import Home from './pages/Home';
-import MovieDetails from './pages/MovieDetails';
-import Search from './pages/Search';
-import Watchlist from './pages/Watchlist';
-
-function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/movie/:id" element={<MovieDetails />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/watchlist" element={<Watchlist />} />
-      </Routes>
-    </Router>
-  );
-}
-
-export default App;
+Primmitive
+```javascript
+let num = 42;           // Number
+let name = "Alice";     // String
+let isActive = true;    // Boolean
+let value;              // Undefined
+let nothing = null;     // Null
+let unique = Symbol();  // Symbol
+let bigNumber = 123n;   // BigInt
 ```
 
-
-#### `src/pages/Home.js`
-
-```js
-import React from 'react';
-
-function Home() {
-  return <h2>Home Page</h2>;
-}
-
-export default Home;
+- Non-Primitive
+```javascript
+let person = { name: "Alice", age: 25 };  // Object
+let colors = ["red", "blue", "green"];    // Array
 ```
-Similarly, create `MovieDetails.js`, `Search.js`, and `Watchlist.js` with simple placeholders.
+
+### Operators
+
+#### Arithmetic Operators
+
+```javascript
+let x = 5, y = 2;
+console.log(x / y);  
+console.log(x % y);
+console.log(x*y);
+console.log(x**y);
+```
+#### Assignment Operators
+
+```javascript
+let a = 10;
+a %= 5;  
+console.log(a);
+
+
+let b = 15;
+a /= 5;  
+console.log(a);
+```
+#### Comparision Operators
+
+```javascript
+console.log(5 == "5");  
+console.log(5 === "5");\
+
+a=34
+b=45
+# Assign the added value of a and b to c
+ ```
+#### Logical Operators
+
+```javascript
+let x = true, y = false;
+console.log(x && y);  // false
+console.log(x || y);  // true
+console.log(!x);      // false
+```
+#### Ternary Operators
+
+```javascript
+let age = 18;
+let status = age >= 18 ? "Adult" : "Minor";
+console.log(status); 
+```
+
+#### Type Operators
+
+```javascript
+console.log(typeof 42);         // "number"
+console.log([] instanceof Array); // true
+```
