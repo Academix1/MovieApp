@@ -830,31 +830,6 @@ export default Navbar;
 ```
 </details>
 
-<details>
-<summary><strong>src/redux/movieSlice.js</strong></summary>
-
-```javascript
-import api, { getPopularMovies, getTrendingMovies } from '../util/api';
-export const searchMoviesAsync = createAsyncThunk(
-  'movies/search',
-  async (query) => {
-    const response = await api.get(`/search/movie?query=${query}`);
-    return response.data.results;
-  }
-);
-
-const movieSlice = createSlice({
-  // other reducers
-  extraReducers: (builder) => {
-    builder.addCase(searchMoviesAsync.fulfilled, (state, action) => {
-      state.searchResults = action.payload;
-    });
-  },
-});
-
-export default movieSlice.reducer;
-```
-</details>
 
 <details>
 <summary><strong>src/pages/Search.js</strong></summary>
@@ -906,6 +881,9 @@ function Search() {
 
 export default Search;
 ```
+</details>
+
+
 ```markdown
 # Day 9: Watchlist Feature
 
@@ -1009,6 +987,82 @@ function Watchlist() {
 }
 
 export default Watchlist;
+```
+</details>
+
+<details>
+<summary><strong>src/redux/movieSlice.js</strong></summary>
+
+```javascriptimport { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+import api from '../util/api'; // Assuming 'api' is correctly set up
+
+// Thunk to search for movies based on a query
+export const searchMoviesAsync = createAsyncThunk(
+  'movies/search',
+  async (query) => {
+    const response = await api.get(`/search/movie?query=${query}`);
+    return response.data.results;
+  }
+);
+
+// Thunk to fetch genres
+export const fetchGenres = createAsyncThunk(
+  'movies/fetchGenres',
+  async () => {
+    const response = await api.get('/genre/movie/list');
+    return response.data.genres;
+  }
+);
+
+// Reducers to handle Watchlist actions
+const movieSlice = createSlice({
+  name: 'movies',
+  initialState: {
+    searchResults: [],
+    watchlist: [],
+    genres: [],
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    addToWatchlist: (state, action) => {
+      state.watchlist.push(action.payload);
+    },
+    removeFromWatchlist: (state, action) => {
+      state.watchlist = state.watchlist.filter(
+        (movie) => movie.id !== action.payload.id
+      );
+    },
+  },
+  extraReducers: (builder) => {
+    // Search Movies
+    builder
+      .addCase(searchMoviesAsync.fulfilled, (state, action) => {
+        state.searchResults = action.payload;
+      })
+      .addCase(searchMoviesAsync.rejected, (state, action) => {
+        state.error = action.error.message;
+      });
+
+    // Fetch Genres
+    builder
+      .addCase(fetchGenres.fulfilled, (state, action) => {
+        state.genres = action.payload;
+      })
+      .addCase(fetchGenres.rejected, (state, action) => {
+        state.error = action.error.message;
+      });
+  },
+});
+
+export const {
+  addToWatchlist,
+  removeFromWatchlist,
+} = movieSlice.actions;
+
+export default movieSlice.reducer;
+
 ```
 </details>
 
