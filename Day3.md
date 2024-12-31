@@ -1,4 +1,4 @@
-# Conditions and Loops
+# Conditions Loops and Arrays
 
 ### Conditional Statements
 
