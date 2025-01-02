@@ -70,7 +70,11 @@ export default MovieDetails;
 ### MovieCardUpdate.js
 
 ```javascript
+import { useNavigate } from 'react-router-dom';
+
+ const navigate = useNavigate();
+
 const handleCardClick = () => {
-    navigate(`/movie/${movie.id}`); // Navigate to the MovieDetails page with movie ID
+    navigate(`/movie/${movie.id}`); 
   };
 ```
