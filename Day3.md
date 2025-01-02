@@ -54,16 +54,8 @@ export default Navbar;
 
 ```js
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import theme from './styles/theme';
-import Navbar from './components/Navbar';
-
-// Pages
-import Home from './pages/Home';
-import MovieDetails from './pages/MovieDetails';
-import Search from './pages/Search';
-import Watchlist from './pages/Watchlist';
 
 function App() {
   return (
@@ -71,15 +63,10 @@ function App() {
       <CssBaseline />
       <Router>
         <Navbar />
-        <Box sx={{ mt: 8 }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/movie/:id" element={<MovieDetails />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/watchlist" element={<Watchlist />} />
-          </Routes>
-        </Box>
-      </Router>
+
+      //Pages Adding Through Routes
+ 
+    </Router>
     </ThemeProvider>
   );
 }
