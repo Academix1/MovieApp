@@ -85,3 +85,21 @@ function MovieCard({ movie }) {
   
   export default Watchlist;
   ```
+
+```NavBar
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { useNavigate } from 'react-router-dom';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+
+const handleWatchlistClick = () => {
+    navigate('/watchlist');
+  };
+
+ <Button
+          color="inherit"
+          onClick={handleWatchlistClick}
+          sx={{ display: { xs: 'none', md: 'block' } }}
+        >
+          Watchlist
+        </Button>
+```
