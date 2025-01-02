@@ -208,6 +208,7 @@ export default GenreDrawer;
 - Home.js
 
 ```javascript
+    import { fetchPopularMovies, fetchTrendingMovies,fetchMoviesByGenre } from '../redux/movieSlice';
     const dispatch = useDispatch();
     const {
       popular,
