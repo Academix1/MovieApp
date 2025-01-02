@@ -37,30 +37,14 @@ export default store;
 <summary><strong>src/App.js (Updated)</strong></summary>
 
 ```js
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { Provider } from 'react-redux';
-import theme from './styles/theme';
-import Navbar from './components/Navbar';
 import { store } from './redux/store';
 
-// Pages
-import Home from './pages/Home';
-import MovieDetails from './pages/MovieDetails';
-import Search from './pages/Search';
-import Watchlist from './pages/Watchlist';
 
 function App() {
   return (
     <Provider store={store}>
       //Adding Provider and Configuring Store in it
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Router>
-          <Navbar />
-        </Router>
-      </ThemeProvider>
     </Provider>
   );
 }
