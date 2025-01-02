@@ -31,14 +31,6 @@ export default movieSlice.reducer;
 
 - MovieCard
 ```javascript
-import React from 'react';
-import {
-  Card,
-  CardContent,
-  Typography,
-  CardMedia,
-  IconButton,
-} from '@mui/material';
 import { Bookmark, BookmarkBorder } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToWatchlist, removeFromWatchlist } from '../redux/movieSlice';
@@ -58,34 +50,8 @@ function MovieCard({ movie }) {
     }
   };
 
-  
+// Add on Code  
   return (
-    <Card
-      sx={{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        cursor: 'pointer',
-        borderRadius: 2,
-        boxShadow: 3,
-        position: 'relative', // Ensure the IconButton is positioned correctly
-      }}
-    >
-      <CardMedia
-        component="img"
-        height="250"
-        image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} // Use the movie poster URL
-        alt={movie.title}
-        sx={{ objectFit: 'cover', borderRadius: 2 }}
-      />
-      <CardContent sx={{ flexGrow: 1 }}>
-        <Typography gutterBottom variant="h6" component="div">
-          {movie.title}
-        </Typography>
-        <Typography variant="body2" color="textSecondary">
-          {movie.release_date ? movie.release_date.slice(0, 4) : 'N/A'} {/* Display release year */}
-        </Typography>
-      </CardContent>
       <IconButton
         onClick={handleWatchlistClick}
         sx={{
@@ -97,7 +63,6 @@ function MovieCard({ movie }) {
       >
         {isInWatchlist ? <Bookmark /> : <BookmarkBorder />}
       </IconButton>
-    </Card>
   );
 }
 
