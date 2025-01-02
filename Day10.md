@@ -1,7 +1,8 @@
 - MovieSlice
 
 ```javascript
-  import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../util/api'; // Ensure 'api' is correctly set up
 
 // Thunk to fetch genres
@@ -170,7 +171,8 @@ export default GenreDrawer;
 - App.js
   
   ```javascript
-      <Box sx={{ display: 'flex', mt: 8 }}>
+  import GenreDrawer from './components/GenreDrawer';
+    <Box sx={{ display: 'flex', mt: 8 }}>
             {/* Sidebar */}
             <Box
               component="aside"
