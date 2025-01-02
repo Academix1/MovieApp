@@ -152,7 +152,7 @@ const handleWatchlistClick = () => {
           Watchlist
         </Button>
 ```
-<title>src/`App.js`</title>
+- App.js
 
 ```javascript
 
