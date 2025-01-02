@@ -197,10 +197,7 @@ export default GenreDrawer;
               }}
             >
               <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/movie/:id" element={<MovieDetails />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/watchlist" element={<Watchlist />} />
+              // Add Connection Pages
               </Routes>
             </Box>
           </Box>
