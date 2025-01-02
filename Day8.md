@@ -156,3 +156,23 @@ function Search() {
 
 export default Search;
 ```
+
+<summary><strong>src/pages/Home.js</strong></summary>
+
+```javascript
+
+import Home from './pages/Home';
+import Search from './pages/Search';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+<Router>
+          <Navbar />
+          <Box sx={{ mt: 8 }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/search" element={<Search />} />
+            </Routes>
+          </Box>
+        </Router>
+
+```
