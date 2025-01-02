@@ -93,7 +93,9 @@ export const searchMoviesAsync = createAsyncThunk(
   }
 );
 
+
 const movieSlice = createSlice({
+    searchResults: [],
   // other reducers
   extraReducers: (builder) => {
     builder.addCase(searchMoviesAsync.fulfilled, (state, action) => {
