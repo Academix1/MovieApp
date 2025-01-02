@@ -25,4 +25,3 @@ function Home() {
 
 export default Home;
 ```
-Similarly, create `MovieDetails.js`, `Search.js`, and `Watchlist.js` with simple placeholders.
