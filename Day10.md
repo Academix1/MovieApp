@@ -205,3 +205,45 @@ export default GenreDrawer;
             </Box>
           </Box>
     ```   
+- Home.js
+
+```javascript
+    const dispatch = useDispatch();
+    const {
+      popular,
+      trending,
+      genreMovies,
+      selectedGenre,
+      loading,
+    } = useSelector((state) => state.movies);
+  
+    useEffect(() => {
+      if (selectedGenre) {
+        dispatch(fetchMoviesByGenre(selectedGenre.id));
+      } else {
+        dispatch(fetchPopularMovies());
+        dispatch(fetchTrendingMovies());
+      }
+    }, [dispatch, selectedGenre]);
+
+  if (loading) {
+    return <Loading message="Fetching movies..." />;
+  }
+  if (selectedGenre) {
+    return (
+      <Container sx={{ py: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          {selectedGenre.name} Movies
+        </Typography>
+        <Grid container spacing={3}>
+          {genreMovies.map((movie) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
+              <MovieCard movie={movie} />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    );
+  }
+
+```
