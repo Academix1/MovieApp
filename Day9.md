@@ -86,7 +86,9 @@ function MovieCard({ movie }) {
   export default Watchlist;
   ```
 
-```NavBar
+- NavBar
+  
+```javascript
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { useNavigate } from 'react-router-dom';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
