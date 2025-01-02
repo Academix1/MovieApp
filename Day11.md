@@ -78,3 +78,12 @@ const handleCardClick = () => {
     navigate(`/movie/${movie.id}`); 
   };
 ```
+### App.js
+```javascript
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/search" element={<Search />} />
+              <Route path='/movie/:id' element={<MovieDetails />} />
+              <Route path="/watchlist" element={<Watchlist />} />
+            </Routes>
+```
