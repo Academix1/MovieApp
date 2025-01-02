@@ -1,27 +1,42 @@
-<summary><strong>src/components/Loading.js</strong></summary>
+<summary><strong>src/components/MovieCard.js</strong></summary>
 
 ```javascript
 import React from 'react';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Card, CardContent, Typography, CardMedia } from '@mui/material';
 
-function Loading({ message = 'Loading...' }) {
+function MovieCard({ movie }) {
   return (
-    <Box
+    <Card
       sx={{
+        height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '50vh',
+        cursor: 'pointer',
       }}
     >
-      <CircularProgress size={40} sx={{ mb: 2 }} />
-      <Typography color="text.secondary">{message}</Typography>
-    </Box>
+      <CardMedia
+        component="img"
+        image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} // Assuming poster_path is the key in your movie object
+        alt={movie.title}
+        sx={{
+          height: 300,
+          objectFit: 'cover',
+        }}
+      />
+      <CardContent sx={{ flexGrow: 1 }}>
+        <Typography gutterBottom variant="h6" component="div">
+          {movie.title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A'} / 10
+        </Typography>
+      </CardContent>
+    </Card>
   );
 }
 
-export default Loading;
+export default MovieCard;
+
 ```
 
 <summary><strong>src/pages/Home.js</strong></summary>
