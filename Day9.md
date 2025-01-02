@@ -152,3 +152,14 @@ const handleWatchlistClick = () => {
           Watchlist
         </Button>
 ```
+<details>src/`App.js`</details>
+
+```javascript
+
+    import Watchlist from './pages/Watchlist';
+    <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/search" element={<Search />} />
+                <Route path="/watchlist" element={<Watchlist />} />
+              </Routes>
+```
