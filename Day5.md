@@ -1,58 +1,70 @@
-# **Assignment: Understanding `useState` and `useEffect` in React**
-
-### **Objective:**
-The objective of this assignment is to understand the concepts of React Hooks `useState` and `useEffect`. You will build a **Counter App** that demonstrates how to manage state in React and how to execute side effects (like logging to the console) when certain state changes.
-
-### **Instructions:**
-
-1. **Understanding `useState`:**
-   - `useState` is a hook used to manage state in a functional component.
-   - It returns an array with two values: the current state value and a function to update that state.
-
-2. **Understanding `useEffect`:**
-   - `useEffect` is a hook used to perform side effects in function components.
-   - It can run after every render, or only when certain values change, depending on how you configure it.
-
-### **Task: Build a Counter App with `useState` and `useEffect`:**
-
-#### Steps to complete:
-
-1. **Create a new component called `Counter.js`**:
-   - In this component, you will use `useState` to manage the state of the counter (initially set to 0).
-   - You will also use `useEffect` to log a message every time the counter value changes.
-
-#### **Code Explanation:**
-
-1. **`useState` for Counter:**
-   - You will use `useState` to store and update the counter value.
-
-2. **`useEffect` for Side Effects:**
-   - You will use `useEffect` to log the counter value to the console every time the counter changes.
-
----
-
-### **Code for `Counter.js`:**
-
+Axios,UseState and Use Effect
 ```javascript
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-function Counter() {
-  // Using useState to store the counter value
-  const [count, setCount] = useState(0);
+function Home() {
+  // State to store movies, loading status, and error
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Using useEffect to log the counter value whenever it changes
+  // Helper function to get the TMDB Access Token from .env
+  const getAccessToken = () => process.env.REACT_APP_TMDB_ACCESS_TOKEN;
+
+  // Fetching popular movies using the access token in the URL
   useEffect(() => {
-    console.log(`The counter value is: ${count}`);
-  }, [count]); // Dependency array ensures it runs only when 'count' changes
+    const fetchMovies = async () => {
+      const accessToken = getAccessToken();
+      if (!accessToken) {
+        setError('API Key is missing');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/movie/popular`
+        );
+        setMovies(response.data.results);
+        setLoading(false);
+      } catch (error) {
+        setError('Failed to fetch movies');
+        setLoading(false);
+      }
+    };
+
+    fetchMovies();
+  }, []); // Empty dependency array means this effect runs only once, when the component mounts
+
+  // Show loading state while movies are being fetched
+  if (loading) {
+    return <h2>Loading movies...</h2>;
+  }
+
+  // Show error message if fetch failed
+  if (error) {
+    return <h2>{error}</h2>;
+  }
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '20px' }}>
-      <h1>Counter App</h1>
-      <p>Current count: {count}</p>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
-      <button onClick={() => setCount(count - 1)}>Decrement</button>
+    <div style={{ padding: '20px' }}>
+      <h2>Popular Movies</h2>
+      <ul>
+        {movies.map((movie) => (
+          <li key={movie.id}>
+            <h3>{movie.title}</h3>
+            <img
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+              alt={movie.title}
+              style={{ width: '200px' }}
+            />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-export default Counter;
+export default Home;
+```
