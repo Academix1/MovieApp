@@ -54,18 +54,11 @@ import Watchlist from './pages/Watchlist';
 function App() {
   return (
     <Provider store={store}>
+      //Adding Provider and Configuring Store in it
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Router>
           <Navbar />
-          <Box sx={{ mt: 8 }}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/movie/:id" element={<MovieDetails />} />
-              <Route path="/search" element={<Search />} />
-              <Route path="/watchlist" element={<Watchlist />} />
-            </Routes>
-          </Box>
         </Router>
       </ThemeProvider>
     </Provider>
