@@ -1,10 +1,12 @@
 ### `src/pages/MovieDetails.js`
 
 ```javascript
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
 import { useDispatch } from 'react-redux';
 import { Container, Grid, Typography, Box, Chip, Rating } from '@mui/material';
-import api from '../util/api'; // Ensure this points to your API utility
+import api from '../utils/api'; // Ensure this points to your API utility
 import Loading from '../components/Loading'; // Ensure this component exists and is correctly implemented
 
 function MovieDetails() {
@@ -66,6 +68,7 @@ function MovieDetails() {
 }
 
 export default MovieDetails;
+
 ```
 ### `src/componenets/MovieCard.js(update)`
 
