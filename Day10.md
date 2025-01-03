@@ -1,4 +1,5 @@
-- MovieSlice
+
+### ` src/redux/MovieSlice.js(updated) `
 
 ```javascript
 
@@ -64,7 +65,9 @@ export const { setSelectedGenre, clearSelectedGenre } = movieSlice.actions;
 
 export default movieSlice.reducer;
 ```
-- Genre-Drawer
+
+
+### ` src/components/GenreDrawer.js(updated) `
 
 ```javascript
   import React, { useEffect } from 'react';
@@ -168,7 +171,7 @@ function GenreDrawer() {
 
 export default GenreDrawer;
 ```
-- App.js
+### ` src/App.js(updated) `
   
   ```javascript
   import GenreDrawer from './components/GenreDrawer';
@@ -203,8 +206,75 @@ export default GenreDrawer;
               </Routes>
             </Box>
           </Box>
-    ```   
-- Home.js
+  ```
+
+### ` src/App.js(main) `
+```javascript
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider, CssBaseline, Box } from '@mui/material';
+import { Provider } from 'react-redux';
+import theme from './styles/theme';
+import Navbar from './components/NavBar';
+import { store } from './redux/store';
+
+import GenreDrawer from './components/GenreDrawer';
+import Home from './pages/Home';
+import Search from './pages/Search';
+import Watchlist from './pages/Watchlist';
+
+function App() {
+  return (
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router>
+          <Navbar />
+          <Box sx={{ display: 'flex', mt: 8 }}>
+          {/* Sidebar */}
+          <Box
+            component="aside"
+            sx={{
+              width: { xs: '100%', sm: '240px' }, // Full width on small screens, fixed on larger
+              flexShrink: 0,
+              position: 'fixed',
+              height: 'calc(100vh - 64px)', // Subtract Navbar height
+              overflowY: 'auto',
+              overflowX:'hidden',
+              borderRight: '1px solid #e0e0e0',
+              bgcolor: 'background.paper',
+            }}
+          >
+            <GenreDrawer />
+          </Box>
+
+          {/* Main Content */}
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 1,
+              ml: { sm: '240px' }, // Leave space for the sidebar on larger screens
+              p: 3,
+            }}
+          >
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/watchlist" element={<Watchlist />} />
+            </Routes>
+          </Box>
+        </Box>
+        </Router>
+      </ThemeProvider>
+    </Provider>
+  );
+}
+
+export default App;
+```
+
+ 
+### ` src/pages/Home.js(update) `
 
 ```javascript
     import { fetchPopularMovies, fetchTrendingMovies,fetchMoviesByGenre } from '../redux/movieSlice';
@@ -246,4 +316,82 @@ export default GenreDrawer;
     );
   }
 
+```
+### ` src/pages/Home.js(main) `
+
+```javascript
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Container, Grid, Typography } from '@mui/material';
+import { fetchPopularMovies, fetchTrendingMovies,fetchMoviesByGenre } from '../redux/movieSlice';
+import Loading from '../components/Loading';
+import MovieCard from '../components/MovieCard';
+
+function Home() {
+    const dispatch = useDispatch();
+    const {
+      popular,
+      trending,
+      genreMovies,
+      selectedGenre,
+      loading,
+    } = useSelector((state) => state.movies);
+  
+    useEffect(() => {
+      if (selectedGenre) {
+        dispatch(fetchMoviesByGenre(selectedGenre.id));
+      } else {
+        dispatch(fetchPopularMovies());
+        dispatch(fetchTrendingMovies());
+      }
+    }, [dispatch, selectedGenre]);
+
+  if (loading) {
+    return <Loading message="Fetching movies..." />;
+  }
+  if (selectedGenre) {
+    return (
+      <Container sx={{ py: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          {selectedGenre.name} Movies
+        </Typography>
+        <Grid container spacing={3}>
+          {genreMovies.map((movie) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
+              <MovieCard movie={movie} />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    );
+  }
+
+  return (
+    <Container sx={{ py: 4 }}>
+      <Typography variant="h4" gutterBottom>
+        Popular Movies
+      </Typography>
+      <Grid container spacing={3} sx={{ mb: 4 }}>
+        {popular.slice(0, 6).map((movie) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
+            <MovieCard movie={movie} />
+          </Grid>
+        ))}
+      </Grid>
+
+      <Typography variant="h4" gutterBottom>
+        Trending Now
+      </Typography>
+      <Grid container spacing={3}>
+        {trending.slice(0, 6).map((movie) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
+            <MovieCard movie={movie} />
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
+  );
+}
+
+export default Home;
 ```
