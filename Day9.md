@@ -227,7 +227,7 @@ export default MovieCard;
 
 
 
-- WatchList
+### ` src/pages/Watchlist.js(updated) `
   ```javascript
   import React from 'react';
   import { useSelector } from 'react-redux';
