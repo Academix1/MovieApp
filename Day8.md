@@ -276,3 +276,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
   
   export default App;
 ```
+### `Installations`
+```
+npm install react-router-dom
+```
