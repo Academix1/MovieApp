@@ -50,7 +50,7 @@ export default Navbar;
 ```
 
 
-#### Updated `src/App.js`
+#### `src/App.js (main)`
 
 ```js
 import React from 'react';
