@@ -77,3 +77,7 @@ function App() {
 export default App;
 ```
 ---
+### `Installations`
+
+`npm install @mui/material @emotion/react @emotion/styled`
+
