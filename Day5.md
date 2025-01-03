@@ -71,7 +71,7 @@ function Home() {
 
 export default Home;
 ```
-### Installations
+### `Installations`
 ```
 npm install axios
 ```
