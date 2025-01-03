@@ -1,5 +1,5 @@
 
-- MovieSlice
+### ` src/redux/MovieSlice.js(updated) `
 ```javascript
 import { createSlice } from '@reduxjs/toolkit';
 
