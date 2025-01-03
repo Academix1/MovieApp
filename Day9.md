@@ -386,7 +386,7 @@ export default Navbar;
               </Routes>
 ```
 
-### ` src/components/App.js(main)` 
+### ` src/App.js(main)` 
 ```javascript
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
