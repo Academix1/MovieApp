@@ -1,4 +1,4 @@
-<summary><strong>src/redux/movieSlice.js</strong></summary>
+### `src/redux/movieSlice.js`
 
 
 ```js
@@ -19,7 +19,7 @@ const movieSlice = createSlice({
 export default movieSlice.reducer;
 ```
 
-<summary><strong>src/redux/store.js</strong></summary>
+### `src/redux/store.js`
 
 ```js
 import { configureStore } from '@reduxjs/toolkit';
@@ -34,7 +34,7 @@ export const store = configureStore({
 export default store;
 ```
 
-<summary><strong>src/App.js (Updated)</strong></summary>
+### `src/App.js (Updated)`
 
 ```js
 import { Provider } from 'react-redux';
@@ -52,7 +52,7 @@ function App() {
 export default App;
 ```
 
-<summary>src/App.js(main)</summary>
+### `src/App.js(main)`
 
 ```js
     import React from 'react';
@@ -82,7 +82,7 @@ export default App;
     export default App;
 ```
 
-<summary><strong>src/pages/Home.js (main)</strong></summary>
+### `src/pages/Home.js (main)`
 
 ```javascript
     import React from 'react';
