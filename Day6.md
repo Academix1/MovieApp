@@ -1,4 +1,4 @@
-<summary><strong>src/utils/api.js</strong></summary>
+### `src/utils/api.js`
 
 ```javascript
 import axios from 'axios';
@@ -17,7 +17,7 @@ export const getTrendingMovies = () => api.get('/trending/movie/day');
 export default api;
 ```
 
-<summary><strong>src/redux/movieSlice.js</strong></summary>
+### `src/redux/movieSlice.js`
 
 ```javascript
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
@@ -70,7 +70,7 @@ const movieSlice = createSlice({
 export default movieSlice.reducer;
 ```
 
-<summary><strong>src/pages/Home.js</strong></summary>
+### `src/pages/Home.js`
 
 ```javascript
 import React, { useEffect } from 'react';
