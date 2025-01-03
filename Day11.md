@@ -1,4 +1,4 @@
-### `MovieDetails.js`
+### `src/pages/MovieDetails.js`
 
 ```javascript
 import { useParams } from 'react-router-dom';
@@ -67,7 +67,7 @@ function MovieDetails() {
 
 export default MovieDetails;
 ```
-### `MovieCardUpdate.js(update)`
+### `src/componenets/MovieCard.js(update)`
 
 ```javascript
 import { useNavigate } from 'react-router-dom';
@@ -79,7 +79,7 @@ const handleCardClick = () => {
   };
 ```
 
-### `MovieCard.js(main)`
+### `src/components/MovieCard.js(main)`
 ```javascript
 import React from 'react';
 import {
@@ -155,7 +155,7 @@ export default MovieCard;
 ```
 
 
-### `App.js (update)`
+### `src/App.js (update)`
 ```javascript
             <Routes>
               <Route path="/" element={<Home />} />
@@ -165,7 +165,7 @@ export default MovieCard;
             </Routes>
 ```
 
-### `App.js (main)`
+### `src/App.js (main)`
 
 ```javascript
 import React from 'react';
