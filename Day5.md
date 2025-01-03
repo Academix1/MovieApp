@@ -72,3 +72,7 @@ export default Home;
 ```
 npm install axios
 ```
+### `project/.env`
+```
+REACT_APP_TMDB_ACCESS_TOKEN=Token
+```
