@@ -97,4 +97,7 @@ export default App;
 ```     
 
 ---
-
+### `Installations`
+```
+npm install @reduxjs/toolkit react-redux
+```
