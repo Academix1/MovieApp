@@ -68,3 +68,7 @@ function Home() {
 
 export default Home;
 ```
+### Installations
+```
+npm install axios
+```
