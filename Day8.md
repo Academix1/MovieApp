@@ -1,4 +1,4 @@
-<summary><strong>src/components/Navbar.js</strong></summary>
+### `src/components/Navbar.js`
 
 ```javascript
 // Add a search form
@@ -81,7 +81,7 @@ function Navbar() {
 export default Navbar;
 ```
 
-<summary><strong>src/redux/movieSlice.js</strong></summary>
+### `src/redux/movieSlice.js (update)`
 
 ```javascript
 import api, { getPopularMovies, getTrendingMovies } from '../util/api';
@@ -172,7 +172,7 @@ const movieSlice = createSlice({
 export default movieSlice.reducer;
 ```
 
-<summary><strong>src/pages/Search.js</strong></summary>
+`src/pages/Search.js`
 
 ```javascript
 import React, { useEffect } from 'react';
@@ -222,7 +222,7 @@ function Search() {
 export default Search;
 ```
 
-<summary><strong>src/pages/App.js</strong></summary>
+### `src/pages/App.js (updated)`
 
 ```javascript
 
