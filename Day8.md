@@ -106,6 +106,71 @@ const movieSlice = createSlice({
 
 export default movieSlice.reducer;
 ```
+### `src/redux/movieSlice.js`
+
+```javascript
+  import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { getPopularMovies, getTrendingMovies } from '../utils/api';
+import api  from '../utils/api';
+
+export const fetchPopularMovies = createAsyncThunk(
+  'movies/fetchPopular',
+  async () => {
+    const response = await getPopularMovies();
+    return response.data.results;
+  }
+);
+export const searchMoviesAsync = createAsyncThunk(
+    'movies/search',
+    async (query) => {
+      const response = await api.get(`/search/movie?query=${query}`);
+      return response.data.results;
+    }
+  );
+
+export const fetchTrendingMovies = createAsyncThunk(
+  'movies/fetchTrending',
+  async () => {
+    const response = await getTrendingMovies();
+    return response.data.results;
+  }
+);
+
+const movieSlice = createSlice({
+  name: 'movies',
+  initialState: {
+    popular: [],
+    trending: [],
+    searchResults: [],
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchPopularMovies.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchPopularMovies.fulfilled, (state, action) => {
+        state.loading = false;
+        state.popular = action.payload;
+      })
+      .addCase(fetchPopularMovies.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      builder.addCase(searchMoviesAsync.fulfilled, (state, action) => {
+        state.searchResults = action.payload;
+      })
+      .addCase(fetchTrendingMovies.fulfilled, (state, action) => {
+        state.trending = action.payload;
+      });
+  },
+});  
+export default movieSlice.reducer;
+```
 
 <summary><strong>src/pages/Search.js</strong></summary>
 
@@ -157,7 +222,7 @@ function Search() {
 export default Search;
 ```
 
-<summary><strong>src/pages/Home.js</strong></summary>
+<summary><strong>src/pages/App.js</strong></summary>
 
 ```javascript
 
@@ -175,4 +240,39 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
           </Box>
         </Router>
 
+```
+### src/pages/App.js(main)
+```javascript
+  import React from 'react';
+  import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+  import { ThemeProvider, CssBaseline, Box } from '@mui/material';
+  import { Provider } from 'react-redux';
+  import theme from './styles/theme';
+  import Navbar from './components/NavBar';
+  import { store } from './redux/store';
+  
+  // Pages
+  import Home from './pages/Home';
+  import Search from './pages/Search';
+  
+  function App() {
+    return (
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Router>
+            <Navbar />
+            <Box sx={{ mt: 8 }}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/search" element={<Search />} />
+              </Routes>
+            </Box>
+          </Router>
+        </ThemeProvider>
+      </Provider>
+    );
+  }
+  
+  export default App;
 ```
