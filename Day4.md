@@ -51,7 +51,38 @@ function App() {
 
 export default App;
 ```
-<summary><strong>src/pages/Home.js (Updated)</strong></summary>
+
+<summary>src/App.js(main)</summary>
+
+```js
+    import React from 'react';
+    import { ThemeProvider, CssBaseline, Box } from '@mui/material';
+    import { Provider } from 'react-redux';
+    import theme from './styles/theme';
+    import Navbar from './components/NavBar';
+    import { store } from './redux/store';
+    
+    // Pages
+    import Home from './pages/Home';
+    
+    function App() {
+      return (
+        <Provider store={store}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+              <Navbar />
+              <Box sx={{ mt: 8 }}>
+                <Home/>
+              </Box>
+          </ThemeProvider>
+        </Provider>
+      );
+    }
+    
+    export default App;
+```
+
+<summary><strong>src/pages/Home.js (main)</strong></summary>
 
 ```javascript
     import React from 'react';
@@ -63,8 +94,7 @@ export default App;
     }
     
     export default Home;
-```
-
+```     
 
 ---
 
