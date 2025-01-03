@@ -1,5 +1,5 @@
 
-### ` src/redux/MovieSlice.js(updated) `
+### ` src/redux/MovieSlice.js(update) `
 
 ```javascript
 
@@ -186,7 +186,7 @@ export default movieSlice.reducer;
 ```
 
 
-### ` src/components/GenreDrawer.js(updated) `
+### ` src/components/GenreDrawer.js`
 
 ```javascript
   import React, { useEffect } from 'react';
