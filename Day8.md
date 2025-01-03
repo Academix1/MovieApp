@@ -106,7 +106,7 @@ const movieSlice = createSlice({
 
 export default movieSlice.reducer;
 ```
-### `src/redux/movieSlice.js`
+### `src/redux/movieSlice.js (main)`
 
 ```javascript
   import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
@@ -241,7 +241,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
         </Router>
 
 ```
-### src/pages/App.js(main)
+### `src/pages/App.js(main)`
 ```javascript
   import React from 'react';
   import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
