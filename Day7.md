@@ -1,4 +1,4 @@
-<summary><strong>src/components/MovieCard.js</strong></summary>
+### `src/components/MovieCard.js`
 
 ```javascript
 import React from 'react';
@@ -38,7 +38,7 @@ function MovieCard({ movie }) {
 export default MovieCard;
 
 ```
-<summary><strong>src/pages/Loading.js</strong></summary>
+### `src/pages/Loading.js`
 
 ```javascript
 import React from 'react';
@@ -65,7 +65,7 @@ export default Loading;
 ```
 
 
-<summary><strong>src/pages/Home.js(Updated)</strong></summary>
+### `src/pages/Home.js(Updated)`
 
 ```javascript
 
@@ -100,8 +100,7 @@ export default Loading;
 
 ```
 
-<summary><strong>src/pages/Home.js(main)</strong></summary>
-
+### src/pages/Home.js(main)
 ````javascript
   import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
