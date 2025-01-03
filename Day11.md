@@ -82,35 +82,31 @@ const handleCardClick = () => {
 ### `src/components/MovieCard.js(main)`
 ```javascript
 import React from 'react';
-import {
-  Card,
-  CardContent,
-  Typography,
-  CardMedia,
-  IconButton,
-} from '@mui/material';
-import { Bookmark, BookmarkBorder } from '@mui/icons-material';
-import { useDispatch, useSelector } from 'react-redux';
+import { Card, CardContent, Typography, CardMedia } from '@mui/material';
 import { addToWatchlist, removeFromWatchlist } from '../redux/movieSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import {BookmarkBorder,Bookmark} from '@mui/icons-material';
+import {IconButton} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 function MovieCard({ movie }) {
-  const dispatch = useDispatch();
-  
-  const watchlist = useSelector((state) => state.movies.watchlist);
-  const isInWatchlist = watchlist.some((m) => m.id === movie.id);
-
-  const handleWatchlistClick = (e) => {
-    e.stopPropagation();
-    if (isInWatchlist) {
-      dispatch(removeFromWatchlist(movie));
-    } else {
-      dispatch(addToWatchlist(movie));
-    }
-  };
-
-  
+    const dispatch = useDispatch();
+    const watchlist = useSelector((state) => state.movies.watchlist);
+    const isInWatchlist = watchlist.some((m) => m.id === movie.id);
+    const navigate = useNavigate();
+    const handleCardClick = () => {
+      navigate(`/movie/${movie.id}`); 
+    };
+    const handleWatchlistClick = (e) => {
+        e.stopPropagation();
+        if (isInWatchlist) {
+          dispatch(removeFromWatchlist(movie));
+        } else {
+          dispatch(addToWatchlist(movie));
+        }
+      };  
   return (
-    <Card
+    <Card onClick={handleCardClick}
       sx={{
         height: '100%',
         display: 'flex',
@@ -152,6 +148,7 @@ function MovieCard({ movie }) {
 }
 
 export default MovieCard;
+
 ```
 
 
