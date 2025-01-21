@@ -1,3 +1,4 @@
+//[ignore] 
 #### `src/App.js`
 
 ```js
