@@ -18,7 +18,7 @@ export default App;
 
 ```js
 import React from 'react';
-# Break Here
+//[pause]
 function Home() {
   return <h2>Home Page</h2>;
 }
