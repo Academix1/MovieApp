@@ -20,8 +20,10 @@ export default App;
 import React from 'react';
 //[pause]
 function Home() {
+//[pause]
   return <h2>Home Page</h2>;
+//[pause]
 }
-
+//[pause]
 export default Home;
 ```
