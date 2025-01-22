@@ -81,7 +81,7 @@ function Navbar() {
 export default Navbar;
 ```
 
-### `src/redux/movieSlice.js (update)`
+### `src/redux/movieSlice.js (Manual Code)`
 
 ```javascript
 import api, { getPopularMovies, getTrendingMovies } from '../util/api';
@@ -222,7 +222,7 @@ function Search() {
 export default Search;
 ```
 
-### `src/pages/App.js (updated)`
+### `src/pages/App.js (Manual Code)`
 
 ```javascript
 
