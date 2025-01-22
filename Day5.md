@@ -1,7 +1,7 @@
 
 ## `Axios,UseState and Use Effect`
 
-### `src/pages/Home.js`
+### `src/pages/Home.js(Type Simulator)`
 ```javascript
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
