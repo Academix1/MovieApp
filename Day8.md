@@ -172,7 +172,7 @@ const movieSlice = createSlice({
 export default movieSlice.reducer;
 ```
 
-`src/pages/Search.js`
+### `src/pages/Search.js (Type Simulator)`
 
 ```javascript
 import React, { useEffect } from 'react';
