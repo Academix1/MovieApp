@@ -1,6 +1,6 @@
 ### Component Composition
 
-#### `src/pages/Home.js`(Typing Simulator)
+#### `src/pages/Home.js (Type Simulator)`
 
 ```js
 import React from 'react';
