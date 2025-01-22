@@ -1,6 +1,6 @@
 ## **Day 1: Basic Project Setup**
 
-#### `src/index.js`
+#### `src/index.js (Type Simulator)`
 
 ```js
 import React from 'react';
@@ -15,7 +15,7 @@ root.render(
 );
 ```
 
-#### `src/App.js`
+#### `src/App.js (Type Simulator)`
 
 ```js
 import React from 'react';
