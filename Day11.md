@@ -1,4 +1,4 @@
-### `src/pages/MovieDetails.js`
+### `src/pages/MovieDetails.js (Type Simulator)`
 
 ```javascript
 import React, { useState, useEffect } from 'react';
@@ -70,7 +70,7 @@ function MovieDetails() {
 export default MovieDetails;
 
 ```
-### `src/componenets/MovieCard.js(update)`
+### `src/componenets/MovieCard.js(Manual)`
 
 ```javascript
 import { useNavigate } from 'react-router-dom';
@@ -155,7 +155,7 @@ export default MovieCard;
 ```
 
 
-### `src/App.js (update)`
+### `src/App.js (Manual)`
 ```javascript
             <Routes>
               <Route path="/" element={<Home />} />
