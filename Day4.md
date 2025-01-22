@@ -1,4 +1,4 @@
-### `src/redux/movieSlice.js`
+### `src/redux/movieSlice.js (Typing Simulator)`
 
 
 ```js
@@ -19,7 +19,7 @@ const movieSlice = createSlice({
 export default movieSlice.reducer;
 ```
 
-### `src/redux/store.js`
+### `src/redux/store.js (Typing Simulator) `
 
 ```js
 import { configureStore } from '@reduxjs/toolkit';
@@ -34,7 +34,7 @@ export const store = configureStore({
 export default store;
 ```
 
-### `src/App.js (Updated)`
+### `src/App.js (Manual Code)`
 
 ```js
 import { Provider } from 'react-redux';
