@@ -128,6 +128,55 @@ export default SearchForm;
 ```
 
 
+
+
+### `src/redux/movieSlice.js (Manual Code)`
+
+```javascript
+import api, { getPopularMovies, getTrendingMovies } from '../util/api';
+export const searchMoviesAsync = createAsyncThunk(
+  'movies/search',
+  async (query) => {
+    const response = await api.get(`/search/movie?query=${query}`);
+    return response.data.results;
+  }
+);
+
+
+const movieSlice = createSlice({
+    searchResults: [],
+  // other reducers
+  extraReducers: (builder) => {
+    builder.addCase(searchMoviesAsync.fulfilled, (state, action) => {
+      state.searchResults = action.payload;
+    });
+  },
+});
+
+export default movieSlice.reducer;
+```
+
+
+### `src/pages/App.js (Manual Code)`
+
+```javascript
+
+import Home from './pages/Home';
+import Search from './pages/Search';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+<Router>
+          <Navbar />
+          <Box sx={{ mt: 8 }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/search" element={<Search />} />
+            </Routes>
+          </Box>
+        </Router>
+
+```
+
 ### `src/components/Navbar.js(main)`
 
 ```javascript
@@ -211,31 +260,42 @@ function Navbar() {
 export default Navbar;
 ```
 
-### `src/redux/movieSlice.js (Manual Code)`
-
+### `src/pages/App.js(main)`
 ```javascript
-import api, { getPopularMovies, getTrendingMovies } from '../util/api';
-export const searchMoviesAsync = createAsyncThunk(
-  'movies/search',
-  async (query) => {
-    const response = await api.get(`/search/movie?query=${query}`);
-    return response.data.results;
+  import React from 'react';
+  import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+  import { ThemeProvider, CssBaseline, Box } from '@mui/material';
+  import { Provider } from 'react-redux';
+  import theme from './styles/theme';
+  import Navbar from './components/NavBar';
+  import { store } from './redux/store';
+  
+  // Pages
+  import Home from './pages/Home';
+  import Search from './pages/Search';
+  
+  function App() {
+    return (
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Router>
+            <Navbar />
+            <Box sx={{ mt: 8 }}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/search" element={<Search />} />
+              </Routes>
+            </Box>
+          </Router>
+        </ThemeProvider>
+      </Provider>
+    );
   }
-);
-
-
-const movieSlice = createSlice({
-    searchResults: [],
-  // other reducers
-  extraReducers: (builder) => {
-    builder.addCase(searchMoviesAsync.fulfilled, (state, action) => {
-      state.searchResults = action.payload;
-    });
-  },
-});
-
-export default movieSlice.reducer;
+  
+  export default App;
 ```
+
 ### `src/redux/movieSlice.js (main)`
 
 ```javascript
@@ -303,60 +363,6 @@ export default movieSlice.reducer;
 ```
 
 
-### `src/pages/App.js (Manual Code)`
-
-```javascript
-
-import Home from './pages/Home';
-import Search from './pages/Search';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-<Router>
-          <Navbar />
-          <Box sx={{ mt: 8 }}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/search" element={<Search />} />
-            </Routes>
-          </Box>
-        </Router>
-
-```
-### `src/pages/App.js(main)`
-```javascript
-  import React from 'react';
-  import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-  import { ThemeProvider, CssBaseline, Box } from '@mui/material';
-  import { Provider } from 'react-redux';
-  import theme from './styles/theme';
-  import Navbar from './components/NavBar';
-  import { store } from './redux/store';
-  
-  // Pages
-  import Home from './pages/Home';
-  import Search from './pages/Search';
-  
-  function App() {
-    return (
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Router>
-            <Navbar />
-            <Box sx={{ mt: 8 }}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/search" element={<Search />} />
-              </Routes>
-            </Box>
-          </Router>
-        </ThemeProvider>
-      </Provider>
-    );
-  }
-  
-  export default App;
-```
 ### `Installations`
 ```
 npm install react-router-dom
