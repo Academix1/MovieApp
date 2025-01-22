@@ -47,9 +47,7 @@ function Search() {
 
 export default Search;
 ```
-
-
-### `src/components/Navbar.js(Manual)`
+### `src/components/Navbar.js(Type Simulator)`
 ```js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -102,6 +100,11 @@ function SearchForm() {
       setSearchQuery('');
     }
   };
+```
+
+### `src/components/Navbar.js(Manual)`
+```js
+
 
   return (
     <Box component="form" onSubmit={handleSearch} sx={{ ml: 'auto' }}>
