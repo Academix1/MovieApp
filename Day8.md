@@ -49,7 +49,7 @@ export default Search;
 ```
 ### `src/components/Navbar.js(Type Simulator)`
 ```js
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, InputBase } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
