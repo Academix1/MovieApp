@@ -32,7 +32,6 @@ export default Watchlist;
 
 ### ` src/redux/MovieSlice.js(Manual Code) `
 ```javascript
-import { createSlice } from '@reduxjs/toolkit';
 
 const movieSlice = createSlice({
   name: 'movies',
