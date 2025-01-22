@@ -16,7 +16,7 @@ export default Home;
 
 
 
-#### `src/App.js Manual Code`
+#### `src/App.js (Manual Code)`
 ```js
 import Home from './pages/Home';
 <Home />
