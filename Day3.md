@@ -11,6 +11,7 @@ const theme = createTheme({
     primary: {
       main: 'rgba(229, 9, 20, 1)', // Netflix-like red
     },
+    //[pause]
     background: {
       default: 'rgba(20, 20, 20, 1)',
       paper: 'rgba(31, 31, 31, 1)',
