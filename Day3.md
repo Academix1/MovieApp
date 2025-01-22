@@ -1,4 +1,4 @@
-#### `src/styles/theme.js`
+#### `src/styles/theme.js`(Typing Simulator)
 
 ```js
 import { createTheme } from '@mui/material/styles';
