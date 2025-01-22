@@ -9,14 +9,11 @@ const theme = createTheme({
     mode: 'dark',
     //[pause]
     primary: {
-      main: '#e50914', // Netflix-like red
+      main: 'rgba(229, 9, 20, 1)', // Netflix-like red
     },
-    //[pause]
     background: {
-      //[pause]
-      default: '#141414',
-      //[pause]
-      paper: '#1f1f1f',
+      default: 'rgba(20, 20, 20, 1)',
+      paper: 'rgba(31, 31, 31, 1)',
     },
   },
   //[pause]
