@@ -48,6 +48,23 @@ function Navbar() {
 
 export default Navbar;
 ```
+#### `src/App.js (Manual Code)`
+
+```js
+import { ThemeProvider, CssBaseline, Box } from '@mui/material';
+import theme from './styles/theme';
+import Navbar from './components/NavBar';
+
+<ThemeProvider theme={theme}>
+      <CssBaseline />
+   
+        <Navbar />
+        <Box sx={{ mt: 8 }}>
+          <Home/>
+        </Box>
+    
+    </ThemeProvider>
+
 
 
 #### `src/App.js (main)`
