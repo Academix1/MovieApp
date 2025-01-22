@@ -65,7 +65,7 @@ import Navbar from './components/NavBar';
     
     </ThemeProvider>
 
-
+```
 
 #### `src/App.js (main)`
 
