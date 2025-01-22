@@ -1,6 +1,6 @@
 ### Component Composition
 
-#### `src/App.js
+#### `src/App.js`
 #### Manual Code
 ```js
 import Home from './pages/Home';
