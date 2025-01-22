@@ -1,5 +1,5 @@
 
-### ` src/redux/MovieSlice.js(update) `
+### ` src/redux/MovieSlice.js(Manual Code) `
 
 ```javascript
 
@@ -186,7 +186,7 @@ export default movieSlice.reducer;
 ```
 
 
-### ` src/components/GenreDrawer.js`
+### ` src/components/GenreDrawer.js(Type Simulator)`
 
 ```javascript
   import React, { useEffect } from 'react';
@@ -290,7 +290,7 @@ function GenreDrawer() {
 
 export default GenreDrawer;
 ```
-### ` src/App.js(updated) `
+### ` src/App.js(Manual Code) `
   
   ```javascript
   import GenreDrawer from './components/GenreDrawer';
@@ -393,7 +393,7 @@ export default App;
 ```
 
  
-### ` src/pages/Home.js(update) `
+### ` src/pages/Home.js(Manual Code) `
 
 ```javascript
     import { fetchPopularMovies, fetchTrendingMovies,fetchMoviesByGenre } from '../redux/movieSlice';
