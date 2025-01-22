@@ -1,5 +1,5 @@
 
-### ` src/redux/MovieSlice.js(updated) `
+### ` src/redux/MovieSlice.js(Manual Code) `
 ```javascript
 import { createSlice } from '@reduxjs/toolkit';
 
@@ -108,7 +108,7 @@ export const {
 export default movieSlice.reducer;
 ```    
 
-### ` src/components/MovieCard.js(update) `
+### ` src/components/MovieCard.js(Manual Code) `
 ```javascript
 import { Bookmark, BookmarkBorder } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -227,7 +227,7 @@ export default MovieCard;
 
 
 
-### ` src/pages/Watchlist.js `
+### ` src/pages/Watchlist.js (Type Simulator)`
   ```javascript
   import React from 'react';
 import { useSelector } from 'react-redux';
@@ -257,7 +257,7 @@ export default Watchlist;
   ```
 
 
-### ` src/components/NavBar.js(updated)`  
+### ` src/components/NavBar.js(Manual)`  
 
 ```javascript
 import BookmarkIcon from '@mui/icons-material/Bookmark';
@@ -374,7 +374,7 @@ export default Navbar;
 
   ```
 
-### ` src/App.js(update)` 
+### ` src/App.js(Manual)` 
 
 ```javascript
 
