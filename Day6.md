@@ -17,7 +17,7 @@ export const getTrendingMovies = () => api.get('/trending/movie/day');
 export default api;
 ```
 
-### `src/redux/movieSlice.js`
+### `src/redux/movieSlice.js (Type Script) `
 
 ```javascript
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
@@ -70,7 +70,7 @@ const movieSlice = createSlice({
 export default movieSlice.reducer;
 ```
 
-### `src/pages/Home.js`
+### `src/pages/Home.js (Type Script)`
 
 ```javascript
 import React, { useEffect } from 'react';
