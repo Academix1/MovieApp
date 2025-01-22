@@ -2,28 +2,36 @@
 
 ```js
 import { createTheme } from '@mui/material/styles';
-
+//[pause]
 const theme = createTheme({
+  //[pause]
   palette: {
     mode: 'dark',
+    //[pause]
     primary: {
       main: '#e50914', // Netflix-like red
     },
+    //[pause]
     background: {
+      //[pause]
       default: '#141414',
+      //[pause]
       paper: '#1f1f1f',
     },
   },
+  //[pause]
   typography: {
+    //[pause]
     fontFamily: [
       'Roboto',
       '"Helvetica Neue"',
       'Arial',
       'sans-serif',
     ].join(','),
+    //[pause]
   },
 });
-
+//[pause]
 export default theme;
 ```
 
@@ -31,21 +39,29 @@ export default theme;
 #### `src/components/Navbar.js`
 
 ```js
+//[pause]
 import React from 'react';
+//[pause]
 import { AppBar, Toolbar, Typography } from '@mui/material';
-
+//[pause]
 function Navbar() {
-  return (
-    <AppBar position="fixed">
+return (
+//[pause]
+   <AppBar position="fixed">
+//[pause]
       <Toolbar>
+//[pause]
         <Typography variant="h6" component="div">
           Movie App
         </Typography>
+//[pause]
       </Toolbar>
+//[pause]
     </AppBar>
+//[pause]
   );
 }
-
+//[pause]
 export default Navbar;
 ```
 
