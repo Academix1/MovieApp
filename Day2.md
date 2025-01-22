@@ -1,5 +1,21 @@
 ### Component Composition
 
+#### `src/pages/Home.js`(Typing Simulator)
+
+```js
+import React from 'react';
+//[pause]
+function Home() {
+//[pause]
+  return <h2>Home Page</h2>;
+//[pause]
+}
+//[pause]
+export default Home;
+```
+
+
+
 #### `src/App.js`
 #### Manual Code
 ```js
@@ -20,20 +36,7 @@ function App() {
 }
 
 export default App;
-//[ignore] 
+
 ```
 
 
-#### `src/pages/Home.js`(Typing Simulator)
-
-```js
-import React from 'react';
-//[pause]
-function Home() {
-//[pause]
-  return <h2>Home Page</h2>;
-//[pause]
-}
-//[pause]
-export default Home;
-```
