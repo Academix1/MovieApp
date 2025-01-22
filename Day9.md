@@ -58,85 +58,6 @@ export const {
 export default movieSlice.reducer;
 
 ```
-### ` src/redux/MovieSlice.js(main) `
-```javascript
-  import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getPopularMovies, getTrendingMovies } from '../utils/api';
-import api  from '../utils/api';
-
-export const fetchPopularMovies = createAsyncThunk(
-  'movies/fetchPopular',
-  async () => {
-    const response = await getPopularMovies();
-    return response.data.results;
-  }
-);
-export const searchMoviesAsync = createAsyncThunk(
-    'movies/search',
-    async (query) => {
-      const response = await api.get(`/search/movie?query=${query}`);
-      return response.data.results;
-    }
-  );
-
-
-export const fetchTrendingMovies = createAsyncThunk(
-  'movies/fetchTrending',
-  async () => {
-    const response = await getTrendingMovies();
-    return response.data.results;
-  }
-);
-
-const movieSlice = createSlice({
-  name: 'movies',
-  initialState: {
-    popular: [],
-    trending: [],
-    watchlist: [],
-    searchResults: [],
-    loading: false,
-    error: null,
-  },
-  reducers: {
-    addToWatchlist: (state, action) => {
-        state.watchlist.push(action.payload);
-      },
-      removeFromWatchlist: (state, action) => {
-        state.watchlist = state.watchlist.filter(
-          (movie) => movie.id !== action.payload.id
-        );
-        
-      },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchPopularMovies.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchPopularMovies.fulfilled, (state, action) => {
-        state.loading = false;
-        state.popular = action.payload;
-      })
-      .addCase(fetchPopularMovies.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      })
-      builder.addCase(searchMoviesAsync.fulfilled, (state, action) => {
-        state.searchResults = action.payload;
-      })
-      .addCase(fetchTrendingMovies.fulfilled, (state, action) => {
-        state.trending = action.payload;
-      });
-  },
-});
-export const {
-    addToWatchlist,
-    removeFromWatchlist,
-  } = movieSlice.actions;
-  
-export default movieSlice.reducer;
-```    
 
 ### ` src/components/MovieCard.js(Manual Code) `
 ```javascript
@@ -179,84 +100,6 @@ export default MovieCard;
 
 ```
 
-### ` src/components/MovieCard.js(main) `
-  
-  ```javascript
-    import React from 'react';
-import {
-  Card,
-  CardContent,
-  Typography,
-  CardMedia,
-  IconButton,
-} from '@mui/material';
-import { Bookmark, BookmarkBorder } from '@mui/icons-material';
-import { useDispatch, useSelector } from 'react-redux';
-import { addToWatchlist, removeFromWatchlist } from '../redux/movieSlice';
-
-function MovieCard({ movie }) {
-  const dispatch = useDispatch();
-  
-  const watchlist = useSelector((state) => state.movies.watchlist);
-  const isInWatchlist = watchlist.some((m) => m.id === movie.id);
-
-  const handleWatchlistClick = (e) => {
-    e.stopPropagation();
-    if (isInWatchlist) {
-      dispatch(removeFromWatchlist(movie));
-    } else {
-      dispatch(addToWatchlist(movie));
-    }
-  };
-
-  
-  return (
-    <Card
-      sx={{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        cursor: 'pointer',
-        borderRadius: 2,
-        boxShadow: 3,
-        position: 'relative', // Ensure the IconButton is positioned correctly
-      }}
-    >
-      <CardMedia
-        component="img"
-        height="250"
-        image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} // Use the movie poster URL
-        alt={movie.title}
-        sx={{ objectFit: 'cover', borderRadius: 2 }}
-      />
-      <CardContent sx={{ flexGrow: 1 }}>
-        <Typography gutterBottom variant="h6" component="div">
-          {movie.title}
-        </Typography>
-        <Typography variant="body2" color="textSecondary">
-          {movie.release_date ? movie.release_date.slice(0, 4) : 'N/A'} {/* Display release year */}
-        </Typography>
-      </CardContent>
-      <IconButton
-        onClick={handleWatchlistClick}
-        sx={{
-          position: 'absolute',
-          top: 8,
-          right: 8,
-          color: isInWatchlist ? 'primary.main' : 'text.secondary', // Change icon color based on watchlist status
-        }}
-      >
-        {isInWatchlist ? <Bookmark /> : <BookmarkBorder />}
-      </IconButton>
-    </Card>
-  );
-}
-
-export default MovieCard;
-```
-
-
-
 
 
 ### ` src/components/NavBar.js(Manual)`  
@@ -278,6 +121,20 @@ const handleWatchlistClick = () => {
           Watchlist
         </Button>
 ```
+
+### ` src/App.js(Manual)` 
+
+```javascript
+
+    import Watchlist from './pages/Watchlist';
+    <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/search" element={<Search />} />
+                <Route path="/watchlist" element={<Watchlist />} />
+              </Routes>
+
+```
+
 ### ` src/components/NavBar.js(main)` 
   
   ```javascript
@@ -376,17 +233,86 @@ export default Navbar;
 
   ```
 
-### ` src/App.js(Manual)` 
 
+### ` src/redux/MovieSlice.js(main) `
 ```javascript
+  import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { getPopularMovies, getTrendingMovies } from '../utils/api';
+import api  from '../utils/api';
 
-    import Watchlist from './pages/Watchlist';
-    <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/watchlist" element={<Watchlist />} />
-              </Routes>
-```
+export const fetchPopularMovies = createAsyncThunk(
+  'movies/fetchPopular',
+  async () => {
+    const response = await getPopularMovies();
+    return response.data.results;
+  }
+);
+export const searchMoviesAsync = createAsyncThunk(
+    'movies/search',
+    async (query) => {
+      const response = await api.get(`/search/movie?query=${query}`);
+      return response.data.results;
+    }
+  );
+
+
+export const fetchTrendingMovies = createAsyncThunk(
+  'movies/fetchTrending',
+  async () => {
+    const response = await getTrendingMovies();
+    return response.data.results;
+  }
+);
+
+const movieSlice = createSlice({
+  name: 'movies',
+  initialState: {
+    popular: [],
+    trending: [],
+    watchlist: [],
+    searchResults: [],
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    addToWatchlist: (state, action) => {
+        state.watchlist.push(action.payload);
+      },
+      removeFromWatchlist: (state, action) => {
+        state.watchlist = state.watchlist.filter(
+          (movie) => movie.id !== action.payload.id
+        );
+        
+      },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchPopularMovies.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchPopularMovies.fulfilled, (state, action) => {
+        state.loading = false;
+        state.popular = action.payload;
+      })
+      .addCase(fetchPopularMovies.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      builder.addCase(searchMoviesAsync.fulfilled, (state, action) => {
+        state.searchResults = action.payload;
+      })
+      .addCase(fetchTrendingMovies.fulfilled, (state, action) => {
+        state.trending = action.payload;
+      });
+  },
+});
+export const {
+    addToWatchlist,
+    removeFromWatchlist,
+  } = movieSlice.actions;
+  
+export default movieSlice.reducer;
+```    
 
 ### ` src/App.js(main)` 
 ```javascript
@@ -426,3 +352,81 @@ function App() {
 
 export default App;
 ```
+
+### ` src/components/MovieCard.js(main) `
+  
+  ```javascript
+    import React from 'react';
+import {
+  Card,
+  CardContent,
+  Typography,
+  CardMedia,
+  IconButton,
+} from '@mui/material';
+import { Bookmark, BookmarkBorder } from '@mui/icons-material';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToWatchlist, removeFromWatchlist } from '../redux/movieSlice';
+
+function MovieCard({ movie }) {
+  const dispatch = useDispatch();
+  
+  const watchlist = useSelector((state) => state.movies.watchlist);
+  const isInWatchlist = watchlist.some((m) => m.id === movie.id);
+
+  const handleWatchlistClick = (e) => {
+    e.stopPropagation();
+    if (isInWatchlist) {
+      dispatch(removeFromWatchlist(movie));
+    } else {
+      dispatch(addToWatchlist(movie));
+    }
+  };
+
+  
+  return (
+    <Card
+      sx={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        cursor: 'pointer',
+        borderRadius: 2,
+        boxShadow: 3,
+        position: 'relative', // Ensure the IconButton is positioned correctly
+      }}
+    >
+      <CardMedia
+        component="img"
+        height="250"
+        image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} // Use the movie poster URL
+        alt={movie.title}
+        sx={{ objectFit: 'cover', borderRadius: 2 }}
+      />
+      <CardContent sx={{ flexGrow: 1 }}>
+        <Typography gutterBottom variant="h6" component="div">
+          {movie.title}
+        </Typography>
+        <Typography variant="body2" color="textSecondary">
+          {movie.release_date ? movie.release_date.slice(0, 4) : 'N/A'} {/* Display release year */}
+        </Typography>
+      </CardContent>
+      <IconButton
+        onClick={handleWatchlistClick}
+        sx={{
+          position: 'absolute',
+          top: 8,
+          right: 8,
+          color: isInWatchlist ? 'primary.main' : 'text.secondary', // Change icon color based on watchlist status
+        }}
+      >
+        {isInWatchlist ? <Bookmark /> : <BookmarkBorder />}
+      </IconButton>
+    </Card>
+  );
+}
+
+export default MovieCard;
+```
+
+
