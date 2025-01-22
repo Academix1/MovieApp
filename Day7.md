@@ -1,4 +1,4 @@
-### `src/components/MovieCard.js`
+### `src/components/MovieCard.js (Type Simulator)`
 
 ```javascript
 import React from 'react';
@@ -38,7 +38,7 @@ function MovieCard({ movie }) {
 export default MovieCard;
 
 ```
-### `src/pages/Loading.js`
+### `src/pages/Loading.js (Type Simulator) `
 
 ```javascript
 import React from 'react';
@@ -65,7 +65,7 @@ export default Loading;
 ```
 
 
-### `src/pages/Home.js(Updated)`
+### `src/pages/Home.js(Type Simulator) `
 
 ```javascript
 
