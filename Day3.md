@@ -1,4 +1,4 @@
-#### `src/styles/theme.js`(Typing Simulator)
+#### `src/styles/theme.js (Typing Simulator)`
 
 ```js
 import { createTheme } from '@mui/material/styles';
@@ -28,7 +28,7 @@ export default theme;
 ```
 
 
-#### `src/components/Navbar.js`
+#### `src/components/Navbar.js  (Typing Simulator)`
 
 ```js
 import React from 'react';
