@@ -24,7 +24,7 @@ export default App;
 ```
 
 
-#### `src/pages/Home.js`
+#### `src/pages/Home.js`(Typing Simulator)
 
 ```js
 import React from 'react';
