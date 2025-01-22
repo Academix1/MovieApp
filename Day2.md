@@ -1,6 +1,8 @@
-//[ignore] 
+### Component Composition
+
+
 #### `src/App.js`
-//[ignore] 
+
 ```js
 import React from 'react';
 import Home from './pages/Home';
