@@ -64,161 +64,6 @@ useEffect(() => {
 export default Search;
 ```
 
-### `src/components/Navbar.js(Type Simulator)`
-```js
-import { useState } from 'react';
-//[pause]
-import { useNavigate } from 'react-router-dom';
-//[pause]
-import { Box, InputBase } from '@mui/material';
-//[pause]
-import { styled, alpha } from '@mui/material/styles';
-//[pause]
-import SearchIcon from '@mui/icons-material/Search';
-//[pause]
-
-const Search = styled('div')(({ theme }) => ({
-//[pause]
-  position: 'relative',
-//[pause]
-  borderRadius: theme.shape.borderRadius,
-//[pause]
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-//[pause]
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-//[pause]
-  marginLeft: theme.spacing(2),
-//[pause]
-  width: 'auto',
-}));
-//[pause]
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-//[pause]
-  padding: theme.spacing(0, 2),
-//[pause]
-height: '100%',
-//[pause]
-  position: 'absolute',
-//[pause]
-  pointerEvents: 'none',
-//[pause]
-  display: 'flex',
-//[pause]
-  alignItems: 'center',
-//[pause]
-  justifyContent: 'center',
-}));
-//[pause]
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-//[pause]
-  color: 'inherit',
-//[pause]
-  '& .MuiInputBase-input': {
-//[pause]
-    padding: theme.spacing(1, 1, 1, 0),
-//[pause]
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-//[pause]
-    transition: theme.transitions.create('width'),
-//[pause]
-    width: '12ch',
-//[pause]
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-//[pause]
-  },
-}));
-//[pause]
-function SearchForm() {
-//[pause]
-  const [searchQuery, setSearchQuery] = useState('');
-//[pause]
-  const navigate = useNavigate();
-//[pause]
-  const handleSearch = (e) => {
-//[pause]
-    e.preventDefault();
-//[pause]
-    if (searchQuery.trim()) {
-//[pause]
-      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-//[pause]
-      setSearchQuery('');
-//[pause]
-    }
-  };
-//[pause]
-```
-
-### `src/components/Navbar.js(Manual)`
-```js
-
-
-  return (
-    <Box component="form" onSubmit={handleSearch} sx={{ ml: 'auto' }}>
-      <Search>
-        <SearchIconWrapper>
-          <SearchIcon />
-        </SearchIconWrapper>
-        <StyledInputBase
-          placeholder="Search..."
-          inputProps={{ 'aria-label': 'search' }}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </Search>
-    </Box>
-  );
-}
-
-export default SearchForm;
-
-```
-
-
-
-
-### `src/redux/movieSlice.js (Manual Code)`
-
-```javascript
-//[pause]
-import api, { getPopularMovies, getTrendingMovies } from '../util/api';
-//[pause]
-export const searchMoviesAsync = createAsyncThunk(
-//[pause]
-  'movies/search',
-  async (query) => {
-//[pause]
-    const response = await api.get(`/search/movie?query=${query}`);
-//[pause]
-    return response.data.results;
-//[pause]
-  }
-//[pause]
-);
-
-
-const movieSlice = createSlice({
-//[pause]
-    searchResults: [],
-//[pause]
-  extraReducers: (builder) => {
-//[pause]
-    builder.addCase(searchMoviesAsync.fulfilled, (state, action) => {
-//[pause]
-      state.searchResults = action.payload;
-//[quick]
-    });
-  },
-});
-//[pause]
-export default movieSlice.reducer;
-```
 
 
 ### `src/pages/App.js (Manual Code)`
@@ -244,136 +89,129 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 ### `src/components/Navbar.js(main)`
 
 ```javascript
-// Add a search form
+//[pause]
 import React, { useState } from 'react';
+//[pause]
 import { useNavigate } from 'react-router-dom';
+//[pause]
 import { AppBar, Toolbar, Typography, Box, InputBase, IconButton } from '@mui/material';
+//[pause]
 import { styled, alpha } from '@mui/material/styles';
+//[pause]
 import SearchIcon from '@mui/icons-material/Search';
-
+//[pause]
 const Search = styled('div')(({ theme }) => ({
+//[pause]
   position: 'relative',
+//[pause]
   borderRadius: theme.shape.borderRadius,
+//[pause]
   backgroundColor: alpha(theme.palette.common.white, 0.15),
+//[pause]
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
+//[pause]
   marginLeft: theme.spacing(2),
   width: 'auto',
 }));
+//[pause]
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
+//[pause]
   padding: theme.spacing(0, 2),
+//[pause]
   height: '100%',
+//[pause]
   position: 'absolute',
+//[pause]
   pointerEvents: 'none',
+//[pause]
   display: 'flex',
+//[pause]
   alignItems: 'center',
+//[pause]
   justifyContent: 'center',
+//[pause]
 }));
+//[pause]
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
+//[pause]
   color: 'inherit',
+//[pause]
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '12ch',
+//[pause]
     [theme.breakpoints.up('md')]: {
       width: '20ch',
     },
+//[pause]
   },
 }));
-
+//[pause]
 function Navbar() {
+//[pause]
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
-
+//[pause]
   const handleSearch = (e) => {
-    e.preventDefault();
+//[pause]
+ e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
       setSearchQuery('');
     }
   };
+//[pause]
 
   return (
-    <AppBar position="fixed">
+//[pause]
+ <AppBar position="fixed">
+//[pause]
       <Toolbar>
+//[pause]
         <Typography variant="h6" component="div">
           Movie App
         </Typography>
+//[pause]
         <Box component="form" onSubmit={handleSearch} sx={{ ml: 'auto' }}>
+//[pause]
           <Search>
+//[pause]
             <SearchIconWrapper>
+//[pause]
               <SearchIcon />
+//[pause]
             </SearchIconWrapper>
+//[pause]
             <StyledInputBase
+//[pause]
               placeholder="Search..."
+//[pause]
               inputProps={{ 'aria-label': 'search' }}
+//[pause]
               value={searchQuery}
+//[pause]
               onChange={(e) => setSearchQuery(e.target.value)}
             />
+//[pause]
           </Search>
         </Box>
+//[pause]
       </Toolbar>
+//[pause]
     </AppBar>
+//[pause]
   );
 }
-
+//[pause]
 export default Navbar;
 ```
 
-### `src/pages/App.js(main)`
-```javascript
-  import React from 'react';
-//[pause]
-  import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-//[pause]
-  import { ThemeProvider, CssBaseline, Box } from '@mui/material';
-//[pause]
-  import { Provider } from 'react-redux';
-//[pause]
-  import theme from './styles/theme';
-//[pause]
-  import Navbar from './components/NavBar';
-//[pause]
-  import { store } from './redux/store';
-//[pause]
-  import Home from './pages/Home';
-//[pause]
-  import Search from './pages/Search';
-//[pause]
-  
-  function App() {
-    return (
-//[pause]
-      <Provider store={store}>
-//[pause]
-        <ThemeProvider theme={theme}>
-//[pause]
-          <CssBaseline />
-//[pause]
-          <Router>
-//[pause]
-            <Navbar />
-//[pause]
-            <Box sx={{ mt: 8 }}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/search" element={<Search />} />
-              </Routes>
-            </Box>
-//[pause]
-          </Router>
-//[pause]
-        </ThemeProvider>
-      </Provider>
-    );
-  }
-  //[pause]
-  export default App;
-```
 
 ### `src/redux/movieSlice.js (main)`
 
@@ -389,13 +227,19 @@ export const fetchPopularMovies = createAsyncThunk(
     return response.data.results;
   }
 );
+
+//[pause]
 export const searchMoviesAsync = createAsyncThunk(
+//[pause]
     'movies/search',
+//[pause]
     async (query) => {
       const response = await api.get(`/search/movie?query=${query}`);
       return response.data.results;
     }
+//[pause]
   );
+//[pause]
 
 export const fetchTrendingMovies = createAsyncThunk(
   'movies/fetchTrending',
@@ -410,7 +254,9 @@ const movieSlice = createSlice({
   initialState: {
     popular: [],
     trending: [],
-    searchResults: [],
+//[pause]
+ searchResults: [],
+//[pause]
     loading: false,
     error: null,
   },
@@ -430,15 +276,52 @@ const movieSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      builder.addCase(searchMoviesAsync.fulfilled, (state, action) => {
+
+    //[pause]
+     builder.addCase(searchMoviesAsync.fulfilled, (state, action) => {
         state.searchResults = action.payload;
       })
+    //[pause]
       .addCase(fetchTrendingMovies.fulfilled, (state, action) => {
         state.trending = action.payload;
       });
   },
 });  
 export default movieSlice.reducer;
+```
+
+### `src/pages/App.js(main)`
+```javascript
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider, CssBaseline, Box } from '@mui/material';
+import { Provider } from 'react-redux';
+import theme from './styles/theme';
+import Navbar from './components/NavBar';
+import { store } from './redux/store';
+import Home from './pages/Home';
+import Search from './pages/Search';
+
+function App() {
+  return (
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router>
+          <Navbar />
+          <Box sx={{ mt: 8 }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/search" element={<Search />} />
+            </Routes>
+          </Box>
+        </Router>
+      </ThemeProvider>
+    </Provider>
+  );
+}
+
+export default App;
 ```
 
 
