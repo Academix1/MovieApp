@@ -64,29 +64,7 @@ useEffect(() => {
 export default Search;
 ```
 
-
-
-### `src/pages/App.js (Manual Code)`
-
-```javascript
-
-import Home from './pages/Home';
-import Search from './pages/Search';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-<Router>
-          <Navbar />
-          <Box sx={{ mt: 8 }}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/search" element={<Search />} />
-            </Routes>
-          </Box>
-        </Router>
-
-```
-
-### `src/components/Navbar.js(main)`
+### `src/components/Navbar.js(Type Simulator)`
 
 ```javascript
 //[pause]
@@ -212,10 +190,10 @@ function Navbar() {
 export default Navbar;
 ```
 
-
-### `src/redux/movieSlice.js (main)`
+### `src/redux/movieSlice.js (Type Simulator)`
 
 ```javascript
+//[quick]
   import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getPopularMovies, getTrendingMovies } from '../utils/api';
 import api  from '../utils/api';
@@ -289,6 +267,31 @@ const movieSlice = createSlice({
 });  
 export default movieSlice.reducer;
 ```
+
+
+### `src/pages/App.js (Manual Code)`
+
+```javascript
+
+import Home from './pages/Home';
+import Search from './pages/Search';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+<Router>
+          <Navbar />
+          <Box sx={{ mt: 8 }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/search" element={<Search />} />
+            </Routes>
+          </Box>
+        </Router>
+
+```
+
+
+
+
 
 ### `src/pages/App.js(main)`
 ```javascript
