@@ -31,7 +31,6 @@ function Home() {
       }
 //[pause]
       try {
-//[pause]
         const response = await axios.get(
           `https://api.themoviedb.org/3/movie/popular`
         );
