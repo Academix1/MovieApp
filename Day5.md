@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 //[pause]
 function Home() {
-  //[pause]
+//[pause]
   const [movies, setMovies] = useState([]);
 //[pause]
   const [loading, setLoading] = useState(true);
@@ -17,84 +17,96 @@ function Home() {
 //[pause]
   const getAccessToken = () => process.env.REACT_APP_TMDB_ACCESS_TOKEN;
 //[pause]
-  
   useEffect(() => {
 //[pause]
     const fetchMovies = async () => {
+//[pause]
       const accessToken = getAccessToken();
+//[pause]
       if (!accessToken) {
+//[pause]
         setError('API Key is missing');
+//[pause]
         setLoading(false);
+//[pause]
         return;
+//[pause]
       }
 //[pause]
       try {
+//[pause]
         const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/popular`
+//[pause]
+          `https://api.themoviedb.org/3/movie/popular`,
+//[pause]
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
         );
 //[pause]
         setMovies(response.data.results);
 //[pause]
         setLoading(false);
-
+//[pause]
+      } catch (error) {
+//[pause]
+        setError('Failed to fetch movies');
+//[pause]
+        setLoading(false);
+//[pause]
       }
 //[pause]
-      catch (error) {
-        setError('Failed to fetch movies');
-        setLoading(false);
-      }
-
     };
 //[pause]
-
     fetchMovies();
+//[pause]
   }, []);
 //[pause]
-  // Show loading state while movies are being fetched
-
-if (loading) {
+  if (loading) {
+//[pause]
     return <h2>Loading movies...</h2>;
+//[pause]
   }
 //[pause]
-  
   if (error) {
+//[pause]
     return <h2>{error}</h2>;
+//[pause]
   }
 //[pause]
   return (
+//[pause]
     <div style={{ padding: '20px' }}>
+//[pause]
       <h2>Popular Movies</h2>
+//[pause]
       <ul>
 //[pause]
-     {movies.map((movie) => (
+        {movies.map((movie) => (
 //[pause]
-<li key={movie.id}>
+          <li key={movie.id}>
 //[pause]
-
+            <h3>{movie.title}</h3>
 //[pause]
-   <h3>{movie.title}</h3>
-
-//[pause]
-         <img
+            <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
               style={{ width: '200px' }}
             />
-
-//[pause]
           </li>
-
         ))}
-      </ul>
-    </div>
-
 //[pause]
+      </ul>
+//[pause]
+    </div>
   );
-
+//[pause]
 }
-
 //[pause]
 export default Home;
+
 ```
 ### `Installations`
 ```
