@@ -2,104 +2,157 @@
 
 ```javascript
 import React, { useEffect } from 'react';
+//[pause]
 import { useDispatch, useSelector } from 'react-redux';
+//[pause]
 import { useLocation } from 'react-router-dom';
+//[pause]
 import { Container, Typography, Grid } from '@mui/material';
+//[pause]
 import { searchMoviesAsync } from '../redux/movieSlice';
+//[pause]
 import MovieCard from '../components/MovieCard';
+//[pause]
 import Loading from '../components/Loading';
+//[pause]
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
+//[pause]
 
 function Search() {
+//[pause]
   const query = useQuery();
   const searchQuery = query.get('q');
   const dispatch = useDispatch();
   const { searchResults, loading } = useSelector((state) => state.movies);
+//[pause]
 
-  useEffect(() => {
+useEffect(() => {
     if (searchQuery) {
       dispatch(searchMoviesAsync(searchQuery));
     }
   }, [dispatch, searchQuery]);
-
+//[pause]
   if (loading) {
     return <Loading message="Searching movies..." />;
   }
-
+//[pause]
   return (
+//[pause]
     <Container sx={{ py: 4 }}>
+//[pause]
       <Typography variant="h4" gutterBottom>
         Search Results for "{searchQuery}"
       </Typography>
+//[pause]
       <Grid container spacing={3}>
+//[pause]
         {searchResults.map((movie) => (
+//[pause]
           <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
             <MovieCard movie={movie} />
           </Grid>
+//[pause]
         ))}
       </Grid>
     </Container>
   );
 }
-
+//[pause]
 export default Search;
 ```
+
 ### `src/components/Navbar.js(Type Simulator)`
 ```js
 import { useState } from 'react';
+//[pause]
 import { useNavigate } from 'react-router-dom';
+//[pause]
 import { Box, InputBase } from '@mui/material';
+//[pause]
 import { styled, alpha } from '@mui/material/styles';
+//[pause]
 import SearchIcon from '@mui/icons-material/Search';
+//[pause]
 
 const Search = styled('div')(({ theme }) => ({
+//[pause]
   position: 'relative',
+//[pause]
   borderRadius: theme.shape.borderRadius,
+//[pause]
   backgroundColor: alpha(theme.palette.common.white, 0.15),
+//[pause]
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
+//[pause]
   marginLeft: theme.spacing(2),
+//[pause]
   width: 'auto',
 }));
+//[pause]
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
+//[pause]
   padding: theme.spacing(0, 2),
-  height: '100%',
+//[pause]
+height: '100%',
+//[pause]
   position: 'absolute',
+//[pause]
   pointerEvents: 'none',
+//[pause]
   display: 'flex',
+//[pause]
   alignItems: 'center',
+//[pause]
   justifyContent: 'center',
 }));
+//[pause]
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
+//[pause]
   color: 'inherit',
+//[pause]
   '& .MuiInputBase-input': {
+//[pause]
     padding: theme.spacing(1, 1, 1, 0),
+//[pause]
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+//[pause]
     transition: theme.transitions.create('width'),
+//[pause]
     width: '12ch',
+//[pause]
     [theme.breakpoints.up('md')]: {
       width: '20ch',
     },
+//[pause]
   },
 }));
-
+//[pause]
 function SearchForm() {
+//[pause]
   const [searchQuery, setSearchQuery] = useState('');
+//[pause]
   const navigate = useNavigate();
-
+//[pause]
   const handleSearch = (e) => {
+//[pause]
     e.preventDefault();
+//[pause]
     if (searchQuery.trim()) {
+//[pause]
       navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+//[pause]
       setSearchQuery('');
+//[pause]
     }
   };
+//[pause]
 ```
 
 ### `src/components/Navbar.js(Manual)`
@@ -133,26 +186,37 @@ export default SearchForm;
 ### `src/redux/movieSlice.js (Manual Code)`
 
 ```javascript
+//[pause]
 import api, { getPopularMovies, getTrendingMovies } from '../util/api';
+//[pause]
 export const searchMoviesAsync = createAsyncThunk(
+//[pause]
   'movies/search',
   async (query) => {
+//[pause]
     const response = await api.get(`/search/movie?query=${query}`);
+//[pause]
     return response.data.results;
+//[pause]
   }
+//[pause]
 );
 
 
 const movieSlice = createSlice({
+//[pause]
     searchResults: [],
-  // other reducers
+//[pause]
   extraReducers: (builder) => {
+//[pause]
     builder.addCase(searchMoviesAsync.fulfilled, (state, action) => {
+//[pause]
       state.searchResults = action.payload;
+//[quick]
     });
   },
 });
-
+//[pause]
 export default movieSlice.reducer;
 ```
 
@@ -263,36 +327,51 @@ export default Navbar;
 ### `src/pages/App.js(main)`
 ```javascript
   import React from 'react';
+//[pause]
   import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+//[pause]
   import { ThemeProvider, CssBaseline, Box } from '@mui/material';
+//[pause]
   import { Provider } from 'react-redux';
+//[pause]
   import theme from './styles/theme';
+//[pause]
   import Navbar from './components/NavBar';
+//[pause]
   import { store } from './redux/store';
-  
-  // Pages
+//[pause]
   import Home from './pages/Home';
+//[pause]
   import Search from './pages/Search';
+//[pause]
   
   function App() {
     return (
+//[pause]
       <Provider store={store}>
+//[pause]
         <ThemeProvider theme={theme}>
+//[pause]
           <CssBaseline />
+//[pause]
           <Router>
+//[pause]
             <Navbar />
+//[pause]
             <Box sx={{ mt: 8 }}>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/search" element={<Search />} />
               </Routes>
             </Box>
+//[pause]
           </Router>
+//[pause]
         </ThemeProvider>
       </Provider>
     );
   }
-  
+  //[pause]
   export default App;
 ```
 
