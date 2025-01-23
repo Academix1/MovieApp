@@ -2,8 +2,11 @@
 ### ` src/components/GenreDrawer.js(Type Simulator)`
 
 ```javascript
+//[pause]
   import React, { useEffect } from 'react';
+//[pause]
 import { useDispatch, useSelector } from 'react-redux';
+//[pause]
 import {
   Drawer,
   List,
@@ -15,26 +18,32 @@ import {
   useMediaQuery,
   Box,
 } from '@mui/material';
+//[pause]
 import { fetchGenres, setSelectedGenre } from '../redux/MovieSlice';
-
+//[pause]
 const DRAWER_WIDTH = 240;
-
+//[pause]
 function GenreDrawer() {
+//[pause]
   const dispatch = useDispatch();
+//[pause]
   const theme = useTheme();
+//[pause]
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  
+  //[pause]
   const genres = useSelector((state) => state.movies.genres);
-  const selectedGenre = useSelector((state) => state.movies.selectedGenre);
-
+//[pause]
+ const selectedGenre = useSelector((state) => state.movies.selectedGenre);
+//[pause]
   useEffect(() => {
     dispatch(fetchGenres());
   }, [dispatch]);
+//[pause]
 
   const handleGenreClick = (genre) => {
       dispatch(setSelectedGenre(genre));
   };
-
+//[pause]
   const drawer = (
     <>
       <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
@@ -42,65 +51,100 @@ function GenreDrawer() {
           Genres
         </Typography>
       </Box>
+//[pause]
       <List>
+//[pause]
         {genres.map((genre) => (
+//[pause]
           <ListItem key={genre.id} disablePadding>
+//[pause]
             <ListItemButton
+//[pause]
               selected={selectedGenre?.id === genre.id}
+//[pause]
               onClick={() => handleGenreClick(genre)}
             >
+//[pause]
               <ListItemText primary={genre.name} />
+//[pause]
             </ListItemButton>
           </ListItem>
         ))}
       </List>
     </>
   );
-
+//[pause]
   return (
+//[pause]
     <Box
       component="nav"
       sx={{ width: { sm: DRAWER_WIDTH }, flexShrink: { sm: 0 } }}
     >
+//[pause]
       {isMobile ? (
+//[pause]
         <Drawer
           variant="temporary"
+//[pause]
           open={false} // This will be controlled by a state in the parent component
+//[pause]
           ModalProps={{
+//[pause]
             keepMounted: true, // Better open performance on mobile
+//[pause]
           }}
+//[pause]
           sx={{
+//[pause]
             display: { xs: 'block', sm: 'none' },
+//[pause]
             '& .MuiDrawer-paper': {
+//[pause]
               boxSizing: 'border-box',
+//[pause]
               width: DRAWER_WIDTH,
             },
           }}
         >
+//[pause]
           {drawer}
         </Drawer>
+//[pause]
       ) : (
+//[pause]
         <Drawer
           variant="permanent"
+//[pause]
           sx={{
             display: { xs: 'none', sm: 'block' },
+//[pause]
             '& .MuiDrawer-paper': {
+//[pause]
               boxSizing: 'border-box',
+//[pause]
               width: DRAWER_WIDTH,
+//[pause]
               borderRight: '1px solid rgba(0, 0, 0, 0.12)',
+//[pause]
               position: 'relative',
+//[pause]
               height: '100vh',
+//[pause]
             },
+//[pause]
           }}
+//[pause]
           open
         >
           {drawer}
+//[pause]
         </Drawer>
+//[pause]
       )}
     </Box>
   );
 }
-
+//[pause]
 export default GenreDrawer;
 ```
 
@@ -108,66 +152,79 @@ export default GenreDrawer;
 
 ```javascript
 
+
  import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
 import api from '../util/api'; // Ensure 'api' is correctly set up
 
-// Thunk to fetch genres
+//[pause]
 export const fetchGenres = createAsyncThunk(
+//[pause]
   'movies/fetchGenres',
+//[pause]
   async () => {
     const response = await api.get('/genre/movie/list');
     return response.data.genres;
   }
+//[pause]
 );
-
-// Thunk to fetch movies by selected genre
+//[pause]
 export const fetchMoviesByGenre = createAsyncThunk(
+//[pause]
   'movies/fetchMoviesByGenre',
+//[pause]
   async (genreId) => {
     const response = await api.get(`/discover/movie?with_genres=${genreId}`);
     return response.data.results;
   }
+//[pause]
 );
-
-const movieSlice = createSlice({
-  name: 'movies',
-  initialState: {
+```
+```
+//Initial state
     genres: [],
     selectedGenre: null,
     genreMovies: [],
     error: null,
   },
-  reducers: {
+
+ //reducers
     setSelectedGenre: (state, action) => {
+//[pause]
       state.selectedGenre = action.payload;
+//[pause]
     },
+//[pause]
     clearSelectedGenre: (state) => {
+//[pause]
       state.selectedGenre = null;
+//[pause]
       state.genreMovies = [];
+//[pause]
     },
   },
-  extraReducers: (builder) => {
-    builder
-      // Fetch Genres
+//[pause]
+
+// extra reducers
+
       .addCase(fetchGenres.fulfilled, (state, action) => {
         state.genres = action.payload;
       })
+//[pause]
       .addCase(fetchGenres.rejected, (state, action) => {
         state.error = action.error.message;
       })
-
-      // Fetch Movies by Genre
+//[pause]
+     
       .addCase(fetchMoviesByGenre.fulfilled, (state, action) => {
         state.genreMovies = action.payload;
       })
+//[pause]
       .addCase(fetchMoviesByGenre.rejected, (state, action) => {
         state.error = action.error.message;
       });
-  },
-});
-
+//[pause]
 export const { setSelectedGenre, clearSelectedGenre } = movieSlice.actions;
-
 export default movieSlice.reducer;
 ```
 ### ` src/redux/MovieSlice.js(main) `
