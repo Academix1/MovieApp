@@ -15,11 +15,9 @@ function Home() {
 //[pause]
   const [error, setError] = useState(null);
 //[pause]
-
-  // Helper function to get the TMDB Access Token from .env
   const getAccessToken = () => process.env.REACT_APP_TMDB_ACCESS_TOKEN;
 //[pause]
-  // Fetching popular movies using the access token in the URL
+  
   useEffect(() => {
 //[pause]
     const fetchMovies = async () => {
@@ -50,7 +48,7 @@ function Home() {
 //[pause]
 
     fetchMovies();
-  }, []); // Empty dependency array means this effect runs only once, when the component mounts
+  }, []);
 //[pause]
   // Show loading state while movies are being fetched
 
@@ -58,7 +56,7 @@ if (loading) {
     return <h2>Loading movies...</h2>;
   }
 //[pause]
-  // Show error message if fetch failed
+  
   if (error) {
     return <h2>{error}</h2>;
   }
