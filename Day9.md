@@ -2,30 +2,39 @@
 
 ### ` src/pages/Watchlist.js (Type Simulator)`
   ```javascript
+//[pause]
   import React from 'react';
+//[pause]
 import { useSelector } from 'react-redux';
+//[pause]
 import { Container, Typography, Grid } from '@mui/material';
+//[pause]
 import MovieCard from '../components/MovieCard'; // Ensure the path to MovieCard is correct
-
+//[pause]
 function Watchlist() {
   const watchlist = useSelector((state) => state.movies.watchlist);
-
+//[pause]
   return (
+//[pause]
     <Container>
+//[pause]
       <Typography variant="h4" gutterBottom>
         My Watchlist
       </Typography>
+//[pause]
       <Grid container spacing={3}>
+//[pause]
         {watchlist.map((movie) => (
           <Grid item xs={12} sm={6} md={4} key={movie.id}>
             <MovieCard movie={movie} />
           </Grid>
         ))}
+//[pause]
       </Grid>
     </Container>
   );
 }
-
+//[pause]
 export default Watchlist;
   ```
 
@@ -34,14 +43,18 @@ export default Watchlist;
 ```javascript
 
 const movieSlice = createSlice({
+//[pause]
   name: 'movies',
+//[pause]
   initialState: {
     watchlist: [],
   },
+//[pause]
   reducers: {
     addToWatchlist: (state, action) => {
       state.watchlist.push(action.payload);
     },
+//[pause]
     removeFromWatchlist: (state, action) => {
       state.watchlist = state.watchlist.filter(
         (movie) => movie.id !== action.payload.id
@@ -49,53 +62,69 @@ const movieSlice = createSlice({
     },
   },
 });
+//[pause]
 
 export const {
   addToWatchlist,
   removeFromWatchlist,
 } = movieSlice.actions;
-
+//[pause]
 export default movieSlice.reducer;
 
 ```
 
-### ` src/components/MovieCard.js(Manual Code) `
+### ` src/components/MovieCard.js(Type Simulator) `
 ```javascript
+//[pause]
 import { Bookmark, BookmarkBorder } from '@mui/icons-material';
+//[pause]
 import { useDispatch, useSelector } from 'react-redux';
+//[pause]
 import { addToWatchlist, removeFromWatchlist } from '../redux/movieSlice';
+//[pause]
 
 function MovieCard({ movie }) {
-  const dispatch = useDispatch();
-  
+//[pause]
+const dispatch = useDispatch();
+  //[pause]
   const watchlist = useSelector((state) => state.movies.watchlist);
   const isInWatchlist = watchlist.some((m) => m.id === movie.id);
-
+//[pause]
   const handleWatchlistClick = (e) => {
-    e.stopPropagation();
-    if (isInWatchlist) {
+//[pause]
+ e.stopPropagation();
+//[pause]
+if (isInWatchlist) {
       dispatch(removeFromWatchlist(movie));
-    } else {
+    }
+//[pause]
+ else {
       dispatch(addToWatchlist(movie));
     }
   };
+//[pause]
+```
 
-// Add on Code  
+```js src/components/MovieCard.js(Type Simulator)
   return (
       <IconButton
+//[pause]
         onClick={handleWatchlistClick}
+//[pause]
         sx={{
           position: 'absolute',
           top: 8,
           right: 8,
           color: isInWatchlist ? 'primary.main' : 'text.secondary', // Change icon color based on watchlist status
         }}
+//[pause]
       >
         {isInWatchlist ? <Bookmark /> : <BookmarkBorder />}
+//[pause]
       </IconButton>
   );
 }
-
+//[pause]
 export default MovieCard;
 
 ```
@@ -105,20 +134,27 @@ export default MovieCard;
 ### ` src/components/NavBar.js(Manual)`  
 
 ```javascript
+//[pause]
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+//[pause]
 import { useNavigate } from 'react-router-dom';
+//[pause]
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+//[pause]
 
 const handleWatchlistClick = () => {
     navigate('/watchlist');
   };
+//[pause]
 
- <Button
+   <Button
           color="inherit"
           onClick={handleWatchlistClick}
           sx={{ display: { xs: 'none', md: 'block' } }}
         >
+//[pause]
           Watchlist
+//[pause]
         </Button>
 ```
 
@@ -127,7 +163,7 @@ const handleWatchlistClick = () => {
 ```javascript
 
     import Watchlist from './pages/Watchlist';
-    <Routes>
+              <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/watchlist" element={<Watchlist />} />
