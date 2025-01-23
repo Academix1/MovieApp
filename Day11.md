@@ -3,57 +3,83 @@
 ```javascript
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-
+//[pause]
 import { useDispatch } from 'react-redux';
+//[pause]
 import { Container, Grid, Typography, Box, Chip, Rating } from '@mui/material';
+//[pause]
 import api from '../utils/api'; // Ensure this points to your API utility
+//[pause]
 import Loading from '../components/Loading'; // Ensure this component exists and is correctly implemented
-
+//[pause]
 function MovieDetails() {
+//[pause]
   const { id } = useParams();
+//[pause]
   const [movie, setMovie] = useState(null);
+//[pause]
   const [cast, setCast] = useState([]);
+//[pause]
   const dispatch = useDispatch();
-
+//[pause]
   useEffect(() => {
+//[pause]
     const fetchData = async () => {
+//[pause]
       try {
         const [movieRes, creditsRes] = await Promise.all([
+//[pause]
           api.get(`/movie/${id}`),
+//[pause]
           api.get(`/movie/${id}/credits`),
+//[pause]
         ]);
+//[pause]
         setMovie(movieRes.data);
+//[pause]
         setCast(creditsRes.data.cast.slice(0, 10));
+//[pause]
       } catch (error) {
         console.error('Failed to fetch movie details:', error);
       }
     };
+//[pause]
     fetchData();
   }, [id]);
-
+//[pause]
   if (!movie) {
     return <Loading />;
   }
-
+//[pause]
   return (
+//[pause]
     <Container>
+//[pause]
       <Grid container spacing={4}>
+//[pause]
         <Grid item xs={12} md={4}>
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt={movie.title}
             style={{ width: '100%', borderRadius: '8px' }}
           />
+
         </Grid>
+//[pause]
         <Grid item xs={12} md={8}>
+//[pause]
           <Typography variant="h3" gutterBottom>
             {movie.title}
           </Typography>
+//[pause]
           <Rating value={movie.vote_average / 2} readOnly />
           <Typography paragraph>{movie.overview}</Typography>
           <Typography>Release Date: {movie.release_date}</Typography>
+//[pause]
           <Box mt={2}>
+//[pause]
             {cast.map((actor) => (
+//[pause]
               <Chip
                 key={actor.id}
                 label={actor.name}
@@ -61,12 +87,15 @@ function MovieDetails() {
               />
             ))}
           </Box>
+//[pause]
         </Grid>
+//[pause]
       </Grid>
+//[pause]
     </Container>
   );
 }
-
+//[pause]
 export default MovieDetails;
 
 ```
@@ -84,6 +113,7 @@ const handleCardClick = () => {
 
 ### `src/components/MovieCard.js(main)`
 ```javascript
+
 import React from 'react';
 import { Card, CardContent, Typography, CardMedia } from '@mui/material';
 import { addToWatchlist, removeFromWatchlist } from '../redux/movieSlice';
