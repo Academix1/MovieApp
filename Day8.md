@@ -193,8 +193,7 @@ export default Navbar;
 ### `src/redux/movieSlice.js (Type Simulator)`
 
 ```javascript
-//[quick]
-  import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+//[quick]import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getPopularMovies, getTrendingMovies } from '../utils/api';
 import api  from '../utils/api';
 
