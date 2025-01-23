@@ -2,10 +2,13 @@
 
 ```javascript
 import React from 'react';
+//[pause]
 import { Card, CardContent, Typography, CardMedia } from '@mui/material';
-
+//[pause]
 function MovieCard({ movie }) {
-  return (
+//[pause]
+return (
+//[pause]
     <Card
       sx={{
         height: '100%',
@@ -14,7 +17,8 @@ function MovieCard({ movie }) {
         cursor: 'pointer',
       }}
     >
-      <CardMedia
+//[pause]
+  <CardMedia
         component="img"
         image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} // Assuming poster_path is the key in your movie object
         alt={movie.title}
@@ -23,18 +27,23 @@ function MovieCard({ movie }) {
           objectFit: 'cover',
         }}
       />
+//[pause]
       <CardContent sx={{ flexGrow: 1 }}>
+//[pause]
         <Typography gutterBottom variant="h6" component="div">
           {movie.title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+//[pause]
+<Typography variant="body2" color="text.secondary">
           Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A'} / 10
         </Typography>
-      </CardContent>
+//[pause]
+</CardContent>
     </Card>
+//[pause]
   );
 }
-
+//[pause]
 export default MovieCard;
 
 ```
@@ -42,11 +51,15 @@ export default MovieCard;
 
 ```javascript
 import React from 'react';
+//[pause]
 import { Box, CircularProgress, Typography } from '@mui/material';
+//[pause]
 
 function Loading({ message = 'Loading...' }) {
+//[pause]
   return (
-    <Box
+//[pause]
+<Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -55,12 +68,14 @@ function Loading({ message = 'Loading...' }) {
         minHeight: '50vh',
       }}
     >
+//[pause]
       <CircularProgress size={40} sx={{ mb: 2 }} />
       <Typography color="text.secondary">{message}</Typography>
+//[pause]
     </Box>
   );
 }
-
+//[pause]
 export default Loading;
 ```
 
@@ -70,30 +85,39 @@ export default Loading;
 ```javascript
 
   return (
+//[pause]
     <Container sx={{ py: 4 }}>
-      {/* Popular Movies */}
+//[pause]
       <Typography variant="h4" gutterBottom>
         Popular Movies
       </Typography>
+//[pause]
+
       <Grid container spacing={3} sx={{ mb: 4 }}>
+//[pause]
   {popular.slice(0, 6).map((movie) => (
+//[pause]
     <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
+//[pause]
       <MovieCard movie={movie} />
     </Grid>
   ))}
 </Grid>
 
-      {/* Trending Now */}
+//[pause]
       <Typography variant="h4" gutterBottom>
         Trending Now
       </Typography>
+//[pause]
       <Grid container spacing={3}>
   {trending.slice(0, 6).map((movie) => (
     <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
+//[pause]
       <MovieCard movie={movie} />
     </Grid>
   ))}
 </Grid>
+//[pause]
     </Container>
   );
 }
