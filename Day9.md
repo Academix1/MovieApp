@@ -367,19 +367,3 @@ export default MovieCard;
 ```
 
 
-
-### ` src/App.js(Manual)` 
-
-```javascript
-
-    import Watchlist from './pages/Watchlist';
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/watchlist" element={<Watchlist />} />
-              </Routes>
-
-```
-
-
-
