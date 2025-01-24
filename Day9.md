@@ -38,83 +38,6 @@ function Watchlist() {
 export default Watchlist;
   ```
 
-
-### ` src/redux/MovieSlice.js(Manual Code) `
-```javascript
-
-const movieSlice = createSlice({
-//[pause]
-  name: 'movies',
-//[pause]
-  initialState: {
-    watchlist: [],
-  },
-//[pause]
-  reducers: {
-    addToWatchlist: (state, action) => {
-      state.watchlist.push(action.payload);
-    },
-//[pause]
-    removeFromWatchlist: (state, action) => {
-      state.watchlist = state.watchlist.filter(
-        (movie) => movie.id !== action.payload.id
-      );
-    },
-  },
-});
-//[pause]
-
-export const {
-  addToWatchlist,
-  removeFromWatchlist,
-} = movieSlice.actions;
-//[pause]
-export default movieSlice.reducer;
-
-```
-
-
-
-
-### ` src/components/NavBar.js(Manual)`  
-
-```javascript
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-//[pause]
-import { useNavigate } from 'react-router-dom';
-//[pause]
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-//[pause]
-
-const handleWatchlistClick = () => {
-    navigate('/watchlist');
-  };
-//[pause]
-
-   <Button
-          color="inherit"
-          onClick={handleWatchlistClick}
-          sx={{ display: { xs: 'none', md: 'block' } }}
-        >
-//[pause]
-          Watchlist
-//[pause]
-        </Button>
-```
-
-### ` src/App.js(Manual)` 
-
-```javascript
-
-    import Watchlist from './pages/Watchlist';
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/watchlist" element={<Watchlist />} />
-              </Routes>
-
-```
-
 ### ` src/components/NavBar.js(main)` 
   
   ```javascript
@@ -442,5 +365,21 @@ const isInWatchlist = watchlist.some((m) => m.id === movie.id);
 
 export default MovieCard;
 ```
+
+
+
+### ` src/App.js(Manual)` 
+
+```javascript
+
+    import Watchlist from './pages/Watchlist';
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/search" element={<Search />} />
+                <Route path="/watchlist" element={<Watchlist />} />
+              </Routes>
+
+```
+
 
 
