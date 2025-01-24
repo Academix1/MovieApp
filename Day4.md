@@ -14,7 +14,6 @@ const movieSlice = createSlice({
   name: 'movies',
   initialState,
   reducers: {
-    // Add actions here in the future
   },
 
 });
