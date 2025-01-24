@@ -43,10 +43,13 @@ export default store;
 
 ```javascript
     import React from 'react';
+    //[pause]
     import { useSelector } from 'react-redux';
-    
+    //[pause]
     function Home() {
+    //[pause]
     const select=useSelector(state=>state.movies.placeholder);
+      //[pause]
       return <h2>Home Page {select}</h2>;
     }
     
