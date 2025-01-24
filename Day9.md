@@ -73,68 +73,12 @@ export default movieSlice.reducer;
 
 ```
 
-### ` src/components/MovieCard.js(Type Simulator) `
-```javascript
-//[pause]
-import { Bookmark, BookmarkBorder } from '@mui/icons-material';
-//[pause]
-import { useDispatch, useSelector } from 'react-redux';
-//[pause]
-import { addToWatchlist, removeFromWatchlist } from '../redux/movieSlice';
-//[pause]
-
-function MovieCard({ movie }) {
-//[pause]
-const dispatch = useDispatch();
-  //[pause]
-  const watchlist = useSelector((state) => state.movies.watchlist);
-  const isInWatchlist = watchlist.some((m) => m.id === movie.id);
-//[pause]
-  const handleWatchlistClick = (e) => {
-//[pause]
- e.stopPropagation();
-//[pause]
-if (isInWatchlist) {
-      dispatch(removeFromWatchlist(movie));
-    }
-//[pause]
- else {
-      dispatch(addToWatchlist(movie));
-    }
-  };
-//[pause]
-```
-
-```js src/components/MovieCard.js(Type Simulator)
-  return (
-      <IconButton
-//[pause]
-        onClick={handleWatchlistClick}
-//[pause]
-        sx={{
-          position: 'absolute',
-          top: 8,
-          right: 8,
-          color: isInWatchlist ? 'primary.main' : 'text.secondary', // Change icon color based on watchlist status
-        }}
-//[pause]
-      >
-        {isInWatchlist ? <Bookmark /> : <BookmarkBorder />}
-//[pause]
-      </IconButton>
-  );
-}
-//[pause]
-export default MovieCard;
-
-```
 
 
 
 ### ` src/components/NavBar.js(Manual)`  
 
 ```javascript
-//[pause]
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 //[pause]
 import { useNavigate } from 'react-router-dom';
@@ -175,10 +119,12 @@ const handleWatchlistClick = () => {
   
   ```javascript
 import React, { useState } from 'react';
+//[pause]
 import { useNavigate } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Box, InputBase, IconButton, Button } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
+//[pause]
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 
 const Search = styled('div')(({ theme }) => ({
@@ -217,6 +163,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function Navbar() {
   const [searchQuery, setSearchQuery] = useState('');
+//[pause]
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
@@ -226,7 +173,7 @@ function Navbar() {
       setSearchQuery('');
     }
   };
-
+  //[pause]
   const handleWatchlistClick = () => {
     navigate('/watchlist');
   };
@@ -250,9 +197,12 @@ function Navbar() {
             />
           </Search>
         </Box>
+
+        //[pause]
         <IconButton color="inherit" onClick={handleWatchlistClick}>
           <BookmarkIcon />
         </IconButton>
+        //[pause]
         <Button
           color="inherit"
           onClick={handleWatchlistClick}
@@ -260,6 +210,7 @@ function Navbar() {
         >
           Watchlist
         </Button>
+      //[pause]
       </Toolbar>
     </AppBar>
   );
@@ -311,14 +262,19 @@ const movieSlice = createSlice({
     error: null,
   },
   reducers: {
+    //[pause]
     addToWatchlist: (state, action) => {
+     //[pause]
         state.watchlist.push(action.payload);
       },
-      removeFromWatchlist: (state, action) => {
+    //[pause]
+  removeFromWatchlist: (state, action) => {
+       //[pause]
         state.watchlist = state.watchlist.filter(
+         //[pause]
           (movie) => movie.id !== action.payload.id
         );
-        
+         //[pause]
       },
   },
   extraReducers: (builder) => {
@@ -342,6 +298,7 @@ const movieSlice = createSlice({
       });
   },
 });
+ //[pause]
 export const {
     addToWatchlist,
     removeFromWatchlist,
@@ -400,24 +357,36 @@ import {
   CardMedia,
   IconButton,
 } from '@mui/material';
+ //[pause]
 import { Bookmark, BookmarkBorder } from '@mui/icons-material';
+ //[pause]
 import { useDispatch, useSelector } from 'react-redux';
+ //[pause]
 import { addToWatchlist, removeFromWatchlist } from '../redux/movieSlice';
 
 function MovieCard({ movie }) {
+ //[pause]
   const dispatch = useDispatch();
-  
-  const watchlist = useSelector((state) => state.movies.watchlist);
-  const isInWatchlist = watchlist.some((m) => m.id === movie.id);
 
+ //[pause]
+  const watchlist = useSelector((state) => state.movies.watchlist);
+ //[pause]
+const isInWatchlist = watchlist.some((m) => m.id === movie.id);
+ //[pause]
+ //[pause]
   const handleWatchlistClick = (e) => {
+ //[pause]
     e.stopPropagation();
+ //[pause]
     if (isInWatchlist) {
+ //[pause]
       dispatch(removeFromWatchlist(movie));
     } else {
+ //[pause]
       dispatch(addToWatchlist(movie));
     }
   };
+ //[pause]
 
   
   return (
@@ -447,16 +416,25 @@ function MovieCard({ movie }) {
           {movie.release_date ? movie.release_date.slice(0, 4) : 'N/A'} {/* Display release year */}
         </Typography>
       </CardContent>
-      <IconButton
+
+        <IconButton
+           //[pause]
         onClick={handleWatchlistClick}
+        //[pause]
         sx={{
+        //[pause]
           position: 'absolute',
+       //[pause]
           top: 8,
+       //[pause]
           right: 8,
+      //[pause]
           color: isInWatchlist ? 'primary.main' : 'text.secondary', // Change icon color based on watchlist status
         }}
       >
+     //[pause]
         {isInWatchlist ? <Bookmark /> : <BookmarkBorder />}
+     //[pause]
       </IconButton>
     </Card>
   );
