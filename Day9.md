@@ -2,40 +2,56 @@
 
 ### ` src/pages/Watchlist.js (Type Simulator)`
   ```javascript
-//[pause]
-  import React from 'react';
-//[pause]
-import { useSelector } from 'react-redux';
-//[pause]
-import { Container, Typography, Grid } from '@mui/material';
-//[pause]
-import MovieCard from '../components/MovieCard'; // Ensure the path to MovieCard is correct
-//[pause]
-function Watchlist() {
-  const watchlist = useSelector((state) => state.movies.watchlist);
-//[pause]
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Grid, Container, Typography, Button } from '@mui/material';
+import { RootState } from '../redux/store';
+import { removeFromWatchlist } from '../redux/movieSlice';
+import MovieCard from '../components/MovieCard';
+
+const Watchlist: React.FC = () => {
+  const dispatch = useDispatch();
+  const watchlist = useSelector((state: RootState) => state.movies.watchlist);
+
+  const handleRemoveFromWatchlist = (movieId: number) => {
+    const movieToRemove = watchlist.find((movie) => movie.id === movieId);
+    if (movieToRemove) {
+      dispatch(removeFromWatchlist(movieToRemove));
+    }
+  };
+
   return (
-//[pause]
-    <Container>
-//[pause]
+    <Container sx={{ py: 4 }}>
       <Typography variant="h4" gutterBottom>
         My Watchlist
       </Typography>
-//[pause]
       <Grid container spacing={3}>
-//[pause]
-        {watchlist.map((movie) => (
-          <Grid item xs={12} sm={6} md={4} key={movie.id}>
-            <MovieCard movie={movie} />
-          </Grid>
-        ))}
-//[pause]
+        {watchlist.length === 0 ? (
+          <Typography variant="h6" color="textSecondary">
+            Your watchlist is empty.
+          </Typography>
+        ) : (
+          watchlist.map((movie) => (
+            <Grid  key={movie.id}>
+              <MovieCard movie={movie} />
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => handleRemoveFromWatchlist(movie.id)}
+                sx={{ mt: 2 }}
+              >
+                Remove from Watchlist
+              </Button>
+            </Grid>
+          ))
+        )}
       </Grid>
     </Container>
   );
-}
-//[pause]
+};
+
 export default Watchlist;
+
   ```
 
 ### ` src/components/NavBar.js(main)` 
