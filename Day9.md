@@ -261,6 +261,7 @@ export const { addToWatchlist, removeFromWatchlist } = movieSlice.actions;
 
 export default movieSlice.reducer;
 
+
 ```    
 
 ### ` src/App.js(main)` 
