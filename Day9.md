@@ -265,41 +265,39 @@ export default movieSlice.reducer;
 
 ### ` src/App.js(main)` 
 ```javascript
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider, CssBaseline, Box, Grid } from '@mui/material';
-import { Provider } from 'react-redux';
+import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import theme from './styles/theme';
 import Navbar from './components/NavBar';
+import Home from './components/Home';
+import { Provider } from 'react-redux';
 import { store } from './redux/store';
-import Home from './pages/Home';
+import { Route, Routes } from 'react-router-dom';
 import Search from './pages/Search';
-import Watchlist from './pages/Watchlist';
+import { BrowserRouter } from 'react-router-dom'; 
+import Watchlist from './pages/WatchList';
 
 function App() {
   return (
-    <Provider store={store}>
+    <Provider store={store}>   
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Router>
+        <BrowserRouter>  {/* Wrap with BrowserRouter */}
           <Navbar />
-          <Box sx={{ display: 'flex', mt: 8 }}>
-            {/* Sidebar */}
-         
-
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/watchlist" element={<Watchlist />} />
-              </Routes>
-            </Box>
-        </Router>
+          <Box sx={{ mt: 2 }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/watchlist" element={<Watchlist />} />
+            </Routes>
+          </Box>
+        </BrowserRouter>
       </ThemeProvider>
     </Provider>
   );
 }
 
 export default App;
+
 ```
 
 ### ` src/components/MovieCard.js(main) `
