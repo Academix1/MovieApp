@@ -232,3 +232,55 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
 
 export default MovieCard;
 ```
+
+### `Home.tsx` (VITE)
+```js
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPopularMovies, fetchTrendingMovies } from '../redux/movieSlice'; // Ensure the correct path
+import { RootState, AppDispatch } from '../redux/store'; // Import AppDispatch type
+import MovieCard from './MovieCard'; // Import MovieCard
+
+const Home: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>(); // Use typed dispatch
+  const { popularMovies, trendingMovies, loading, error } = useSelector(
+    (state: RootState) => state.movies
+  );
+
+  useEffect(() => {
+    dispatch(fetchPopularMovies()); // Dispatch async action
+    dispatch(fetchTrendingMovies());
+  }, [dispatch]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+
+  return (
+    <div>
+      <h2>Popular Movies</h2>
+      <div style={gridStyle}>
+        {popularMovies.map((movie: any) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
+      </div>
+
+      <h2>Trending Movies</h2>
+      <div style={gridStyle}>
+        {trendingMovies.map((movie: any) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// Style for displaying 4 items per row and proper indentation
+const gridStyle = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(4, 1fr)', // Create 4 equal-width columns
+  gap: '16px', // Space between cards
+  padding: '0 16px', // Indentation for better appearance
+};
+
+export default Home;
+```
