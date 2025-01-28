@@ -42,14 +42,13 @@ export default Watchlist;
   
   ```javascript
 import React, { useState } from 'react';
-//[pause]
 import { useNavigate } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Box, InputBase, IconButton, Button } from '@mui/material';
+import { AppBar, Toolbar, Typography, Box, InputBase, IconButton } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
-//[pause]
-import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkIcon from '@mui/icons-material/Bookmark'; // Import Icon for Watchlist
 
+// Styled components for the search bar
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -84,21 +83,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function Navbar() {
-  const [searchQuery, setSearchQuery] = useState('');
-//[pause]
+const Navbar: React.FC = () => {
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const navigate = useNavigate();
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchQuery('');
+      setSearchQuery(''); // Clear the search input after submitting
     }
-  };
-  //[pause]
-  const handleWatchlistClick = () => {
-    navigate('/watchlist');
   };
 
   return (
@@ -107,7 +101,7 @@ function Navbar() {
         <Typography variant="h6" component="div">
           Movie App
         </Typography>
-        <Box component="form" onSubmit={handleSearch} sx={{ ml: 'auto' }}>
+        <Box component="form" onSubmit={handleSearch} sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -119,25 +113,21 @@ function Navbar() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </Search>
+          <IconButton
+            onClick={() => navigate('/watchlist')}
+            sx={{
+              ml: 2,
+              color: 'white', // Ensure the icon is white to be visible
+            }}
+            aria-label="Watchlist"
+          >
+            <BookmarkIcon />WatchList
+          </IconButton>
         </Box>
-
-        //[pause]
-        <IconButton color="inherit" onClick={handleWatchlistClick}>
-          <BookmarkIcon />
-        </IconButton>
-        //[pause]
-        <Button
-          color="inherit"
-          onClick={handleWatchlistClick}
-          sx={{ display: { xs: 'none', md: 'block' } }}
-        >
-          Watchlist
-        </Button>
-      //[pause]
       </Toolbar>
     </AppBar>
   );
-}
+};
 
 export default Navbar;
 
@@ -146,88 +136,115 @@ export default Navbar;
 
 ### ` src/redux/MovieSlice.js(main) `
 ```javascript
-  import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getPopularMovies, getTrendingMovies } from '../utils/api';
-import api  from '../utils/api';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import api from '../utils/api'; // Ensure the correct path to api.ts
 
-export const fetchPopularMovies = createAsyncThunk(
-  'movies/fetchPopular',
-  async () => {
-    const response = await getPopularMovies();
-    return response.data.results;
+// Define the Movie type (to type the movies array in the state)
+interface Movie {
+  id: number;
+  title: string;
+  poster_path: string;
+  vote_average: number | null;
+}
+
+interface MovieState {
+  popularMovies: Movie[];
+  trendingMovies: Movie[];
+  searchResults: Movie[];
+  watchlist: Movie[]; // Added watchlist to the state
+  loading: boolean;
+  error: string | null;
+}
+
+const initialState: MovieState = {
+  popularMovies: [],
+  trendingMovies: [],
+  searchResults: [],
+  watchlist: [], // Initialize the watchlist
+  loading: false,
+  error: null,
+};
+
+// Define async actions using createAsyncThunk
+export const searchMoviesAsync = createAsyncThunk<Movie[], string>(
+  'movies/search',
+  async (query) => {
+    const response = await api.get(`/search/movie?query=${query}`);
+    return response.data.results; // Assuming the response has a `results` key with an array of movies
   }
 );
-export const searchMoviesAsync = createAsyncThunk(
-    'movies/search',
-    async (query) => {
-      const response = await api.get(`/search/movie?query=${query}`);
-      return response.data.results;
-    }
-  );
 
-
-export const fetchTrendingMovies = createAsyncThunk(
-  'movies/fetchTrending',
+export const fetchPopularMovies = createAsyncThunk<Movie[]>(
+  'movies/fetchPopularMovies',
   async () => {
-    const response = await getTrendingMovies();
-    return response.data.results;
+    const response = await api.get('/movie/popular');
+    return response.data.results; // Assuming the response has a `results` key with an array of movies
   }
 );
 
+export const fetchTrendingMovies = createAsyncThunk<Movie[]>(
+  'movies/fetchTrendingMovies',
+  async () => {
+    const response = await api.get('/trending/movie/week');
+    return response.data.results; // Assuming the response has a `results` key with an array of movies
+  }
+);
+
+// Create the slice
 const movieSlice = createSlice({
   name: 'movies',
-  initialState: {
-    popular: [],
-    trending: [],
-    watchlist: [],
-    searchResults: [],
-    loading: false,
-    error: null,
-  },
+  initialState,
   reducers: {
-    //[pause]
-    addToWatchlist: (state, action) => {
-     //[pause]
+    addToWatchlist: (state, action: PayloadAction<Movie>) => {
+      // Ensure movie is not already in the watchlist
+      if (!state.watchlist.find((movie) => movie.id === action.payload.id)) {
         state.watchlist.push(action.payload);
-      },
-    //[pause]
-  removeFromWatchlist: (state, action) => {
-       //[pause]
-        state.watchlist = state.watchlist.filter(
-         //[pause]
-          (movie) => movie.id !== action.payload.id
-        );
-         //[pause]
-      },
+      }
+    },
+    removeFromWatchlist: (state, action: PayloadAction<Movie>) => {
+      // Remove the movie from watchlist
+      state.watchlist = state.watchlist.filter(
+        (movie) => movie.id !== action.payload.id
+      );
+    },
   },
   extraReducers: (builder) => {
     builder
+      // Handle the popular movies fetch
       .addCase(fetchPopularMovies.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchPopularMovies.fulfilled, (state, action) => {
+      .addCase(fetchPopularMovies.fulfilled, (state, action: PayloadAction<Movie[]>) => {
         state.loading = false;
-        state.popular = action.payload;
+        state.popularMovies = action.payload;
       })
       .addCase(fetchPopularMovies.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.error.message || 'Failed to fetch popular movies';
       })
-      builder.addCase(searchMoviesAsync.fulfilled, (state, action) => {
+      // Handle the trending movies fetch
+      .addCase(fetchTrendingMovies.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchTrendingMovies.fulfilled, (state, action: PayloadAction<Movie[]>) => {
+        state.loading = false;
+        state.trendingMovies = action.payload;
+      })
+      .addCase(fetchTrendingMovies.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to fetch trending movies';
+      })
+      // Handle search movies async action
+      .addCase(searchMoviesAsync.fulfilled, (state, action: PayloadAction<Movie[]>) => {
         state.searchResults = action.payload;
-      })
-      .addCase(fetchTrendingMovies.fulfilled, (state, action) => {
-        state.trending = action.payload;
       });
   },
 });
- //[pause]
-export const {
-    addToWatchlist,
-    removeFromWatchlist,
-  } = movieSlice.actions;
-  
+
+export const { addToWatchlist, removeFromWatchlist } = movieSlice.actions;
+
 export default movieSlice.reducer;
+
 ```    
 
 ### ` src/App.js(main)` 
@@ -272,98 +289,113 @@ export default App;
 ### ` src/components/MovieCard.js(main) `
   
   ```javascript
-    import React from 'react';
-import {
-  Card,
-  CardContent,
-  Typography,
-  CardMedia,
-  IconButton,
-} from '@mui/material';
- //[pause]
+ import React from 'react';
+import { Card, CardContent, Typography, CardMedia, Box, IconButton } from '@mui/material';
 import { Bookmark, BookmarkBorder } from '@mui/icons-material';
- //[pause]
 import { useDispatch, useSelector } from 'react-redux';
- //[pause]
 import { addToWatchlist, removeFromWatchlist } from '../redux/movieSlice';
 
-function MovieCard({ movie }) {
- //[pause]
-  const dispatch = useDispatch();
+// Define the Movie type based on the data structure expected
+interface Movie {
+  id: number;
+  title: string;
+  poster_path: string;
+  vote_average: number | null;
+}
 
- //[pause]
-  const watchlist = useSelector((state) => state.movies.watchlist);
- //[pause]
-const isInWatchlist = watchlist.some((m) => m.id === movie.id);
- //[pause]
- //[pause]
-  const handleWatchlistClick = (e) => {
- //[pause]
-    e.stopPropagation();
- //[pause]
+interface MovieCardProps {
+  movie: Movie;
+}
+
+const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
+  const dispatch = useDispatch();
+  
+  // Access watchlist state from Redux store
+  const watchlist = useSelector((state: any) => state.movies.watchlist);
+  const isInWatchlist = watchlist.some((m: Movie) => m.id === movie.id);
+
+  // Handle click for adding/removing movie from watchlist
+  const handleWatchlistClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent the click from triggering the card's onClick
     if (isInWatchlist) {
- //[pause]
       dispatch(removeFromWatchlist(movie));
     } else {
- //[pause]
       dispatch(addToWatchlist(movie));
     }
   };
- //[pause]
 
-  
   return (
     <Card
       sx={{
-        height: '100%',
         display: 'flex',
         flexDirection: 'column',
         cursor: 'pointer',
-        borderRadius: 2,
         boxShadow: 3,
-        position: 'relative', // Ensure the IconButton is positioned correctly
+        borderRadius: 2,
+        overflow: 'hidden',
+        height: '100%',
+        transition: 'transform 0.2s',
+        '&:hover': {
+          transform: 'scale(1.05)',
+        },
+        position: 'relative', // To position the icon button inside the card
       }}
     >
       <CardMedia
         component="img"
-        height="250"
-        image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} // Use the movie poster URL
+        image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
         alt={movie.title}
-        sx={{ objectFit: 'cover', borderRadius: 2 }}
+        sx={{
+          height: 350,
+          objectFit: 'cover',
+          width: '100%',
+        }}
       />
-      <CardContent sx={{ flexGrow: 1 }}>
-        <Typography gutterBottom variant="h6" component="div">
+      <CardContent sx={{ flexGrow: 1, padding: 2 }}>
+        <Typography
+          gutterBottom
+          variant="h6"
+          component="div"
+          sx={{
+            fontWeight: 'bold',
+            color: 'text.primary',
+            fontSize: '1.1rem',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          }}
+        >
           {movie.title}
         </Typography>
-        <Typography variant="body2" color="textSecondary">
-          {movie.release_date ? movie.release_date.slice(0, 4) : 'N/A'} {/* Display release year */}
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ fontSize: '0.875rem' }}
+          >
+            Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A'} / 10
+          </Typography>
+        </Box>
       </CardContent>
 
-        <IconButton
-           //[pause]
+      {/* Watchlist Icon */}
+      <IconButton
         onClick={handleWatchlistClick}
-        //[pause]
         sx={{
-        //[pause]
           position: 'absolute',
-       //[pause]
           top: 8,
-       //[pause]
           right: 8,
-      //[pause]
-          color: isInWatchlist ? 'primary.main' : 'text.secondary', // Change icon color based on watchlist status
+          color: isInWatchlist ? 'primary.main' : 'text.secondary', // Change color based on watchlist status
         }}
       >
-     //[pause]
         {isInWatchlist ? <Bookmark /> : <BookmarkBorder />}
-     //[pause]
       </IconButton>
     </Card>
   );
-}
+};
 
 export default MovieCard;
+
 ```
 
 
