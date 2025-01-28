@@ -179,3 +179,56 @@ function Home() {
 export default Home;
 ````    
   
+### `MovieCard.ts (VITE)`
+```ts
+import React from 'react';
+import { Card, CardContent, Typography, CardMedia } from '@mui/material';
+
+// Define the Movie type based on the data structure expected
+interface Movie {
+  title: string;
+  poster_path: string;
+  vote_average: number | null;
+}
+
+interface MovieCardProps {
+  movie: Movie;
+}
+
+const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
+  return (
+    <Card
+      sx={{
+        height: '100%',  // Ensures the card takes full available height
+        display: 'flex',
+        flexDirection: 'column',
+        cursor: 'pointer',
+        boxShadow: 3,  // Optional: Add a slight shadow for better visual appeal
+        borderRadius: 2,  // Rounded corners for the card
+        overflow: 'hidden', // Prevents overflow from the image
+      }}
+    >
+      <CardMedia
+        component="img"
+        image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} // Assuming poster_path is the key in your movie object
+        alt={movie.title}
+        sx={{
+          height: 350,  // Reduced height for the image
+          objectFit: 'cover',  // Maintains aspect ratio while covering the area
+          width: '100%',  // Ensures the image takes the full width of the card
+        }}
+      />
+      <CardContent sx={{ flexGrow: 1, padding: 1 }}>
+        <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
+          {movie.title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A'} / 10
+        </Typography>
+      </CardContent>
+    </Card>
+  );
+}
+
+export default MovieCard;
+```
