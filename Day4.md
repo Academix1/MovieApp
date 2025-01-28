@@ -55,22 +55,19 @@ export default store;
     export default Home;
 ```     
 
-### `src/App.js (Updated)`
+### `src/pages/Home.tsx`
 
-```js
-import { Provider } from 'react-redux';
-import { store } from './redux/store';
+```javascript
+   import { useSelector } from 'react-redux'; // Correct import statement
 
+function Home() {
+  // Correctly typed selector to ensure TypeScript compatibility
+  const select = useSelector((state: any) => state.movies?.placeholder);
 
-function App() {
-  return (
-    <Provider store={store}>
-      //Adding Provider and Configuring Store in it
-    </Provider>
-  );
+  return <h2>Home Page {select}</h2>;
 }
 
-export default App;
+export default Home;
 ```
 
 ### `src/App.js(main)`
