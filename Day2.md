@@ -1,6 +1,6 @@
 ### Component Composition
 
-#### `src/pages/Home.js`
+#### `src/pages/Home.tsx`
 
 ```js
 function Home() {
@@ -9,7 +9,7 @@ function Home() {
 export default Home;
 ```
 
-#### `src/App.js`
+#### `src/App.tsx`
 
 ```js
 import Home from './pages/Home';
