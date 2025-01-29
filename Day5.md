@@ -11,6 +11,7 @@ npm install axios
 VITE_TMDB_API_KEY=Token
 ```
 
+### Home.tsx
 ```Home.tsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
