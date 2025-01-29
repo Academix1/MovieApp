@@ -1,5 +1,5 @@
 
-### `src/redux/movieSlice.js`
+### `src/redux/movieSlice.ts`
 
 
 ```js
@@ -51,7 +51,7 @@ function Home() {
 export default Home;
 ```
 
-### `src/App.js(main)`
+### `src/App.tsx`
 
 ```js
     import React from 'react';
