@@ -1,6 +1,6 @@
 
 
-### ` src/pages/Watchlist.js (Type Simulator)`
+### ` src/pages/Watchlist.tsx (Type Simulator)`
   ```javascript
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -54,7 +54,7 @@ export default Watchlist;
 
   ```
 
-### ` src/components/NavBar.js(main)` 
+### ` src/components/NavBar.tsx(main)` 
   
   ```javascript
 import React, { useState } from 'react';
@@ -150,7 +150,7 @@ export default Navbar;
   ```
 
 
-### ` src/redux/MovieSlice.js(main) `
+### ` src/redux/MovieSlice.tsx(main) `
 ```javascript
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import api from '../utils/api'; // Ensure the correct path to api.ts
@@ -264,7 +264,7 @@ export default movieSlice.reducer;
 
 ```    
 
-### ` src/App.js(main)` 
+### ` src/App.tsx(main)` 
 ```javascript
 import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import theme from './styles/theme';
@@ -301,7 +301,7 @@ export default App;
 
 ```
 
-### ` src/components/MovieCard.js(main) `
+### ` src/components/MovieCard.tsx(main) `
   
   ```javascript
  import React from 'react';
