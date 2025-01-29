@@ -21,7 +21,7 @@ const movieSlice = createSlice({
 export default movieSlice.reducer;
 ```
 
-### `src/redux/store.js`
+### `src/redux/store.tsx`
 
 ```js
 import { configureStore } from '@reduxjs/toolkit';
@@ -35,22 +35,6 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 ```
-### `src/pages/Home.js (Type Simulator)`
-
-```javascript
-    import React from 'react';
-    //[pause]
-    import { useSelector } from 'react-redux';
-    //[pause]
-    function Home() {
-    //[pause]
-    const select=useSelector(state=>state.movies.placeholder);
-      //[pause]
-      return <h2>Home Page {select}</h2>;
-    }
-    
-    export default Home;
-```     
 
 ### `src/pages/Home.tsx`
 
