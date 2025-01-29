@@ -1,4 +1,4 @@
-#### `src/styles/theme.js (Typing Simulator)`
+#### `src/styles/theme.ts(Typing Simulator)`
 
 ```js
 import { createTheme } from '@mui/material/styles';
@@ -28,7 +28,7 @@ export default theme;
 ```
 
 
-#### `src/components/Navbar.js  (Typing Simulator)`
+#### `src/components/Navbar.tsx  (Typing Simulator)`
 
 ```tsx
 import { AppBar, Toolbar, Typography } from '@mui/material';
@@ -48,7 +48,7 @@ function Navbar() {
 export default Navbar;
 ```
 
-#### `src/App.js (Manual Code)`
+#### `src/App.tsx (Manual Code)`
 
 ```tsx
 import { ThemeProvider, CssBaseline, Box } from '@mui/material';
