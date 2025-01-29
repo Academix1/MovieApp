@@ -30,8 +30,7 @@ export default theme;
 
 #### `src/components/Navbar.js  (Typing Simulator)`
 
-```js
-import React from 'react';
+```tsx
 import { AppBar, Toolbar, Typography } from '@mui/material';
 
 function Navbar() {
@@ -48,9 +47,10 @@ function Navbar() {
 
 export default Navbar;
 ```
+
 #### `src/App.js (Manual Code)`
 
-```js
+```tsx
 import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import theme from './styles/theme';
 import Navbar from './components/NavBar';
@@ -60,39 +60,12 @@ import Navbar from './components/NavBar';
    
         <Navbar />
         <Box sx={{ mt: 8 }}>
-          <Home/>
+          {/* Call Home Here */}
         </Box>
     
-    </ThemeProvider>
-
+    </ThemeProvider> 
 ```
 
-#### `src/App.js (main)`
-
-```js
-import React from 'react';
-import { ThemeProvider, CssBaseline, Box } from '@mui/material';
-import theme from './styles/theme';
-import Navbar from './components/NavBar';
-import Home from './pages/Home';
-
-
-function App() {
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-   
-        <Navbar />
-        <Box sx={{ mt: 8 }}>
-          <Home/>
-        </Box>
-    
-    </ThemeProvider>
-  );
-}
-
-export default App;
-```
 ---
 ### `Installations`
 
