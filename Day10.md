@@ -1,7 +1,8 @@
 
-### ` src/components/GenreDrawer.js(Type Simulator)`
+### ` src/components/GenreDrawer.tsx(Type Simulator)`
 
 ```javascript
+
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { List, ListItemButton, ListItemText, Typography, Box } from '@mui/material';
@@ -51,7 +52,7 @@ export default GenreDrawer;
 
 ```
 
-### ` src/redux/MovieSlice.js(main) `
+### ` src/redux/MovieSlice.ts(main) `
 
 ```javascript
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
@@ -221,7 +222,8 @@ export default movieSlice.reducer;
 ```
 
 
-### ` src/App.js(main) `
+### ` src/App.tsx(main) `
+
 ```javascript
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, CssBaseline, Box, Toolbar } from '@mui/material';
@@ -290,7 +292,7 @@ export default App;
 ```
 
  
-### ` src/pages/Home.js(main) `
+### ` src/pages/Home.tsx(main) `
 
 ```javascript
 import React, { useEffect } from 'react';
