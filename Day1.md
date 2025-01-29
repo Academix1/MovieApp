@@ -1,7 +1,7 @@
 ## **Day 1: Basic Project Setup**
 
 
-#### `src/App.js (Type Simulator)`
+#### `src/App.tsx (Type Simulator)`
 
 ```js
 function App() {
