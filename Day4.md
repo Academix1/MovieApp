@@ -25,18 +25,15 @@ export default movieSlice.reducer;
 
 ```js
 import { configureStore } from '@reduxjs/toolkit';
-//[pause]
 import movieReducer from './movieSlice';
-//[pause]
+
 export const store = configureStore({
-//[pause]
   reducer: {
     movies: movieReducer,
   },
-//[pause]
 });
-//[pause]
-export default store;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 ```
 ### `src/pages/Home.js (Type Simulator)`
 
