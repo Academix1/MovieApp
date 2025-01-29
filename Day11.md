@@ -3,83 +3,75 @@
 ```javascript
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-//[pause]
-import { useDispatch } from 'react-redux';
-//[pause]
-import { Container, Grid, Typography, Box, Chip, Rating } from '@mui/material';
-//[pause]
+import {
+  Container,
+  Grid,
+  Typography,
+  Box,
+  Chip,
+  Rating,
+} from '@mui/material';
 import api from '../utils/api'; // Ensure this points to your API utility
-//[pause]
 import Loading from '../components/Loading'; // Ensure this component exists and is correctly implemented
-//[pause]
-function MovieDetails() {
-//[pause]
-  const { id } = useParams();
-//[pause]
-  const [movie, setMovie] = useState(null);
-//[pause]
-  const [cast, setCast] = useState([]);
-//[pause]
-  const dispatch = useDispatch();
-//[pause]
+
+interface Movie {
+  id: number;
+  title: string;
+  poster_path: string;
+  overview: string;
+  release_date: string;
+  vote_average: number;
+}
+
+interface Actor {
+  id: number;
+  name: string;
+}
+
+const MovieDetails: React.FC = () => {
+  const { id } = useParams<{ id: string }>(); // Type for route parameters
+  const [movie, setMovie] = useState<Movie | null>(null);
+  const [cast, setCast] = useState<Actor[]>([]);
+
   useEffect(() => {
-//[pause]
     const fetchData = async () => {
-//[pause]
       try {
         const [movieRes, creditsRes] = await Promise.all([
-//[pause]
           api.get(`/movie/${id}`),
-//[pause]
           api.get(`/movie/${id}/credits`),
-//[pause]
         ]);
-//[pause]
         setMovie(movieRes.data);
-//[pause]
         setCast(creditsRes.data.cast.slice(0, 10));
-//[pause]
       } catch (error) {
         console.error('Failed to fetch movie details:', error);
       }
     };
-//[pause]
     fetchData();
   }, [id]);
-//[pause]
+
   if (!movie) {
     return <Loading />;
   }
-//[pause]
+
   return (
-//[pause]
     <Container>
-//[pause]
       <Grid container spacing={4}>
-//[pause]
         <Grid item xs={12} md={4}>
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt={movie.title}
             style={{ width: '100%', borderRadius: '8px' }}
           />
-
         </Grid>
-//[pause]
         <Grid item xs={12} md={8}>
-//[pause]
           <Typography variant="h3" gutterBottom>
             {movie.title}
           </Typography>
-//[pause]
           <Rating value={movie.vote_average / 2} readOnly />
           <Typography paragraph>{movie.overview}</Typography>
           <Typography>Release Date: {movie.release_date}</Typography>
-//[pause]
           <Box mt={2}>
-//[pause]
             {cast.map((actor) => (
-//[pause]
               <Chip
                 key={actor.id}
                 label={actor.name}
@@ -87,129 +79,163 @@ function MovieDetails() {
               />
             ))}
           </Box>
-//[pause]
         </Grid>
-//[pause]
       </Grid>
-//[pause]
     </Container>
   );
-}
-//[pause]
+};
+
 export default MovieDetails;
 
 ```
 ### `src/componenets/MovieCard.js(Manual)`
 
 ```javascript
-import { useNavigate } from 'react-router-dom';
-
- const navigate = useNavigate();
-
-const handleCardClick = () => {
-    navigate(`/movie/${movie.id}`); 
-  };
-```
-
-### `src/components/MovieCard.js(main)`
-```javascript
-
 import React from 'react';
-import { Card, CardContent, Typography, CardMedia } from '@mui/material';
-import { addToWatchlist, removeFromWatchlist } from '../redux/movieSlice';
+import {
+  Card,
+  CardContent,
+  Typography,
+  CardMedia,
+  Box,
+  IconButton,
+} from '@mui/material';
+import { Bookmark, BookmarkBorder } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
-import {BookmarkBorder,Bookmark} from '@mui/icons-material';
-import {IconButton} from '@mui/material';
+import { addToWatchlist, removeFromWatchlist } from '../redux/movieSlice';
 import { useNavigate } from 'react-router-dom';
 
-function MovieCard({ movie }) {
-    const dispatch = useDispatch();
-    const watchlist = useSelector((state) => state.movies.watchlist);
-    const isInWatchlist = watchlist.some((m) => m.id === movie.id);
-    const navigate = useNavigate();
-    const handleCardClick = () => {
-      navigate(`/movie/${movie.id}`); 
-    };
-    const handleWatchlistClick = (e) => {
-        e.stopPropagation();
-        if (isInWatchlist) {
-          dispatch(removeFromWatchlist(movie));
-        } else {
-          dispatch(addToWatchlist(movie));
-        }
-      };  
+// Define the Movie type based on the data structure expected
+interface Movie {
+  id: number;
+  title: string;
+  poster_path: string;
+  vote_average: number | null;
+}
+
+interface MovieCardProps {
+  movie: Movie;
+}
+
+const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // Access watchlist state from Redux store
+  const watchlist = useSelector((state: any) => state.movies.watchlist);
+  const isInWatchlist = watchlist.some((m: Movie) => m.id === movie.id);
+
+  // Handle click for adding/removing movie from watchlist
+  const handleWatchlistClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent the click from triggering the card's onClick
+    if (isInWatchlist) {
+      dispatch(removeFromWatchlist(movie));
+    } else {
+      dispatch(addToWatchlist(movie));
+    }
+  };
+
+  // Handle navigation to movie details page
+  const handleCardClick = () => {
+    navigate(`/movie/${movie.id}`); // Navigate to the MovieDetails page with the movie ID
+  };
+
   return (
-    <Card onClick={handleCardClick}
+    <Card
       sx={{
-        height: '100%',
         display: 'flex',
         flexDirection: 'column',
         cursor: 'pointer',
-        borderRadius: 2,
         boxShadow: 3,
-        position: 'relative', // Ensure the IconButton is positioned correctly
+        borderRadius: 2,
+        overflow: 'hidden',
+        height: 'auto',
+        transition: 'transform 0.2s',
+        '&:hover': {
+          transform: 'scale(1.05)',
+        },
+        position: 'relative',
       }}
+      onClick={handleCardClick} // Navigate to MovieDetails on card click
     >
       <CardMedia
         component="img"
-        height="250"
-        image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} // Use the movie poster URL
+        image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
         alt={movie.title}
-        sx={{ objectFit: 'cover', borderRadius: 2 }}
+        sx={{
+          height: 250,
+          objectFit: 'cover',
+          width: '100%',
+        }}
       />
-      <CardContent sx={{ flexGrow: 1 }}>
-        <Typography gutterBottom variant="h6" component="div">
+      <CardContent sx={{ flexGrow: 1, padding: 2 }}>
+        <Typography
+          gutterBottom
+          variant="h6"
+          component="div"
+          sx={{
+            fontWeight: 'bold',
+            color: 'text.primary',
+            fontSize: '1.1rem',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          }}
+        >
           {movie.title}
         </Typography>
-        <Typography variant="body2" color="textSecondary">
-          {movie.release_date ? movie.release_date.slice(0, 4) : 'N/A'} {/* Display release year */}
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ fontSize: '0.875rem' }}
+          >
+            Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A'} / 10
+          </Typography>
+        </Box>
       </CardContent>
+
+      {/* Watchlist Icon */}
       <IconButton
         onClick={handleWatchlistClick}
         sx={{
           position: 'absolute',
           top: 8,
           right: 8,
-          color: isInWatchlist ? 'primary.main' : 'text.secondary', // Change icon color based on watchlist status
+          color: isInWatchlist ? 'primary.main' : 'text.secondary',
         }}
       >
         {isInWatchlist ? <Bookmark /> : <BookmarkBorder />}
       </IconButton>
     </Card>
   );
-}
+};
 
 export default MovieCard;
 
+
 ```
 
 
-### `src/App.js (Manual)`
-```javascript
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/search" element={<Search />} />
-              <Route path='/movie/:id' element={<MovieDetails />} />
-              <Route path="/watchlist" element={<Watchlist />} />
-            </Routes>
-```
+
 
 ### `src/App.js (main)`
 
 ```javascript
-import React from 'react';
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider, CssBaseline, Box } from '@mui/material';
+import { ThemeProvider, CssBaseline, Box, Toolbar } from '@mui/material';
 import { Provider } from 'react-redux';
 import theme from './styles/theme';
-import Navbar from './components/NavBar';
 import { store } from './redux/store';
-
-import GenreDrawer from './components/GenreDrawer';
-import Home from './pages/Home';
 import Search from './pages/Search';
-import Watchlist from './pages/Watchlist';
+import Home from './components/Home';
+import MovieDetails from './components/MovieDetails';
+import Watchlist from './pages/WatchList';
+import Navbar from './components/NavBar';
+import GenreDrawer from './components/GenreDrawer';
+
+const drawerWidth = 240; // Must match the width set in GenreDrawer
 
 function App() {
   return (
@@ -217,41 +243,44 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Router>
+          {/* Navbar: fixed position to remain at the top */}
           <Navbar />
           <Box sx={{ display: 'flex', mt: 8 }}>
-          {/* Sidebar */}
-          <Box
-            component="aside"
-            sx={{
-              width: { xs: '100%', sm: '240px' }, // Full width on small screens, fixed on larger
-              flexShrink: 0,
-              position: 'fixed',
-              height: 'calc(100vh - 64px)', // Subtract Navbar height
-              overflowY: 'auto',
-              overflowX:'hidden',
-              borderRight: '1px solid #e0e0e0',
-              bgcolor: 'background.paper',
-            }}
-          >
-            <GenreDrawer />
-          </Box>
+            {/* Sidebar: GenreDrawer */}
+            <Box
+              component="aside"
+              sx={{
+                width: { xs: '100%', sm: `${drawerWidth}px` }, // Full width on small screens, fixed on larger
+                flexShrink: 0,
+                position: 'fixed',
+                top: '64px', // Move the drawer down to start below the navbar
+                height: 'calc(100vh - 64px)', // Subtract Navbar height
+                overflowY: 'auto',
+                borderRight: '1px solid #e0e0e0',
+                bgcolor: 'background.paper',
+              }}
+            >
+              <GenreDrawer />
+            </Box>
 
-          {/* Main Content */}
-          <Box
-            component="main"
-            sx={{
-              flexGrow: 1,
-              ml: { sm: '240px' }, // Leave space for the sidebar on larger screens
-              p: 3,
-            }}
-          >
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/search" element={<Search />} />
-              <Route path="/watchlist" element={<Watchlist />} />
-            </Routes>
+            {/* Main Content: Adjust content area based on sidebar */}
+            <Box
+              component="main"
+              sx={{
+                flexGrow: 1,
+                ml: { sm: `${drawerWidth}px` }, // Leave space for the sidebar on larger screens
+                p: 3,
+              }}
+            >
+              <Toolbar /> {/* Adds space below the navbar for content */}
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/search" element={<Search />} />
+                <Route path="/watchlist" element={<Watchlist />} />
+                <Route path="/movie/:id" element={<MovieDetails />} />
+              </Routes>
+            </Box>
           </Box>
-        </Box>
         </Router>
       </ThemeProvider>
     </Provider>
@@ -259,4 +288,5 @@ function App() {
 }
 
 export default App;
+
 ```
