@@ -1,4 +1,4 @@
-### `src/pages/App.js(main)`
+### `src/pages/App.tsx(main)`
 ```javascript
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
