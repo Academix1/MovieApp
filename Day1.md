@@ -14,3 +14,6 @@ function App() {
 
 export default App;
 ```
+```cmd
+npm create vite@latest moviedb --template react
+```
