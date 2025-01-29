@@ -1,4 +1,4 @@
-### `src/pages/MovieDetails.js (Type Simulator)`
+### `src/pages/MovieDetails.tsx`
 
 ```javascript
 import React, { useState, useEffect } from 'react';
@@ -88,7 +88,7 @@ const MovieDetails: React.FC = () => {
 export default MovieDetails;
 
 ```
-### `src/componenets/MovieCard.js(Manual)`
+### `src/componenets/MovieCard.tsx`
 
 ```javascript
 import React from 'react';
@@ -219,7 +219,7 @@ export default MovieCard;
 
 
 
-### `src/App.js (main)`
+### `src/App.tsx (main)`
 
 ```javascript
 
