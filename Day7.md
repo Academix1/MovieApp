@@ -130,7 +130,6 @@ export default Loading;
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Grid, Typography } from '@mui/material';
 import { fetchPopularMovies, fetchTrendingMovies } from '../redux/movieSlice';
-import Loading from '../components/Loading';
 import MovieCard from '../components/MovieCard';
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
@@ -145,7 +144,7 @@ function Home() {
   }, [dispatch]);
 
   if (loading) {
-    return <Loading message="Fetching movies..." />;
+    return "Loading"
   }
 
   return (
