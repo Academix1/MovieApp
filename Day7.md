@@ -128,8 +128,10 @@ export default Loading;
 ````javascript
   import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+//[pause]
 import { Container, Grid, Typography } from '@mui/material';
 import { fetchPopularMovies, fetchTrendingMovies } from '../redux/movieSlice';
+//[pause]
 import MovieCard from '../components/MovieCard';
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
@@ -152,11 +154,17 @@ function Home() {
       <Typography variant="h4" gutterBottom>
         Popular Movies
       </Typography>
+//[pause]
       <Grid container spacing={3} sx={{ mb: 4 }}>
+//[pause]
   {popular.slice(0, 6).map((movie) => (
+//[pause]
     <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
+//[pause]
       <MovieCard movie={movie} />
+//[pause]
     </Grid>
+//[pause]
   ))}
 </Grid>
 
@@ -164,13 +172,20 @@ function Home() {
       <Typography variant="h4" gutterBottom>
         Trending Now
       </Typography>
+//[pause]
       <Grid container spacing={3}>
+//[pause]
   {trending.slice(0, 6).map((movie) => (
+//[pause]
     <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
+//[pause]
       <MovieCard movie={movie} />
+//[pause]
     </Grid>
+//[pause]
   ))}
 </Grid>
+
     </Container>
   );
 }
