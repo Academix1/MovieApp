@@ -47,38 +47,6 @@ return (
 export default MovieCard;
 
 ```
-### `src/pages/Loading.js (Type Simulator) `
-
-```javascript
-import React from 'react';
-//[pause]
-import { Box, CircularProgress, Typography } from '@mui/material';
-//[pause]
-
-function Loading({ message = 'Loading...' }) {
-//[pause]
-  return (
-//[pause]
-<Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '50vh',
-      }}
-    >
-//[pause]
-      <CircularProgress size={40} sx={{ mb: 2 }} />
-      <Typography color="text.secondary">{message}</Typography>
-//[pause]
-    </Box>
-  );
-}
-//[pause]
-export default Loading;
-```
-
 
 ### `src/pages/Home.js(Type Simulator) `
 
