@@ -47,49 +47,36 @@ return (
 export default MovieCard;
 
 ```
-
-### `src/pages/Home.js(Type Simulator) `
-
-```javascript
-
+### `src/components/Loading.js`
+```js
+import React from 'react';
+//[pause]
+import { Box, CircularProgress, Typography } from '@mui/material';
+//[pause]
+function Loading({ message = 'Loading...' }) {
+//[pause]
   return (
 //[pause]
-    <Container sx={{ py: 4 }}>
+    <Box
 //[pause]
-      <Typography variant="h4" gutterBottom>
-        Popular Movies
-      </Typography>
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '50vh',
+      }}
+    >
 //[pause]
-
-      <Grid container spacing={3} sx={{ mb: 4 }}>
+      <CircularProgress size={40} sx={{ mb: 2 }} />
 //[pause]
-  {popular.slice(0, 6).map((movie) => (
+      <Typography color="text.secondary">{message}</Typography>
 //[pause]
-    <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
-//[pause]
-      <MovieCard movie={movie} />
-    </Grid>
-  ))}
-</Grid>
-
-//[pause]
-      <Typography variant="h4" gutterBottom>
-        Trending Now
-      </Typography>
-//[pause]
-      <Grid container spacing={3}>
-  {trending.slice(0, 6).map((movie) => (
-    <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
-//[pause]
-      <MovieCard movie={movie} />
-    </Grid>
-  ))}
-</Grid>
-//[pause]
-    </Container>
+    </Box>
   );
 }
-
+//[pause]
+export default Loading;
 ```
 
 ### src/pages/Home.js(main)
@@ -101,6 +88,8 @@ import { Container, Grid, Typography } from '@mui/material';
 import { fetchPopularMovies, fetchTrendingMovies } from '../redux/movieSlice';
 //[pause]
 import MovieCard from '../components/MovieCard';
+//[pause]
+import Loading from '../components/Loading';
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
@@ -113,8 +102,9 @@ function Home() {
     dispatch(fetchTrendingMovies());
   }, [dispatch]);
 
-  if (loading) {
-    return "Loading"
+//[pause]
+    if (loading) {
+    return <Loading message="Fetching movies..." />;
   }
 
   return (
