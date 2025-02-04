@@ -213,7 +213,7 @@ const movieSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      builder.addCase(searchMoviesAsync.fulfilled, (state, action) => {
+       .addCase(searchMoviesAsync.fulfilled, (state, action) => {
         state.searchResults = action.payload;
       })
       .addCase(fetchTrendingMovies.fulfilled, (state, action) => {
