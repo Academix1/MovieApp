@@ -2,11 +2,8 @@
 ### ` src/components/GenreDrawer.js(Type Simulator)`
 
 ```javascript
-//[pause]
-  import React, { useEffect } from 'react';
-//[pause]
+ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-//[pause]
 import {
   Drawer,
   List,
@@ -19,7 +16,7 @@ import {
   Box,
 } from '@mui/material';
 //[pause]
-import { fetchGenres, setSelectedGenre } from '../redux/MovieSlice';
+import { clearSelectedGenre, fetchGenres, setSelectedGenre } from '../redux/movieSlice';
 //[pause]
 const DRAWER_WIDTH = 240;
 //[pause]
@@ -30,20 +27,29 @@ function GenreDrawer() {
   const theme = useTheme();
 //[pause]
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  //[pause]
+//[pause]
   const genres = useSelector((state) => state.movies.genres);
 //[pause]
- const selectedGenre = useSelector((state) => state.movies.selectedGenre);
+  const selectedGenre = useSelector((state) => state.movies.selectedGenre);
 //[pause]
   useEffect(() => {
+//[pause]
     dispatch(fetchGenres());
+//[pause]
   }, [dispatch]);
 //[pause]
-
   const handleGenreClick = (genre) => {
-      dispatch(setSelectedGenre(genre));
-  };
 //[pause]
+    if (selectedGenre?.id === genre.id) {
+//[pause]
+      dispatch(clearSelectedGenre());
+//[pause]
+    } else {
+      dispatch(setSelectedGenre(genre)); 
+    }
+  };
+//[pause]  
+
   const drawer = (
     <>
       <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
@@ -53,15 +59,12 @@ function GenreDrawer() {
       </Box>
 //[pause]
       <List>
-//[pause]
         {genres.map((genre) => (
 //[pause]
           <ListItem key={genre.id} disablePadding>
 //[pause]
             <ListItemButton
-//[pause]
               selected={selectedGenre?.id === genre.id}
-//[pause]
               onClick={() => handleGenreClick(genre)}
             >
 //[pause]
@@ -74,129 +77,88 @@ function GenreDrawer() {
     </>
   );
 //[pause]
+
   return (
-//[pause]
     <Box
       component="nav"
       sx={{ width: { sm: DRAWER_WIDTH }, flexShrink: { sm: 0 } }}
     >
-//[pause]
       {isMobile ? (
-//[pause]
         <Drawer
           variant="temporary"
-//[pause]
           open={false} // This will be controlled by a state in the parent component
-//[pause]
           ModalProps={{
-//[pause]
             keepMounted: true, // Better open performance on mobile
-//[pause]
           }}
-//[pause]
           sx={{
-//[pause]
             display: { xs: 'block', sm: 'none' },
-//[pause]
             '& .MuiDrawer-paper': {
-//[pause]
               boxSizing: 'border-box',
-//[pause]
               width: DRAWER_WIDTH,
             },
           }}
         >
-//[pause]
           {drawer}
         </Drawer>
-//[pause]
       ) : (
-//[pause]
         <Drawer
           variant="permanent"
-//[pause]
           sx={{
             display: { xs: 'none', sm: 'block' },
-//[pause]
             '& .MuiDrawer-paper': {
-//[pause]
               boxSizing: 'border-box',
-//[pause]
               width: DRAWER_WIDTH,
-//[pause]
               borderRight: '1px solid rgba(0, 0, 0, 0.12)',
-//[pause]
               position: 'relative',
-//[pause]
               height: '100vh',
-//[pause]
             },
-//[pause]
           }}
-//[pause]
           open
         >
           {drawer}
-//[pause]
         </Drawer>
-//[pause]
       )}
     </Box>
   );
 }
-//[pause]
+
 export default GenreDrawer;
+
 ```
 
 ### ` src/redux/MovieSlice.js(main) `
 
 ```javascript
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getPopularMovies, getTrendingMovies } from '../utils/api';
 import api  from '../utils/api';
 
-//[pause]
 export const fetchPopularMovies = createAsyncThunk(
-//[pause]
   'movies/fetchPopular',
-//[pause]
   async () => {
     const response = await getPopularMovies();
-//[pause]
     return response.data.results;
-//[pause]
   }
 );
-//[pause]
 export const searchMoviesAsync = createAsyncThunk(
-//[pause]
     'movies/search',
-//[pause]
     async (query) => {
-//[pause]
       const response = await api.get(`/search/movie?query=${query}`);
-//[pause]
       return response.data.results;
     }
   );
 //[pause]
   export const fetchGenres = createAsyncThunk(
-//[pause]
     'movies/fetchGenres',
 //[pause]
     async () => {
-//[pause]
       const response = await api.get('/genre/movie/list');
 //[pause]
       return response.data.genres;
-//[pause]
     }
   );
-  
   //[pause]
   export const fetchMoviesByGenre = createAsyncThunk(
-//[pause]
     'movies/fetchMoviesByGenre',
 //[pause]
     async (genreId) => {
@@ -206,6 +168,7 @@ export const searchMoviesAsync = createAsyncThunk(
       return response.data.results;
     }
   );
+//[pause]
 
 export const fetchTrendingMovies = createAsyncThunk(
   'movies/fetchTrending',
@@ -231,7 +194,6 @@ const movieSlice = createSlice({
     genreMovies: [],
 //[pause]
     error: null,
-//[pause]
   },
   reducers: {
     addToWatchlist: (state, action) => {
@@ -244,7 +206,7 @@ const movieSlice = createSlice({
         
       },
 //[pause]
-  setSelectedGenre: (state, action) => {
+      setSelectedGenre: (state, action) => {
         state.selectedGenre = action.payload;
       },
 //[pause]
@@ -252,8 +214,8 @@ const movieSlice = createSlice({
         state.selectedGenre = null;
         state.genreMovies = [];
       },
-//[pause]
   },
+//[pause]
 
   extraReducers: (builder) => {
     builder
@@ -290,14 +252,11 @@ const movieSlice = createSlice({
       .addCase(fetchMoviesByGenre.rejected, (state, action) => {
         state.error = action.error.message;
       });
-//[pause]
   },
 });
 export const {
     addToWatchlist,
-//[pause]
     setSelectedGenre,
-//[pause]
     clearSelectedGenre,
     removeFromWatchlist,
   } = movieSlice.actions;
@@ -329,41 +288,35 @@ function App() {
         <Router>
           <Navbar />
 //[pause]
-         <Box sx={{ display: 'flex', mt: 8 }}>
+          <Box sx={{ display: 'flex', mt: 8 }}>
           {/* Sidebar */}
-    //[pause]
-        <Box
+//[pause]
+          <Box
             component="aside"
+//[pause]
             sx={{
-//[pause]
               width: { xs: '100%', sm: '240px' }, // Full width on small screens, fixed on larger
-//[pause]
               flexShrink: 0,
-//[pause]
               position: 'fixed',
-//[pause]
               height: 'calc(100vh - 64px)', // Subtract Navbar height
-//[pause]
               overflowY: 'auto',
-//[pause]
+              scrollbarColor: 'rgba(23, 22, 22, 0.2) rgb(16, 15, 15)',
               overflowX:'hidden',
-//[pause]
               borderRight: '1px solid #e0e0e0',
-//[pause]
               bgcolor: 'background.paper',
-//[pause]
             }}
           >
-            <GenreDrawer />
-          </Box>
-
-        //[pause]
-          <Box
 //[pause]
+            <GenreDrawer />
+//[pause]
+          </Box>
+//[pause]
+          {/* Main Content */}
+          <Box
             component="main"
             sx={{
               flexGrow: 1,
-              ml: { sm: '240px' },
+              ml: { sm: '240px' }, // Leave space for the sidebar on larger screens
               p: 3,
             }}
           >
@@ -373,6 +326,7 @@ function App() {
               <Route path="/search" element={<Search />} />
               <Route path="/watchlist" element={<Watchlist />} />
             </Routes>
+//[pause]
           </Box>
         </Box>
         </Router>
@@ -391,7 +345,6 @@ export default App;
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Grid, Typography } from '@mui/material';
-//[pause]
 import { fetchPopularMovies, fetchTrendingMovies,fetchMoviesByGenre } from '../redux/movieSlice';
 import Loading from '../components/Loading';
 import MovieCard from '../components/MovieCard';
@@ -399,38 +352,34 @@ import MovieCard from '../components/MovieCard';
 function Home() {
     const dispatch = useDispatch();
 //[pause]
-  const {
+    const {
       popular,
       trending,
       genreMovies,
       selectedGenre,
       loading,
     } = useSelector((state) => state.movies);
-//[pause]  
+//[pause]
     useEffect(() => {
 //[pause]
       if (selectedGenre) {
-//[pause]
         dispatch(fetchMoviesByGenre(selectedGenre.id));
-//[pause]
-      } else {
-//[pause]
-        dispatch(fetchPopularMovies());
-//[pause]
-        dispatch(fetchTrendingMovies());
       }
 //[pause]
+ else {
+        dispatch(fetchPopularMovies());
+        dispatch(fetchTrendingMovies());
+      }
     }, [dispatch, selectedGenre]);
-
+//[pause]
   if (loading) {
-//[pause]
     return <Loading message="Fetching movies..." />;
-//[pause]
   }
+
+//[pause]
   if (selectedGenre) {
 //[pause]
     return (
-//[pause]
       <Container sx={{ py: 4 }}>
 //[pause]
         <Typography variant="h4" gutterBottom>
@@ -442,17 +391,16 @@ function Home() {
           {genreMovies.map((movie) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
               <MovieCard movie={movie} />
-//[pause]
             </Grid>
           ))}
 //[pause]
         </Grid>
+//[pause]
       </Container>
     );
   }
-
+//[pause]
   return (
-
     <Container sx={{ py: 4 }}>
       <Typography variant="h4" gutterBottom>
         Popular Movies
