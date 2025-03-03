@@ -23,3 +23,8 @@ npm create vite@latest moviedb --template react-ts-swc
 ```cmd
 npm install
 ```
+### Running the App
+
+```cmd
+npm run dev
+```
