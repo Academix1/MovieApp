@@ -14,6 +14,12 @@ function App() {
 
 export default App;
 ```
+### Creating a REACT-APP
 ```cmd
 npm create vite@latest moviedb --template react-ts-swc
+```
+
+### Installing Base Packages
+```cmd
+npm install
 ```
