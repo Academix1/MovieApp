@@ -15,5 +15,5 @@ function App() {
 export default App;
 ```
 ```cmd
-npm create vite@latest moviedb --template react
+npm create vite@latest moviedb --template react-ts-swc
 ```
