@@ -1,145 +1,138 @@
 ### `src/utils/api.ts (Vite(TS)) `
 
 ```javascript
-import axios from 'axios';
+import axios from 'axios'; //[pause]
 
-// Create axios instance
-const api = axios.create({
-  baseURL: 'https://api.themoviedb.org/3',
-  params: {
-    api_key: import.meta.env.VITE_TMDB_ACCESS_KEY, // Use Vite environment variable
-  },
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+const api = axios.create({ //[pause]
+  baseURL: 'https://api.themoviedb.org/3', //[pause]
+  params: { //[pause]
+    api_key: import.meta.env.VITE_TMDB_ACCESS_KEY, //[pause]
+  }, //[pause]
+  headers: { //[pause]
+    'Content-Type': 'application/json', //[pause]
+  }, //[pause]
+}); //[pause]
 
-// Function to fetch popular movies
-export const getPopularMovies = () => api.get('/movie/popular');
+export const getPopularMovies = () => api.get('/movie/popular'); //[pause]
 
-// Function to fetch trending movies
-export const getTrendingMovies = () => api.get('/trending/movie/day');
+export const getTrendingMovies = () => api.get('/trending/movie/day'); //[pause]
 
-export default api;
+export default api; //[pause]
 ```
 
 ### `src/redux/movieSlice.ts (VITE) `
 
 ```javascript
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { getPopularMovies, getTrendingMovies } from '../utils/api'; // Ensure correct path to api.ts
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'; //[pause]
+import { getPopularMovies, getTrendingMovies } from '../utils/api'; //[pause]
 
-// Define the initial state
-interface MovieState {
-  popularMovies: any[];
-  trendingMovies: any[];
-  loading: boolean;
-  error: string | null;
-}
+interface MovieState { //[pause]
+  popularMovies: any[]; //[pause]
+  trendingMovies: any[]; //[pause]
+  loading: boolean; //[pause]
+  error: string | null; //[pause]
+} //[pause]
 
-const initialState: MovieState = {
-  popularMovies: [],
-  trendingMovies: [],
-  loading: false,
-  error: null,
-};
+const initialState: MovieState = { //[pause]
+  popularMovies: [], //[pause]
+  trendingMovies: [], //[pause]
+  loading: false, //[pause]
+  error: null, //[pause]
+}; //[pause]
 
-// Define async actions using createAsyncThunk
-export const fetchPopularMovies = createAsyncThunk(
-  'movies/fetchPopularMovies',
-  async () => {
-    const response = await getPopularMovies();
-    return response.data.results;
-  }
-);
+export const fetchPopularMovies = createAsyncThunk( //[pause]
+  'movies/fetchPopularMovies', //[pause]
+  async () => { //[pause]
+    const response = await getPopularMovies(); //[pause]
+    return response.data.results; //[pause]
+  } //[pause]
+); //[pause]
 
-export const fetchTrendingMovies = createAsyncThunk(
-  'movies/fetchTrendingMovies',
-  async () => {
-    const response = await getTrendingMovies();
-    return response.data.results;
-  }
-);
+export const fetchTrendingMovies = createAsyncThunk( //[pause]
+  'movies/fetchTrendingMovies', //[pause]
+  async () => { //[pause]
+    const response = await getTrendingMovies(); //[pause]
+    return response.data.results; //[pause]
+  } //[pause]
+); //[pause]
 
-// Create the slice
-const movieSlice = createSlice({
-  name: 'movies',
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchPopularMovies.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchPopularMovies.fulfilled, (state, action: PayloadAction<any[]>) => {
-        state.loading = false;
-        state.popularMovies = action.payload;
-      })
-      .addCase(fetchPopularMovies.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || 'Failed to fetch popular movies';
-      })
-      .addCase(fetchTrendingMovies.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchTrendingMovies.fulfilled, (state, action: PayloadAction<any[]>) => {
-        state.loading = false;
-        state.trendingMovies = action.payload;
-      })
-      .addCase(fetchTrendingMovies.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || 'Failed to fetch trending movies';
-      });
-  },
-});
+const movieSlice = createSlice({ //[pause]
+  name: 'movies', //[pause]
+  initialState, //[pause]
+  reducers: {}, //[pause]
+  extraReducers: (builder) => { //[pause]
+    builder //[pause]
+      .addCase(fetchPopularMovies.pending, (state) => { //[pause]
+        state.loading = true; //[pause]
+      }) //[pause]
+      .addCase(fetchPopularMovies.fulfilled, (state, action: PayloadAction<any[]>) => { //[pause]
+        state.loading = false; //[pause]
+        state.popularMovies = action.payload; //[pause]
+      }) //[pause]
+      .addCase(fetchPopularMovies.rejected, (state, action) => { //[pause]
+        state.loading = false; //[pause]
+        state.error = action.error.message || 'Failed to fetch popular movies'; //[pause]
+      }) //[pause]
+      .addCase(fetchTrendingMovies.pending, (state) => { //[pause]
+        state.loading = true; //[pause]
+      }) //[pause]
+      .addCase(fetchTrendingMovies.fulfilled, (state, action: PayloadAction<any[]>) => { //[pause]
+        state.loading = false; //[pause]
+        state.trendingMovies = action.payload; //[pause]
+      }) //[pause]
+      .addCase(fetchTrendingMovies.rejected, (state, action) => { //[pause]
+        state.loading = false; //[pause]
+        state.error = action.error.message || 'Failed to fetch trending movies'; //[pause]
+      }); //[pause]
+  }, //[pause]
+}); //[pause]
 
-export default movieSlice.reducer;
+export default movieSlice.reducer; //[pause]
 ```
 
 
 ### `src/pages/Home.tsx (VITE)`
 
 ```javascript
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchPopularMovies, fetchTrendingMovies } from '../redux/movieSlice'; // Ensure the correct path
-import { RootState, AppDispatch } from '../redux/store'; // Import AppDispatch type
+import React, { useEffect } from 'react'; //[pause]
+import { useDispatch, useSelector } from 'react-redux'; //[pause]
+import { fetchPopularMovies, fetchTrendingMovies } from '../redux/movieSlice'; //[pause]
+import { RootState, AppDispatch } from '../redux/store'; //[pause]
 
-const MovieList: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>(); // Use typed dispatch
-  const { popularMovies, trendingMovies, loading, error } = useSelector(
-    (state: RootState) => state.movies
-  );
+const MovieList: React.FC = () => { //[pause]
+  const dispatch = useDispatch<AppDispatch>(); //[pause]
+  const { popularMovies, trendingMovies, loading, error } = useSelector( //[pause]
+    (state: RootState) => state.movies //[pause]
+  ); //[pause]
 
-  useEffect(() => {
-    dispatch(fetchPopularMovies()); // Dispatch async action
-    dispatch(fetchTrendingMovies());
-  }, [dispatch]);
+  useEffect(() => { //[pause]
+    dispatch(fetchPopularMovies()); //[pause]
+    dispatch(fetchTrendingMovies()); //[pause]
+  }, [dispatch]); //[pause]
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) return <p>Loading...</p>; //[pause]
+  if (error) return <p>{error}</p>; //[pause]
 
-  return (
-    <div>
-      <h2>Popular Movies</h2>
-      <div>
-        {popularMovies.map((movie: any) => (
-          <div key={movie.id}>{movie.title}</div>
-        ))}
-      </div>
+  return ( //[pause]
+    <div> //[pause]
+      <h2>Popular Movies</h2> //[pause]
+      <div> //[pause]
+        {popularMovies.map((movie: any) => ( //[pause]
+          <div key={movie.id}>{movie.title}</div> //[pause]
+        ))} //[pause]
+      </div> //[pause]
 
-      <h2>Trending Movies</h2>
-      <div>
-        {trendingMovies.map((movie: any) => (
-          <div key={movie.id}>{movie.title}</div>
-        ))}
-      </div>
-    </div>
-  );
-};
+      <h2>Trending Movies</h2> //[pause]
+      <div> //[pause]
+        {trendingMovies.map((movie: any) => ( //[pause]
+          <div key={movie.id}>{movie.title}</div> //[pause]
+        ))} //[pause]
+      </div> //[pause]
+    </div> //[pause]
+  ); //[pause]
+}; //[pause]
 
-export default MovieList;
-
+export default MovieList; //[pause]
 ```
 
 ---
