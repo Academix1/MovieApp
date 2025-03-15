@@ -31,106 +31,104 @@ export default Loading;
   
 ### `MovieCard.ts (VITE)`
 ```ts
-import React from 'react';
-import { Card, CardContent, Typography, CardMedia } from '@mui/material';
+import React from 'react'; //[pause]
+import { Card, CardContent, Typography, CardMedia } from '@mui/material'; //[pause]
 
-// Define the Movie type based on the data structure expected
-interface Movie {
-  title: string;
-  poster_path: string;
-  vote_average: number | null;
-}
+interface Movie { //[pause]
+  title: string; //[pause]
+  poster_path: string; //[pause]
+  vote_average: number | null; //[pause]
+} //[pause]
 
-interface MovieCardProps {
-  movie: Movie;
-}
+interface MovieCardProps { //[pause]
+  movie: Movie; //[pause]
+} //[pause]
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
-  return (
-    <Card
-      sx={{
-        height: '100%',  // Ensures the card takes full available height
-        display: 'flex',
-        flexDirection: 'column',
-        cursor: 'pointer',
-        boxShadow: 3,  // Optional: Add a slight shadow for better visual appeal
-        borderRadius: 2,  // Rounded corners for the card
-        overflow: 'hidden', // Prevents overflow from the image
-      }}
-    >
-      <CardMedia
-        component="img"
-        image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} // Assuming poster_path is the key in your movie object
-        alt={movie.title}
-        sx={{
-          height: 350,  // Reduced height for the image
-          objectFit: 'cover',  // Maintains aspect ratio while covering the area
-          width: '100%',  // Ensures the image takes the full width of the card
-        }}
-      />
-      <CardContent sx={{ flexGrow: 1, padding: 1 }}>
-        <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
-          {movie.title}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A'} / 10
-        </Typography>
-      </CardContent>
-    </Card>
-  );
-}
+const MovieCard: React.FC<MovieCardProps> = ({ movie }) => { //[pause]
+  return ( //[pause]
+    <Card //[pause]
+      sx={{ //[pause]
+        height: '100%', //[pause]
+        display: 'flex', //[pause]
+        flexDirection: 'column', //[pause]
+        cursor: 'pointer', //[pause]
+        boxShadow: 3, //[pause]
+        borderRadius: 2, //[pause]
+        overflow: 'hidden', //[pause]
+      }} //[pause]
+    > //[pause]
+      <CardMedia //[pause]
+        component="img" //[pause]
+        image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} //[pause]
+        alt={movie.title} //[pause]
+        sx={{ //[pause]
+          height: 350, //[pause]
+          objectFit: 'cover', //[pause]
+          width: '100%', //[pause]
+        }} //[pause]
+      /> //[pause]
+      <CardContent sx={{ flexGrow: 1, padding: 1 }}> //[pause]
+        <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}> //[pause]
+          {movie.title} //[pause]
+        </Typography> //[pause]
+        <Typography variant="body2" color="text.secondary"> //[pause]
+          Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A'} / 10 //[pause]
+        </Typography> //[pause]
+      </CardContent> //[pause]
+    </Card> //[pause]
+  ); //[pause]
+} //[pause]
 
 export default MovieCard;
 ```
 
 ### `Home.tsx` (VITE)
 ```js
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchPopularMovies, fetchTrendingMovies } from '../redux/movieSlice'; // Ensure the correct path
-import { RootState, AppDispatch } from '../redux/store'; // Import AppDispatch type
-import MovieCard from './MovieCard'; // Import MovieCard
+import React, { useEffect } from 'react'; //[pause]
+import { useDispatch, useSelector } from 'react-redux'; //[pause]
+import { fetchPopularMovies, fetchTrendingMovies } from '../redux/movieSlice'; //[pause]
+import { RootState, AppDispatch } from '../redux/store'; //[pause]
+import MovieCard from './MovieCard'; //[pause]
 
-const Home: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>(); // Use typed dispatch
-  const { popularMovies, trendingMovies, loading, error } = useSelector(
-    (state: RootState) => state.movies
-  );
+const Home: React.FC = () => { //[pause]
+  const dispatch = useDispatch<AppDispatch>(); //[pause]
+  const { popularMovies, trendingMovies, loading, error } = useSelector( //[pause]
+    (state: RootState) => state.movies //[pause]
+  ); //[pause]
 
-  useEffect(() => {
-    dispatch(fetchPopularMovies()); // Dispatch async action
-    dispatch(fetchTrendingMovies());
-  }, [dispatch]);
+  useEffect(() => { //[pause]
+    dispatch(fetchPopularMovies()); //[pause]
+    dispatch(fetchTrendingMovies()); //[pause]
+  }, [dispatch]); //[pause]
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) return <p>Loading...</p>; //[pause]
+  if (error) return <p>{error}</p>; //[pause]
 
-  return (
-    <div>
-      <h2>Popular Movies</h2>
-      <div style={gridStyle}>
-        {popularMovies.map((movie: any) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))}
-      </div>
+  return ( //[pause]
+    <div> //[pause]
+      <h2>Popular Movies</h2> //[pause]
+      <div style={gridStyle}> //[pause]
+        {popularMovies.map((movie: any) => ( //[pause]
+          <MovieCard key={movie.id} movie={movie} /> //[pause]
+        ))} //[pause]
+      </div> //[pause]
 
-      <h2>Trending Movies</h2>
-      <div style={gridStyle}>
-        {trendingMovies.map((movie: any) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))}
-      </div>
-    </div>
-  );
-};
+      <h2>Trending Movies</h2> //[pause]
+      <div style={gridStyle}> //[pause]
+        {trendingMovies.map((movie: any) => ( //[pause]
+          <MovieCard key={movie.id} movie={movie} /> //[pause]
+        ))} //[pause]
+      </div> //[pause]
+    </div> //[pause]
+  ); //[pause]
+}; //[pause]
 
-// Style for displaying 4 items per row and proper indentation
-const gridStyle = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(4, 1fr)', // Create 4 equal-width columns
-  gap: '16px', // Space between cards
-  padding: '0 16px', // Indentation for better appearance
-};
+const gridStyle = { //[pause]
+  display: 'grid', //[pause]
+  gridTemplateColumns: 'repeat(4, 1fr)', //[pause]
+  gap: '16px', //[pause]
+  padding: '0 16px', //[pause]
+}; //[pause]
 
 export default Home;
 ```
