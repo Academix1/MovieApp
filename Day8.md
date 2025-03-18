@@ -165,10 +165,10 @@ const Navbar: React.FC = () => {
         <Typography variant="h6" component="div">{/*[pause] App title */}
           Movie App
         </Typography>
-        <Box component="form" onSubmit={handleSearch} sx={{ ml: 'auto' }}>{/*[pause] Search form with left margin auto for alignment */}
+        <Box component="form" onSubmit={handleSearch} sx={{ ml: 'auto' }}>//[pause] Search form with left margin auto for alignment
           <Search>{/*[pause] Search bar container */}
-            <SearchIconWrapper>{/*[pause] Wrapper for search icon */}
-              <SearchIcon />{/*[pause] Search icon */}
+            <SearchIconWrapper>//[pause]
+              <SearchIcon />//[pause]
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search..."//[pause] Placeholder text inside the input field
