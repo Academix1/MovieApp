@@ -188,79 +188,83 @@ export default Navbar;//[pause] Exports Navbar component for use in other files
 
 ### MovieSlice.tsx
 ```js
-import React, { useState } from 'react';import { useNavigate } from 'react-router-dom';import { AppBar, Toolbar, Typography, Box, InputBase, IconButton } from '@mui/material';import { styled, alpha } from '@mui/material/styles';import SearchIcon from '@mui/icons-material/Search';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';import { getPopularMovies, getTrendingMovies } from '../utils/api';import api from '../utils/api';
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: theme.spacing(2),
-  width: 'auto',
-}));
+interface MovieState {
+  popularMovies: any[];
+  trendingMovies: any[];
+  searchResults: any[];//[pause]Manages search results
+  loading: boolean;
+  error: string | null;
+}
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '12ch',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
-
-const Navbar: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const navigate = useNavigate();
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchQuery('');
-    }
-  };
-
-  return (
-    <AppBar position="fixed">
-      <Toolbar>
-        <Typography variant="h6" component="div">
-          Movie App
-        </Typography>
-        <Box component="form" onSubmit={handleSearch} sx={{ ml: 'auto' }}>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search..."
-              inputProps={{ 'aria-label': 'search' }}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </Search>
-        </Box>
-      </Toolbar>
-    </AppBar>
-  );
+const initialState: MovieState = {
+  popularMovies: [],
+  trendingMovies: [],
+  searchResults: [],//[pause]Initial empty state for search results
+  loading: false,
+  error: null,
 };
 
-export default Navbar;
+export const fetchPopularMovies = createAsyncThunk(
+  'movies/fetchPopularMovies',
+  async () => {
+    const response = await getPopularMovies();
+    return response.data.results;
+  }
+);
+
+export const fetchTrendingMovies = createAsyncThunk(
+  'movies/fetchTrendingMovies',
+  async () => {
+    const response = await getTrendingMovies();
+    return response.data.results;
+  }
+);
+
+export const searchMoviesAsync = createAsyncThunk(
+  'movies/searchMovies',
+  async (query: string) => {
+    const response = await api.get(`/search/movie?query=${query}`);//[pause]API call for searching movies
+    return response.data.results;//[pause]Returns search results
+  }
+);
+
+const movieSlice = createSlice({
+  name: 'movies',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchPopularMovies.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchPopularMovies.fulfilled, (state, action: PayloadAction<any[]>) => {
+        state.loading = false;
+        state.popularMovies = action.payload;
+      })
+      .addCase(fetchPopularMovies.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to fetch popular movies';
+      })
+      .addCase(fetchTrendingMovies.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchTrendingMovies.fulfilled, (state, action: PayloadAction<any[]>) => {
+        state.loading = false;
+        state.trendingMovies = action.payload;
+      })
+      .addCase(fetchTrendingMovies.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to fetch trending movies';
+      })
+      .addCase(searchMoviesAsync.fulfilled, (state, action: PayloadAction<any[]>) => {
+        state.searchResults = action.payload;//[pause]Updates state with search results
+      });
+  },
+});
+
+export default movieSlice.reducer;
 ```
 
 ### `Installations`
