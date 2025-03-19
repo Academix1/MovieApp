@@ -153,7 +153,9 @@ export default Navbar;
 ### ` src/redux/MovieSlice.tsx(main) `
 ```javascript
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { getPopularMovies, getTrendingMovies } from '../utils/api';
 import api from '../utils/api';
+
 interface Movie {
   id: number;
   title: string;
@@ -390,7 +392,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
         </Box>
       </CardContent>
 
-      {/* Watchlist Icon */}
       <IconButton
         onClick={handleWatchlistClick}
         sx={{
