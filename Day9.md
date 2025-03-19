@@ -2,56 +2,55 @@
 
 ### ` src/pages/Watchlist.tsx (Type Simulator)`
   ```javascript
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Grid, Container, Typography, Button } from '@mui/material';
-import { RootState } from '../redux/store';
-import { removeFromWatchlist } from '../redux/movieSlice';
-import MovieCard from '../components/MovieCard';
+import React from 'react'; //[pause]
+import { useSelector, useDispatch } from 'react-redux'; //[pause]
+import { Grid, Container, Typography, Button } from '@mui/material'; //[pause]
+import { RootState } from '../redux/store'; //[pause]
+import { removeFromWatchlist } from '../redux/movieSlice'; //[pause]
+import MovieCard from '../components/MovieCard'; //[pause]
 
-const Watchlist: React.FC = () => {
-  const dispatch = useDispatch();
-  const watchlist = useSelector((state: RootState) => state.movies.watchlist);
+const Watchlist: React.FC = () => { //[pause]
+  const dispatch = useDispatch(); //[pause]
+  const watchlist = useSelector((state: RootState) => state.movies.watchlist); //[pause]
 
-  const handleRemoveFromWatchlist = (movieId: number) => {
-    const movieToRemove = watchlist.find((movie) => movie.id === movieId);
-    if (movieToRemove) {
-      dispatch(removeFromWatchlist(movieToRemove));
-    }
-  };
+  const handleRemoveFromWatchlist = (movieId: number) => { //[pause]
+    const movieToRemove = watchlist.find((movie) => movie.id === movieId); //[pause]
+    if (movieToRemove) { //[pause]
+      dispatch(removeFromWatchlist(movieToRemove)); //[pause]
+    } //[pause]
+  }; //[pause]
 
-  return (
-    <Container sx={{ py: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        My Watchlist
-      </Typography>
-      <Grid container spacing={3}>
-        {watchlist.length === 0 ? (
-          <Typography variant="h6" color="textSecondary">
-            Your watchlist is empty.
-          </Typography>
-        ) : (
-          watchlist.map((movie) => (
-            <Grid  key={movie.id}>
-              <MovieCard movie={movie} />
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => handleRemoveFromWatchlist(movie.id)}
-                sx={{ mt: 2 }}
-              >
-                Remove from Watchlist
-              </Button>
-            </Grid>
-          ))
-        )}
-      </Grid>
-    </Container>
-  );
-};
+  return ( //[pause]
+    <Container sx={{ py: 4 }}> //[pause]
+      <Typography variant="h4" gutterBottom> //[pause]
+        My Watchlist //[pause]
+      </Typography> //[pause]
+      <Grid container spacing={3}> //[pause]
+        {watchlist.length === 0 ? ( //[pause]
+          <Typography variant="h6" color="textSecondary"> //[pause]
+            Your watchlist is empty. //[pause]
+          </Typography> //[pause]
+        ) : ( //[pause]
+          watchlist.map((movie) => ( //[pause]
+            <Grid key={movie.id}> //[pause]
+              <MovieCard movie={movie} /> //[pause]
+              <Button //[pause]
+                variant="contained" //[pause]
+                color="secondary" //[pause]
+                onClick={() => handleRemoveFromWatchlist(movie.id)} //[pause]
+                sx={{ mt: 2 }} //[pause]
+              > //[pause]
+                Remove from Watchlist //[pause]
+              </Button> //[pause]
+            </Grid> //[pause]
+          )) //[pause]
+        )} //[pause]
+      </Grid> //[pause]
+    </Container> //[pause]
+  ); //[pause]
+}; //[pause]
 
-export default Watchlist;
-
+export default Watchlist; //[pause]
   ```
 
 ### ` src/components/NavBar.tsx(main)` 
@@ -129,16 +128,17 @@ const Navbar: React.FC = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </Search>
-          <IconButton
-            onClick={() => navigate('/watchlist')}
-            sx={{
-              ml: 2,
-              color: 'white', // Ensure the icon is white to be visible
-            }}
-            aria-label="Watchlist"
-          >
-            <BookmarkIcon />WatchList
-          </IconButton>
+          <IconButton //[pause]
+  onClick={() => navigate('/watchlist')} //[pause]
+  sx={{ //[pause]
+    ml: 2, //[pause]
+    color: 'white', 
+  }} //[pause]
+  aria-label="Watchlist" //[pause]
+> //[pause]
+  <BookmarkIcon />WatchList //[pause]
+</IconButton> //[pause]
+
         </Box>
       </Toolbar>
     </AppBar>
