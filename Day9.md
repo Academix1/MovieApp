@@ -153,9 +153,7 @@ export default Navbar;
 ### ` src/redux/MovieSlice.tsx(main) `
 ```javascript
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import api from '../utils/api'; // Ensure the correct path to api.ts
-
-// Define the Movie type (to type the movies array in the state)
+import api from '../utils/api';
 interface Movie {
   id: number;
   title: string;
@@ -210,20 +208,19 @@ export const fetchTrendingMovies = createAsyncThunk<Movie[]>(
 const movieSlice = createSlice({
   name: 'movies',
   initialState,
-  reducers: {
-    addToWatchlist: (state, action: PayloadAction<Movie>) => {
-      // Ensure movie is not already in the watchlist
-      if (!state.watchlist.find((movie) => movie.id === action.payload.id)) {
-        state.watchlist.push(action.payload);
-      }
-    },
-    removeFromWatchlist: (state, action: PayloadAction<Movie>) => {
-      // Remove the movie from watchlist
-      state.watchlist = state.watchlist.filter(
-        (movie) => movie.id !== action.payload.id
-      );
-    },
-  },
+  reducers: { //[pause]
+  addToWatchlist: (state, action: PayloadAction<Movie>) => { //[pause]
+    if (!state.watchlist.find((movie) => movie.id === action.payload.id)) { //[pause]
+      state.watchlist.push(action.payload); //[pause]
+    } //[pause]
+  }, //[pause]
+  removeFromWatchlist: (state, action: PayloadAction<Movie>) => { //[pause]
+    // Remove the movie from watchlist //[pause]
+    state.watchlist = state.watchlist.filter( //[pause]
+      (movie) => movie.id !== action.payload.id //[pause]
+    ); //[pause]
+  }, //[pause]
+}, //[pause]
   extraReducers: (builder) => {
     builder
       // Handle the popular movies fetch
