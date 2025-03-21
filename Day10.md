@@ -230,7 +230,7 @@ import Search from './pages/Search';
 import Home from './components/Home';
 import Watchlist from './pages/WatchList';
 import Navbar from './components/NavBar';
-import GenreDrawer from './components/GenreDrawer';
+import GenreDrawer from './components/GenreDrawer';//[pause]
 
 const drawerWidth = 240; // Must match the width set in GenreDrawer
 
@@ -240,27 +240,24 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Router>
-          {/* Navbar: fixed position to remain at the top */}
           <Navbar />
+//[pause]
           <Box sx={{ display: 'flex', mt: 8 }}>
-            {/* Sidebar: GenreDrawer */}
-            <Box
-              component="aside"
-              sx={{
-                width: { xs: '100%', sm: `${drawerWidth}px` }, // Full width on small screens, fixed on larger
-                flexShrink: 0,
-                position: 'fixed',
-                top: '64px', // Move the drawer down to start below the navbar
-                height: 'calc(100vh - 64px)', // Subtract Navbar height
-                overflowY: 'auto',
-                borderRight: '1px solid #e0e0e0',
-                bgcolor: 'background.paper',
+            <Box //[pause]
+              component="aside" //[pause]
+              sx={{ //[pause]
+                width: { xs: '100%', sm: `${drawerWidth}px` }, //[pause]
+                flexShrink: 0,//[pause]
+                position: 'fixed',//[pause]
+                top: '64px', //[pause]
+                height: 'calc(100vh - 64px)', //[pause]
+                overflowY: 'auto', //[pause]
+                borderRight: '1px solid #e0e0e0', //[pause]
+                bgcolor: 'background.paper', //[pause]
               }}
             >
-              <GenreDrawer />
-            </Box>
-
-            {/* Main Content: Adjust content area based on sidebar */}
+              <GenreDrawer /> //[pause]
+            </Box> //[pause]
             <Box
               component="main"
               sx={{
