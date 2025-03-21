@@ -84,51 +84,51 @@ export default MovieCard;
 
 ### `Home.tsx` (VITE)
 ```js
-import React, { useEffect } from 'react'; //[pause]
-import { useDispatch, useSelector } from 'react-redux'; //[pause]
-import { fetchPopularMovies, fetchTrendingMovies } from '../redux/movieSlice'; //[pause]
-import { RootState, AppDispatch } from '../redux/store'; //[pause]
-import MovieCard from './MovieCard'; //[pause]
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPopularMovies, fetchTrendingMovies } from '../redux/movieSlice';
+import { RootState, AppDispatch } from '../redux/store';
+import MovieCard from './MovieCard';
 
-const Home: React.FC = () => { //[pause]
-  const dispatch = useDispatch<AppDispatch>(); //[pause]
-  const { popularMovies, trendingMovies, loading, error } = useSelector( //[pause]
-    (state: RootState) => state.movies //[pause]
-  ); //[pause]
+const Home: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { popularMovies, trendingMovies, loading, error } = useSelector(
+    (state: RootState) => state.movies
+  );
 
-  useEffect(() => { //[pause]
-    dispatch(fetchPopularMovies()); //[pause]
-    dispatch(fetchTrendingMovies()); //[pause]
-  }, [dispatch]); //[pause]
+  useEffect(() => {
+    dispatch(fetchPopularMovies());
+    dispatch(fetchTrendingMovies());
+  }, [dispatch]);
 
-  if (loading) return <p>Loading...</p>; //[pause]
-  if (error) return <p>{error}</p>; //[pause]
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
-  return ( //[pause]
-    <div> //[pause]
-      <h2>Popular Movies</h2> //[pause]
-      <div style={gridStyle}> //[pause]
-        {popularMovies.map((movie: any) => ( //[pause]
-          <MovieCard key={movie.id} movie={movie} /> //[pause]
-        ))} //[pause]
-      </div> //[pause]
+  return (
+    <div>
+      <h2>Popular Movies</h2>
+      <div style={gridStyle}>
+        {popularMovies.map((movie: any) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
+      </div>
 
-      <h2>Trending Movies</h2> //[pause]
-      <div style={gridStyle}> //[pause]
-        {trendingMovies.map((movie: any) => ( //[pause]
-          <MovieCard key={movie.id} movie={movie} /> //[pause]
-        ))} //[pause]
-      </div> //[pause]
-    </div> //[pause]
-  ); //[pause]
-}; //[pause]
+      <h2>Trending Movies</h2>
+      <div style={gridStyle}>
+        {trendingMovies.map((movie: any) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
+      </div>
+    </div>
+  );
+};
 
-const gridStyle = { //[pause]
-  display: 'grid', //[pause]
-  gridTemplateColumns: 'repeat(4, 1fr)', //[pause]
-  gap: '16px', //[pause]
-  padding: '0 16px', //[pause]
-}; //[pause]
+const gridStyle = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(4, 1fr)',
+  gap: '16px',
+  padding: '0 16px',
+};
 
 export default Home;
 ```
