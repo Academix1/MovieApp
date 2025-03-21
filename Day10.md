@@ -3,52 +3,50 @@
 
 ```javascript
 
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { List, ListItemButton, ListItemText, Typography, Box } from '@mui/material';
-import { fetchGenres, fetchMoviesByGenre, setSelectedGenre } from '../redux/movieSlice';
-import type { AppDispatch } from '../redux/store';
+import React, { useEffect } from 'react'; //[pause]
+import { useDispatch, useSelector } from 'react-redux'; //[pause]
+import { List, ListItemButton, ListItemText, Typography, Box } from '@mui/material'; //[pause]
+import { fetchGenres, fetchMoviesByGenre, setSelectedGenre } from '../redux/movieSlice'; //[pause]
+import type { AppDispatch } from '../redux/store'; //[pause]
 
-// Define the Genre type for better type safety
-interface Genre {
-  id: number;
-  name: string;
-}
+interface Genre { //[pause]
+  id: number; //[pause]
+  name: string; //[pause]
+} //[pause]
 
+const GenreDrawer: React.FC = () => { //[pause]
+  const dispatch = useDispatch<AppDispatch>(); //[pause]
+  const genres = useSelector((state: any) => state.movies.genres); //[pause]
+  const selectedGenre = useSelector((state: any) => state.movies.selectedGenre); //[pause]
 
-const GenreDrawer: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const genres = useSelector((state: any) => state.movies.genres); // `any` is used here for simplicity, replace with RootState
-  const selectedGenre = useSelector((state: any) => state.movies.selectedGenre); // Same here, replace with RootState
+  useEffect(() => { //[pause]
+    dispatch(fetchGenres()); //[pause]
+  }, [dispatch]); //[pause]
 
-  useEffect(() => {
-    dispatch(fetchGenres());
-  }, [dispatch]);
+  const handleGenreClick = (genre: Genre) => { //[pause]
+    dispatch(setSelectedGenre(genre)); //[pause]
+    dispatch(fetchMoviesByGenre(genre.id)); //[pause]
+  }; //[pause]
 
-  const handleGenreClick = (genre: Genre) => {
-    dispatch(setSelectedGenre(genre));
-    dispatch(fetchMoviesByGenre(genre.id)); // Fetch movies by selected genre
-  };
+  return ( //[pause]
+    <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}> //[pause]
+      <Typography variant="h6">Genres</Typography> //[pause]
+      <List> //[pause]
+        {genres.map((genre: Genre) => ( //[pause]
+          <ListItemButton //[pause]
+            key={genre.id} //[pause]
+            selected={selectedGenre?.id === genre.id} //[pause]
+            onClick={() => handleGenreClick(genre)} //[pause]
+          > //[pause]
+            <ListItemText primary={genre.name} /> //[pause]
+          </ListItemButton> //[pause]
+        ))} //[pause]
+      </List> //[pause]
+    </Box> //[pause]
+  ); //[pause]
+}; //[pause]
 
-  return (
-    <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
-      <Typography variant="h6">Genres</Typography>
-      <List>
-        {genres.map((genre: Genre) => (
-          <ListItemButton
-            key={genre.id}
-            selected={selectedGenre?.id === genre.id}
-            onClick={() => handleGenreClick(genre)}
-          >
-            <ListItemText primary={genre.name} />
-          </ListItemButton>
-        ))}
-      </List>
-    </Box>
-  );
-};
-
-export default GenreDrawer;
+export default GenreDrawer; //[pause]
 
 ```
 
@@ -95,7 +93,6 @@ const initialState: MovieState = {
   error: null,
 };
 
-// Async actions using createAsyncThunk
 export const fetchGenres = createAsyncThunk<Genre[]>(
   'movies/fetchGenres',
   async () => {
