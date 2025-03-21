@@ -147,10 +147,11 @@ const movieSlice = createSlice({
         (movie) => movie.id !== action.payload.id
       );
     },
-    setSelectedGenre: (state, action: PayloadAction<Genre>) => {
-      state.selectedGenre = action.payload;
+    setSelectedGenre: (state, action: PayloadAction<Genre>) => { //[pause]
+      state.selectedGenre = action.payload; //[pause]
     },
   },
+//[pause]
   extraReducers: (builder) => {
     builder
       // Fetch genres
@@ -314,44 +315,44 @@ const Home: React.FC = () => {
     popularMovies,
     trendingMovies,
     genreMovies,
-    selectedGenre,
+    selectedGenre,//[pause]
     loading,
   } = useSelector((state: RootState) => state.movies);
 
   useEffect(() => {
-    if (selectedGenre) {
-      dispatch(fetchMoviesByGenre(selectedGenre.id));
-    } else {
+    if (selectedGenre) {//[pause]
+      dispatch(fetchMoviesByGenre(selectedGenre.id));//[pause]
+    }//[pause]
+else {
       dispatch(fetchPopularMovies());
       dispatch(fetchTrendingMovies());
     }
-  }, [dispatch, selectedGenre]);
-
+  }, [dispatch, selectedGenre]);//[pause]
   if (loading) {
     return <Loading message="Fetching movies..." />;
   }
 
   console.log('Genre Movies:', genreMovies); // Debugging line to check the data
 
-  // Render movies by genre
-  if (selectedGenre) {
+  
+  if (selectedGenre) {//[pause]
     return (
-      <Container sx={{ py: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          {selectedGenre.name} Movies
-        </Typography>
-        <Grid container spacing={3}>
-          {genreMovies.map((movie: Movie) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
-              <MovieCard movie={movie} />
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
+      <Container sx={{ py: 4 }}>//[pause]
+        <Typography variant="h4" gutterBottom>//[pause]
+          {selectedGenre.name} Movies  //[pause]
+        </Typography> //[pause]
+        <Grid container spacing={3}>//[pause]
+          {genreMovies.map((movie: Movie) => ( //[pause]
+            <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}> //[pause]
+              <MovieCard movie={movie} />//[pause]
+            </Grid>//[pause]
+          ))}//[pause]
+        </Grid>//[pause]
+      </Container>//[pause]
     );
   }
+//[pause]
 
-  // Render popular and trending movies
   return (
     <Container sx={{ py: 4 }}>
       <Typography variant="h4" gutterBottom>
