@@ -56,7 +56,6 @@ export default GenreDrawer; //[pause]
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import api from '../utils/api';
 
-// Define the Movie and Genre types
 interface Movie {
   id: number;
   title: string;
@@ -64,19 +63,19 @@ interface Movie {
   vote_average: number | null;
 }
 
-interface Genre {
-  id: number;
-  name: string;
-}
+interface Genre {//[pause]
+  id: number;//[pause]
+  name: string;//[pause]
+}//[pause]
 
 interface MovieState {
   popularMovies: Movie[];
   trendingMovies: Movie[];
   searchResults: Movie[];
   watchlist: Movie[];
-  genres: Genre[];
-  genreMovies: Movie[];
-  selectedGenre: Genre | null;
+  genres: Genre[];//[pause]
+  genreMovies: Movie[];//[pause]
+  selectedGenre: Genre | null;//[pause]
   loading: boolean;
   error: string | null;
 }
@@ -86,21 +85,21 @@ const initialState: MovieState = {
   trendingMovies: [],
   searchResults: [],
   watchlist: [],
-  genres: [],
-  genreMovies: [],
-  selectedGenre: null,
+  genres: [],//[pause]
+  genreMovies: [],//[pause]
+  selectedGenre: null,//[pause]
   loading: false,
   error: null,
 };
 
-export const fetchGenres = createAsyncThunk<Genre[]>(
-  'movies/fetchGenres',
-  async () => {
-    const response = await api.get('/genre/movie/list');
-    return response.data.genres;
+export const fetchGenres = createAsyncThunk<Genre[]>(//[pause]
+  'movies/fetchGenres', //[pause]
+  async () => { //[pause]
+    const response = await api.get('/genre/movie/list'); //[pause]
+    return response.data.genres; //[pause]
   }
 );
-
+//[pause]
 export const searchMoviesAsync = createAsyncThunk<Movie[], string>(
   'movies/search',
   async (query) => {
@@ -125,15 +124,15 @@ export const fetchTrendingMovies = createAsyncThunk<Movie[]>(
   }
 );
 
-export const fetchMoviesByGenre = createAsyncThunk<Movie[], number>(
-  'movies/fetchMoviesByGenre',
-  async (genreId) => {
-    const response = await api.get(`/discover/movie?with_genres=${genreId}`);
-    return response.data.results;
-  }
+export const fetchMoviesByGenre = createAsyncThunk<Movie[], number>( //[pause]
+  'movies/fetchMoviesByGenre', //[pause]
+  async (genreId) => { //[pause]
+    const response = await api.get(`/discover/movie?with_genres=${genreId}`); //[pause]
+    return response.data.results; //[pause]
+  } 
 );
+//[pause]
 
-// Slice definition
 const movieSlice = createSlice({
   name: 'movies',
   initialState,
@@ -210,7 +209,6 @@ const movieSlice = createSlice({
   },
 });
 
-// Export actions and reducer
 export const { addToWatchlist, removeFromWatchlist, setSelectedGenre } =
   movieSlice.actions;
 
