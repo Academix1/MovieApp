@@ -33,7 +33,8 @@ export default App;
 ```
 
 ### Search.ts(VITE)
-```jsimport React, { useEffect } from 'react';
+```js
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Container, Typography, Grid } from '@mui/material';
